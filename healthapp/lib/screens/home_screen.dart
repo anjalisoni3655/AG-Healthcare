@@ -1,84 +1,72 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
-import 'package:healthapp/helper_functions/google_login.dart';
+import 'package:healthapp/screens/drawer.dart';
 
-class FirstScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  static String id = 'home_screen';
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  // TODO show blogs in the homescreen in the form of cards
+  int selectedIndex = 0;
+  List<Widget> widgetOptions = [
+   //TODO appointments + payments along with+ cancel and reschedule button 
+    Container(
+      color: Colors.red,
+    ),
+    //TODO: chats with doctor
+     Container(
+      color: Colors.blue,
+    ),
+    //TODO : video calling with doctor
+     Container(
+      color: Colors.green,
+    ),
+   
+   
+    
+  ];
+  List<Text> headingOptions = [
+    Text('Appointments'),
+    Text('Chats'),
+    Text('Video Call'),
+  ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.white],
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize:
+              Size.fromHeight(MediaQuery.of(context).size.height * 0.10),
+          child: AppBar(
+            title: headingOptions[selectedIndex],
+            backgroundColor: Colors.brown,
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                  imageUrl,
-                ),
-                radius: 60,
-                backgroundColor: Colors.transparent,
-              ),
-              SizedBox(height: 40),
-              Text(
-                'NAME',
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
-              Text(
-                name,
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'EMAIL',
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
-              Text(
-                email,
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 40),
-              RaisedButton(
-                onPressed: () {
-                  signOutGoogle();
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  }), ModalRoute.withName('/'));
-                },
-                color: Colors.blue,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Sign Out',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
-                  ),
-                ),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
-              )
-            ],
-          ),
+       drawer: DrawerWidget(),
+        body: widgetOptions[selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.accessibility),
+              title: Text('Appointments'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.change_history),
+              title: Text('Chats'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.video_call),
+              title: Text('Video Call'),
+            ),
+          ],
+          currentIndex: selectedIndex,
+          onTap: (int i) {
+            setState(() {
+              selectedIndex = i;
+            });
+          },
         ),
       ),
     );
