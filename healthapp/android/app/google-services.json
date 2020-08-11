@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "138479565300",
+    "firebase_url": "https://healthapp-f0803.firebaseio.com",
+    "project_id": "healthapp-f0803",
+    "storage_bucket": "healthapp-f0803.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138479565300:android:b6c74bf6a23c20939061a1",
+        "android_client_info": {
+          "package_name": "com.example.healthapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "138479565300-h963kupi9kbptert9dk9n0tqjd7gohav.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.healthapp",
+            "certificate_hash": "b6917d7b9e3447f04ea3c5d20b6b83df827c2c9f"
+          }
+        },
+        {
+          "client_id": "138479565300-h1ri83c4n16hmvj9agd366ib7fuf2urd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDGNppK1H2pE4qJT4fpuxZoEGNaWmcxzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "138479565300-h1ri83c4n16hmvj9agd366ib7fuf2urd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

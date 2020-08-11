@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healthapp/helper_functions/google_login.dart';
+import 'package:healthapp/authentication/google_login.dart';
 import 'home_screen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,14 +13,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: Colors.lightBlueAccent,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 50),
-              _signInButton(),
+              _googleSignInButton(),
+              _appleSignInButton(),
             ],
           ),
         ),
@@ -28,8 +28,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _signInButton() {
-    return OutlineButton(
+  Widget _googleSignInButton() {
+    return RaisedButton(
       splashColor: Colors.grey,
       onPressed: () {
         signInWithGoogle().whenComplete(() {
@@ -42,23 +42,67 @@ class _LoginPageState extends State<LoginPage> {
           );
         });
       },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      highlightElevation: 0,
-      borderSide: BorderSide(color: Colors.grey),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      highlightElevation: 20,
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
+            Image(
+                image: AssetImage("assets/icons/google_logo.png"),
+                height: 20.0),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
                 'Sign in with Google',
                 style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey,
+                  fontSize: 16,
+                  color: Colors.black38,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _appleSignInButton() {
+    return RaisedButton(
+      splashColor: Colors.grey,
+      onPressed: () {
+        signInWithGoogle().whenComplete(() {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return HomeScreen();
+              },
+            ),
+          );
+        });
+      },
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      highlightElevation: 20,
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(
+                image: AssetImage("assets/icons/apple_logo.png"),
+                height: 20.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                '  Sign in with Apple  ',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black38,
                 ),
               ),
             )

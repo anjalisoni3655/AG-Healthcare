@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:healthapp/helper_functions/google_login.dart';
+import 'package:healthapp/authentication/google_login.dart';
 
 import 'login_screen.dart';
 class DrawerWidget extends StatelessWidget {
-  
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: Colors.white,
+        color: Colors.black87,
         padding: EdgeInsets.all(10.0),
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             //TODO :circle avatar
-             CircleAvatar(
-                backgroundImage: NetworkImage(
-                  imageUrl,
-                ),
-                radius: 60,
-                backgroundColor: Colors.transparent,
+            CircleAvatar(
+              backgroundImage: NetworkImage(
+                g_imageUrl,
               ),
-               SizedBox(height: 40),
+              radius: 60,
+              backgroundColor: Colors.transparent,
+            ),
+            SizedBox(height: 40),
             Container (
               child: Center(
                 child: Text(
-                  'Hi $name!',
+                  'Hi $g_name!',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w400,
@@ -38,7 +38,7 @@ class DrawerWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 5.0),
               child: Center(
                 child: Text(
-                  '$email',
+                  '$g_email',
                   style: TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
@@ -62,7 +62,7 @@ class DrawerWidget extends StatelessWidget {
                 color: Colors.white,
               ),
               onTap: () {
-               
+
               },
             ),
             ListTileWidget(
@@ -72,7 +72,7 @@ class DrawerWidget extends StatelessWidget {
                 color: Colors.white,
               ),
               onTap: () {
-              
+
               },
             ),
             ListTileWidget(
@@ -82,7 +82,7 @@ class DrawerWidget extends StatelessWidget {
                 color: Colors.white,
               ),
               onTap: () {
-               
+
               },
             ),
             ListTileWidget(
@@ -92,12 +92,12 @@ class DrawerWidget extends StatelessWidget {
                 color: Colors.white,
               ),
               onTap: () {
-                
+
               },
             ),
-           
-           
-            
+
+
+
             ListTileWidget(
               text: 'Contact the doctor',
               icon: Icon(
@@ -105,7 +105,7 @@ class DrawerWidget extends StatelessWidget {
                 color: Colors.white,
               ),
               onTap: () {
-                
+
               },
             ),
             ListTileWidget(
@@ -115,7 +115,7 @@ class DrawerWidget extends StatelessWidget {
                 color: Colors.white,
               ),
               onTap: () {
-                
+
               },
             ),
             ListTileWidget(
@@ -126,11 +126,11 @@ class DrawerWidget extends StatelessWidget {
               ),
               onTap: ()  {
                 signOutGoogle();
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  }), ModalRoute.withName('/'));
-              
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) {
+                      return LoginPage();
+                    }), ModalRoute.withName('/'));
+
               },
             ),
           ],

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:healthapp/authentication/google_login.dart';
 import 'package:healthapp/screens/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -10,28 +12,27 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // TODO show blogs in the homescreen in the form of cards
   int selectedIndex = 0;
+
   List<Widget> widgetOptions = [
-   //TODO appointments + payments along with+ cancel and reschedule button 
+    //TODO appointments + payments along with+ cancel and reschedule button
     Container(
       color: Colors.red,
     ),
     //TODO: chats with doctor
-     Container(
+    Container(
       color: Colors.blue,
     ),
     //TODO : video calling with doctor
-     Container(
+    Container(
       color: Colors.green,
     ),
-   
-   
-    
   ];
   List<Text> headingOptions = [
     Text('Appointments'),
     Text('Chats'),
     Text('Video Call'),
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Colors.brown,
           ),
         ),
-       drawer: DrawerWidget(),
+        drawer: DrawerWidget(),
         body: widgetOptions[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           items: [

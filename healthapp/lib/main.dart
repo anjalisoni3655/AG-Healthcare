@@ -3,8 +3,6 @@ import 'package:healthapp/screens/login_screen.dart';
 import 'package:healthapp/screens/home_screen.dart';
 
 
-
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -12,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Dr.AG Hospital',
+        title: 'AG Hospital',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -21,7 +19,6 @@ class MyApp extends StatelessWidget {
         routes: {
           LoginPage.id: (context) => LoginPage(),
           HomeScreen.id:(context)=>HomeScreen(),
-          
         });
   }
 }
