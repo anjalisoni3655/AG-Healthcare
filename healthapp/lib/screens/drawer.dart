@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
-
+import 'profile.dart';
 import 'login_screen.dart';
-class DrawerWidget extends StatelessWidget {
 
+class DrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -22,7 +22,7 @@ class DrawerWidget extends StatelessWidget {
               backgroundColor: Colors.transparent,
             ),
             SizedBox(height: 40),
-            Container (
+            Container(
               child: Center(
                 child: Text(
                   'Hi $g_name!',
@@ -61,9 +61,7 @@ class DrawerWidget extends StatelessWidget {
                 Icons.speaker_notes,
                 color: Colors.white,
               ),
-              onTap: () {
-
-              },
+              onTap: () {},
             ),
             ListTileWidget(
               text: 'My payments',
@@ -71,42 +69,27 @@ class DrawerWidget extends StatelessWidget {
                 Icons.payment,
                 color: Colors.white,
               ),
-              onTap: () {
-
-              },
-            ),
-            ListTileWidget(
-              text: 'Cancel appointment',
-              icon: Icon(
-                Icons.cancel,
-                color: Colors.white,
-              ),
-              onTap: () {
-
-              },
-            ),
-            ListTileWidget(
-              text: 'Reschedule appointment',
-              icon: Icon(
-                Icons.time_to_leave,
-                color: Colors.white,
-              ),
-              onTap: () {
-
-              },
+              onTap: () {},
             ),
 
-
-
             ListTileWidget(
-              text: 'Contact the doctor',
+              text: 'Edit Profile',
               icon: Icon(
                 Icons.access_alarm,
                 color: Colors.white,
               ),
               onTap: () {
-
+                Navigator.pushNamed(context, Profile.id);
               },
+            ),
+
+            ListTileWidget(
+              text: 'Contact Available doctor',
+              icon: Icon(
+                Icons.access_alarm,
+                color: Colors.white,
+              ),
+              onTap: () {},
             ),
             ListTileWidget(
               text: 'About the Hospital',
@@ -114,9 +97,7 @@ class DrawerWidget extends StatelessWidget {
                 Icons.access_alarm,
                 color: Colors.white,
               ),
-              onTap: () {
-
-              },
+              onTap: () {},
             ),
             ListTileWidget(
               text: 'Signout',
@@ -124,13 +105,12 @@ class DrawerWidget extends StatelessWidget {
                 Icons.access_alarm,
                 color: Colors.white,
               ),
-              onTap: ()  {
+              onTap: () {
                 signOutGoogle();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) {
-                      return LoginPage();
-                    }), ModalRoute.withName('/'));
-
+                  return LoginPage();
+                }), ModalRoute.withName('/'));
               },
             ),
           ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'home_screen.dart';
+import 'user_details.dart';
+
 
 class LoginPage extends StatefulWidget {
   @override
@@ -36,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
-                return HomeScreen();
+                return UserForm();
               },
             ),
           );
