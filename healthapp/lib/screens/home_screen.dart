@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:healthapp/screens/drawer.dart';
+import 'package:healthapp/screens/index.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -15,17 +16,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> widgetOptions = [
     //TODO appointments + payments along with+ cancel and reschedule button
-    Container(
-      color: Colors.red,
-    ),
+    
     //TODO: chats with doctor
     Container(
-      color: Colors.blue,
+      color: Colors.white,
     ),
     //TODO : video calling with doctor
     Container(
-      color: Colors.green,
+      color: Colors.white,
     ),
+    
+      IndexPage(),
+    
   ];
   List<Text> headingOptions = [
     Text('Appointments'),
@@ -39,10 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize:
-              Size.fromHeight(MediaQuery.of(context).size.height * 0.10),
+              Size.fromHeight(MediaQuery.of(context).size.height * 0.05),
           child: AppBar(
             title: headingOptions[selectedIndex],
-            backgroundColor: Colors.brown,
+            backgroundColor: Colors.blue,
           ),
         ),
         drawer: DrawerWidget(),

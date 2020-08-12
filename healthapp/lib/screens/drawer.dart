@@ -8,20 +8,22 @@ class DrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: Colors.black87,
+        color: Colors.blue,
         padding: EdgeInsets.all(10.0),
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             //TODO :circle avatar
             CircleAvatar(
-              backgroundImage: NetworkImage(
-                g_imageUrl,
+              child: ClipOval(
+                child: Image.network(
+                  g_imageUrl,
+                ),
               ),
-              radius: 60,
+              radius: 40,
               backgroundColor: Colors.transparent,
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 20),
             Container(
               child: Center(
                 child: Text(
@@ -75,7 +77,7 @@ class DrawerWidget extends StatelessWidget {
             ListTileWidget(
               text: 'Edit Profile',
               icon: Icon(
-                Icons.access_alarm,
+                Icons.edit,
                 color: Colors.white,
               ),
               onTap: () {
@@ -86,7 +88,7 @@ class DrawerWidget extends StatelessWidget {
             ListTileWidget(
               text: 'Contact Available doctor',
               icon: Icon(
-                Icons.access_alarm,
+                Icons.contacts,
                 color: Colors.white,
               ),
               onTap: () {},
@@ -94,7 +96,7 @@ class DrawerWidget extends StatelessWidget {
             ListTileWidget(
               text: 'About the Hospital',
               icon: Icon(
-                Icons.access_alarm,
+                Icons.local_hospital,
                 color: Colors.white,
               ),
               onTap: () {},
@@ -102,7 +104,7 @@ class DrawerWidget extends StatelessWidget {
             ListTileWidget(
               text: 'Signout',
               icon: Icon(
-                Icons.access_alarm,
+                Icons.arrow_back,
                 color: Colors.white,
               ),
               onTap: () {

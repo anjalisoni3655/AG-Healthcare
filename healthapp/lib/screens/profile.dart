@@ -13,10 +13,10 @@ Profile({this.user});
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(user.name, style: TextStyle(fontSize: 22)),
-            Text(user.email, style: TextStyle(fontSize: 22)),
-            Text(user.address, style: TextStyle(fontSize: 22)),
-            Text(user.gender, style: TextStyle(fontSize: 22)),
+            Text('user.name', style: TextStyle(fontSize: 22)),
+            Text('user.email', style: TextStyle(fontSize: 22)),
+            Text('user.address', style: TextStyle(fontSize: 22)),
+            Text('user.gender', style: TextStyle(fontSize: 22)),
          //   Text(user.age, style: TextStyle(fontSize: 22)),
           //  Text(user.phone, style: TextStyle(fontSize: 22)),
           ],
