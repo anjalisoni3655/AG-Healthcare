@@ -1,8 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'home_screen.dart';
 import 'user_details.dart';
 
+const List<String> login_types = [' Google ', 'Facebook'];
+const List<AssetImage> login_icons = [
+  AssetImage('assets/icons/google.png'),
+  AssetImage('assets/icons/facebook.png')
+];
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,94 +23,94 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         color: Colors.lightBlueAccent,
         child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              _googleSignInButton(),
-              _appleSignInButton(),
-            ],
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                _SignInWithMobile(),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _SignInButton(login_types[0], login_icons[0]),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                    ),
+                    _SignInButton(login_types[1], login_icons[1]),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _googleSignInButton() {
+  Widget _SignInWithMobile() {
     return RaisedButton(
       splashColor: Colors.grey,
       onPressed: () {
-        signInWithGoogle().whenComplete(() {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return UserForm();
-              },
-            ),
-          );
-        });
+        //TODO: Implement Mobile Phone Login
+        print('Implement Mobile Phone Login');
       },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
       highlightElevation: 20,
-      color: Colors.white,
+      color: Colors.blue[800],
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image(
-                image: AssetImage("assets/icons/google_logo.png"),
-                height: 20.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'Sign in with Google',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black38,
-                ),
-              ),
-            )
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Text(
+            'Continue With Phone Number',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _appleSignInButton() {
+  Widget _SignInButton(String text, AssetImage assetImage) {
     return RaisedButton(
       splashColor: Colors.grey,
       onPressed: () {
-        signInWithGoogle().whenComplete(() {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return HomeScreen();
-              },
-            ),
-          );
-        });
+        if (text == login_types[0]) {
+          signInWithGoogle().whenComplete(() {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return UserForm();
+                },
+              ),
+            );
+          });
+        } else {
+          // TODO: Facebook Login!
+          print('Implement Facebook Login');
+        }
       },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
       highlightElevation: 20,
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image(
-                image: AssetImage("assets/icons/apple_logo.png"),
-                height: 20.0),
+            Image(image: assetImage, height: 20.0),
             Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.all(10),
               child: Text(
-                '  Sign in with Apple  ',
+                text,
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.black38,
+                  color: Colors.blue[800],
                 ),
               ),
             )
