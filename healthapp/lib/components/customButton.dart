@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+
 class CustomButton extends StatelessWidget {
   final Function onPressed;
   final String title;
-  final String image;
-  const CustomButton({@required this.title, @required this.onPressed, this.image})
+  
+  const CustomButton({@required this.title, @required this.onPressed})
       : assert(title != null),
-        assert(onPressed != null),
-        assert(image != null);
+        assert(onPressed != null);
+
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
@@ -18,7 +19,7 @@ class CustomButton extends StatelessWidget {
           width: 2.5,
         ),
       ),
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal:17),
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 17),
       elevation: 0.0,
       onPressed: onPressed,
       child: Row(
@@ -29,11 +30,7 @@ class CustomButton extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.headline2.copyWith(fontSize: 30),
           ),
-          CircleAvatar(
-            backgroundColor: Colors.white.withOpacity(0.85),
-            backgroundImage: AssetImage(image),
-            radius: 40,
-          ),
+          
         ],
       ),
     );

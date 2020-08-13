@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/components/customButton.dart';
+import 'package:healthapp/screens/doctor_list.dart';
 
-class Timing extends StatelessWidget {
-  static const id = 'timing';
+class Disease extends StatelessWidget {
+  static const id = 'disease';
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ height:10.0,
              // image: "assets/6.png",
               onPressed: () {
                 
-              //  Navigator.pushNamed(context, InternalBus.id);
+               Navigator.pushNamed(context, Doctor.id);
               },
              
             ),

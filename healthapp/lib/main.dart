@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:healthapp/screens/disease.dart';
+import 'package:healthapp/screens/doctor_list.dart';
 import 'package:healthapp/screens/login_screen.dart';
 import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/screens/user_details.dart';
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
           LoginPage.id: (context) => LoginPage(),
           HomeScreen.id: (context) => HomeScreen(),
            Profile.id: (context) => Profile(),
+           Disease.id:(context)=>Disease(),
+           Doctor.id:(context)=>Doctor()
 
         });
   }
