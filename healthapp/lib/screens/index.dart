@@ -64,6 +64,7 @@ class IndexState extends State<IndexPage> {
                       onChanged: (ClientRole value) {
                         setState(() {
                           _role = value;
+                          
                         });
                       },
                     ),
