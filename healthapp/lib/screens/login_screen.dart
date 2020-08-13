@@ -21,13 +21,67 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.lightBlueAccent,
+        
+        color: Colors.lightBlue,
         child: Center(
           child: Padding(
             padding: EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
+                Container(
+              height: MediaQuery.of(context).size.width * 0.2,
+              width: MediaQuery.of(context).size.width * 0.2,
+              child: Image.asset(
+                'assets/icons/google.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+            
+            SizedBox(height: 20),
+                 Text(
+                    
+              'Dr. Amit Goel',
+               style: TextStyle(fontSize: 25,
+                  fontWeight: FontWeight.w600,
+               ),
+              
+            ),
+            SizedBox(
+              height: 10,
+            ),
+             Text(
+              'Endrocrinologist in Hyderabad',
+              
+            ),
+           Divider(
+height: 20.0,
+color: Colors.black,
+
+
+
+           ),
+            
+            Text(
+              'Comprehensive Diabetes',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black12),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              '\& Endo care clinic',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black12),
+            ),
+             SizedBox(
+              height: 110,
+            ),
                 _SignInWithMobile(),
                 Padding(
                   padding: EdgeInsets.only(bottom: 15),
