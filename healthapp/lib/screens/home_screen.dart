@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
-import 'package:healthapp/screens/disease.dart';
+import 'package:healthapp/screens/doctor_list.dart';
 import 'package:healthapp/screens/drawer.dart';
 import 'package:healthapp/screens/index.dart';
 
@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //TODO appointments + payments along with+ cancel and reschedule button
     
     //TODO: chats with doctor
-    Disease(),
+    Doctor(),
     //TODO : video calling with doctor
     Container(
       color: Colors.white,

@@ -1,228 +1,168 @@
-import 'package:flutter/cupertino.dart';
+import 'package:healthapp/components/category_card.dart';
+import 'package:healthapp/components/doctor_card.dart';
+import 'package:healthapp/components/search_bar.dart';
+import 'package:healthapp/components/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
-//widget for the my profile page displaying user's details
-class Doctor extends StatefulWidget {
+class Doctor extends StatelessWidget {
   static const id = "doctor";
   @override
-  _DoctorState createState() => _DoctorState();
-}
-
-class _DoctorState extends State<Doctor> {
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('timings'),
-          centerTitle: true,
-          backgroundColor: Colors.blue,
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-        ),
-        backgroundColor: Colors.white,
-        body: SafeArea(
-            child: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: kBackgroundColor,
+      body: SafeArea(
+        bottom: false,
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Center(
-                child: Text(
-                  'Doctors',
-                  textAlign: TextAlign.center,
-                  textScaleFactor: 3.0,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    SvgPicture.asset('assets/icons/menu.svg'),
+                    SvgPicture.asset('assets/icons/profile.svg'),
+                  ],
                 ),
               ),
               SizedBox(
-                height: 20.0,
-                width: 150.0,
+                height: 50,
               ),
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        width: 1.2,
-                        color: Colors.brown[500],
-                      )),
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility,
-                      color: Colors.yellow,
-                    ),
-                    title: Text(
-                      '9.50 AM',
-                    ),
-                  )),
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        width: 1.2,
-                        color: Colors.brown[500],
-                      )),
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility,
-                      color: Colors.yellow,
-                    ),
-                    title: Text(
-                      '10:00AM',
-                    ),
-                  )),
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        width: 1.2,
-                        color: Colors.brown[500],
-                      )),
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility,
-                      color: Colors.yellow,
-                    ),
-                    title: Text(
-                      '10:00AM',
-                    ),
-                  )),
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        width: 1.2,
-                        color: Colors.brown[500],
-                      )),
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility,
-                      color: Colors.yellow,
-                    ),
-                    title: Text(
-                      '10:00AM',
-                    ),
-                  )),
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        width: 1.2,
-                        color: Colors.brown[500],
-                      )),
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility,
-                      color: Colors.yellow,
-                    ),
-                    title: Text(
-                      '10:00AM',
-                    ),
-                  )),
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        width: 1.2,
-                        color: Colors.brown[500],
-                      )),
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility,
-                      color: Colors.yellow,
-                    ),
-                    title: Text(
-                      '10:00AM',
-                    ),
-                  )),
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        width: 1.2,
-                        color: Colors.brown[500],
-                      )),
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility,
-                      color: Colors.yellow,
-                    ),
-                    title: Text(
-                      '10:00AM',
-                    ),
-                  )),
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        width: 1.2,
-                        color: Colors.brown[500],
-                      )),
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility,
-                      color: Colors.yellow,
-                    ),
-                    title: Text(
-                      '10:00AM',
-                    ),
-                  )),
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        width: 1.2,
-                        color: Colors.brown[500],
-                      )),
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility,
-                      color: Colors.yellow,
-                    ),
-                    title: Text(
-                      '10:00AM',
-                    ),
-                  )),
-              Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        width: 1.2,
-                        color: Colors.brown[500],
-                      )),
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.accessibility,
-                      color: Colors.yellow,
-                    ),
-                    title: Text(
-                      '10:00AM',
-                    ),
-                  )),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  'Find Your Desired\nDoctor',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32,
+                    color: kTitleTextColor,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: SearchBar(),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  'Categories',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: kTitleTextColor,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              buildCategoryList(),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Text(
+                  'Top Doctors',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: kTitleTextColor,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              buildDoctorList(),
             ],
           ),
-        )),
+        ),
+      ),
+    );
+  }
+
+  buildCategoryList() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            width: 30,
+          ),
+          CategoryCard(
+            'Dental\nSurgeon',
+            'assets/icons/dental_surgeon.png',
+            kBlueColor,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          CategoryCard(
+            'Heart\nSurgeon',
+            'assets/icons/heart_surgeon.png',
+            kYellowColor,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          CategoryCard(
+            'Eye\nSpecialist',
+            'assets/icons/eye_specialist.png',
+            kOrangeColor,
+          ),
+          SizedBox(
+            width: 30,
+          ),
+        ],
+      ),
+    );
+  }
+
+  buildDoctorList() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 30,
+      ),
+      child: Column(
+        children: <Widget>[
+          DoctorCard(
+            'Dr. Stella Kane',
+            'Heart Surgeon - Flower Hospitals',
+            'assets/images/doctor1.png',
+            kBlueColor,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          DoctorCard(
+            'Dr. Joseph Cart',
+            'Dental Surgeon - Flower Hospitals',
+            'assets/images/doctor2.png',
+            kYellowColor,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          DoctorCard(
+            'Dr. Stephanie',
+            'Eye Specialist - Flower Hospitals',
+            'assets/images/doctor3.png',
+            kOrangeColor,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+        ],
       ),
     );
   }

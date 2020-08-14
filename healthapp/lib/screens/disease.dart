@@ -1,4 +1,5 @@
 import 'package:healthapp/components/constant.dart';
+import 'package:healthapp/screens/doctor_list.dart';
 import 'package:healthapp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -52,12 +53,7 @@ class Disease extends StatelessWidget {
                     ),
                     MaterialButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HomeScreen(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, Doctor.id);
                       },
                       color: kOrangeColor,
                       padding: EdgeInsets.symmetric(
