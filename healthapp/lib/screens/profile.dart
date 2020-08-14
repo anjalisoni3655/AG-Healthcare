@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/user.dart';
 class Profile extends StatelessWidget {
   static const id ="profile";
-  User user;
-Profile({this.user});
+  //User user;
+//Profile({this.user});
 @override
   Widget build(BuildContext context) {
     return (Scaffold(

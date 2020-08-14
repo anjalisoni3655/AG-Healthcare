@@ -32,7 +32,9 @@ dependencies:
   google_sign_in: ^4.4.4
   agora_rtc_engine: ^1.0.13
   permission_handler: ^5.0.1+1
-  expandable: ^4.1.4
+  cloud_firestore: ^0.13.6
+  flutter_svg: ^0.18.0
+  google_fonts: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +52,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+    - assets/images/
 
 
   # To add assets to your application, add an assets section, like this:

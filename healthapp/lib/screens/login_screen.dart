@@ -67,7 +67,7 @@ color: Colors.black,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: Colors.black12),
+                  color: Colors.black),
             ),
             SizedBox(
               height: 10,
@@ -77,7 +77,7 @@ color: Colors.black,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: Colors.black12),
+                  color: Colors.black),
             ),
              SizedBox(
               height: 110,
