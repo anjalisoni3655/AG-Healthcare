@@ -240,32 +240,32 @@ class _UserFormState extends State<UserForm> {
                       key: Key('Submit'),
                       color: Colors.blue,
                       textColor: Colors.white,
-                      onPressed: () {
+                      onPressed: ()async {
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
                         // If the form is valid , all the values are saved in respective variables
                         _formKey.currentState.save();
 
-                        // final doc = await Firestore.instance
-                        //     .collection('user')
-                        //     .where('email', isEqualTo: email)
-                        //     .getDocuments();
+                        final doc = await Firestore.instance
+                             .collection('user')
+                            .where('email', isEqualTo: email)
+                             .getDocuments();
 
-                        // if (doc.documents.length == 0) {
-                        // await  uploadUserDetails(
-                        //     name: name,
-                        //     email: email,
-                        //     gender: gender,
-                        //     phone: phone,
-                        //     address: address,
-                        //     age: age,
-                        //     blood:blood,
-                        //     height:height,
-                        //     weight:weight,
-                        //     marital:marital,
-                        //   );
-                        // }
+                         if (doc.documents.length == 0) {
+                        await  uploadUserDetails(
+                             name: name,
+                          email: email,
+                             gender: gender,
+                             phone: phone,
+                             address: address,
+                             age: age,
+                             blood:blood,
+                             height:height,
+                             weight:weight,
+                           marital:marital,
+                          );
+                       }
                         Navigator.pushReplacementNamed(context, HomeScreen.id);
                       },
                       shape: RoundedRectangleBorder(
