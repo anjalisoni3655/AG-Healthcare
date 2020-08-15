@@ -278,8 +278,10 @@ class ChatScreenState extends State<ChatScreen> {
             // List
             Container(
               child: StreamBuilder(
-                stream: Firestore.instance.collection('users').snapshots(),
+                stream: Firestore.instance.collection('user').snapshots(),
                 builder: (context, snapshot) {
+                  print(snapshot);
+                   
                   if (!snapshot.hasData) {
                     return Center(
                       child: CircularProgressIndicator(
