@@ -2,7 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'home_screen.dart';
+import 'package:healthapp/components/const.dart';
+import 'dart:async';
 import 'user_details.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:healthapp/widget/loading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 const List<String> login_types = [' Google ', 'Facebook'];
 const List<AssetImage> login_icons = [
@@ -11,166 +19,155 @@ const List<AssetImage> login_icons = [
 ];
 
 class LoginPage extends StatefulWidget {
+  LoginPage({Key key, this.title}) : super(key: key);
+  static const id = "login";
+  final String title;
+
   @override
-  static const id = "login_page";
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  SharedPreferences prefs;
+
+  bool isLoading = false;
+  bool isLoggedIn = false;
+  FirebaseUser currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    isSignedIn();
+  }
+
+  void isSignedIn() async {
+    this.setState(() {
+      isLoading = true;
+    });
+
+    prefs = await SharedPreferences.getInstance();
+
+    isLoggedIn = await googleSignIn.isSignedIn();
+    if (isLoggedIn) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+             HomeScreen(currentUserId: prefs.getString('id'))),
+             // HomeScreen()),
+      );
+    }
+
+    this.setState(() {
+      isLoading = false;
+    });
+  }
+
+  Future<Null> handleSignIn() async {
+    prefs = await SharedPreferences.getInstance();
+
+    this.setState(() {
+      isLoading = true;
+    });
+
+    GoogleSignInAccount googleUser = await googleSignIn.signIn();
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    FirebaseUser firebaseUser =
+        (await firebaseAuth.signInWithCredential(credential)).user;
+
+    if (firebaseUser != null) {
+      // Check is already sign up
+      final QuerySnapshot result = await Firestore.instance
+          .collection('user')
+          .where('id', isEqualTo: firebaseUser.uid)
+          .getDocuments();
+      final List<DocumentSnapshot> documents = result.documents;
+      if (documents.length == 0) {
+        // Update data to server if new user
+        Firestore.instance
+            .collection('user')
+            .document(firebaseUser.uid)
+            .setData({
+          'name': firebaseUser.displayName,
+          'photoUrl': firebaseUser.photoUrl,
+          'id': firebaseUser.uid,
+          'createdAt': DateTime.now().millisecondsSinceEpoch.toString(),
+          'chattingWith': null,
+          'email':firebaseUser.email,
+        });
+
+        // Write data to local
+        currentUser = firebaseUser;
+        await prefs.setString('id', currentUser.uid);
+        await prefs.setString('name', currentUser.displayName);
+        await prefs.setString('photoUrl', currentUser.photoUrl);
+        await prefs.setString('email', currentUser.email);
+      } else {
+        // Write data to local
+        await prefs.setString('id', documents[0]['id']);
+        await prefs.setString('name', documents[0]['name']);
+        await prefs.setString('email', documents[0]['email']);
+        await prefs.setString('photoUrl', documents[0]['photoUrl']);
+        await prefs.setString('aboutMe', documents[0]['aboutMe']);
+        
+      }
+      Fluttertoast.showToast(msg: "Successfully Signed in");
+      this.setState(() {
+        isLoading = false;
+      });
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  HomeScreen(currentUserId: firebaseUser.uid)));
+    } else {
+      Fluttertoast.showToast(msg: "Sign in failed, Try Again");
+      this.setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        
-        color: Colors.lightBlue,
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-              height: MediaQuery.of(context).size.width * 0.2,
-              width: MediaQuery.of(context).size.width * 0.2,
-              child: Image.asset(
-                'assets/icons/google.png',
-                fit: BoxFit.contain,
-              ),
-            ),
-            
-            SizedBox(height: 20),
-                 Text(
-                    
-              'Dr. Amit Goel',
-               style: TextStyle(fontSize: 25,
-                  fontWeight: FontWeight.w600,
-               ),
-              
-            ),
-            SizedBox(
-              height: 10,
-            ),
-             Text(
-              'Endrocrinologist in Hyderabad',
-              
-            ),
-           Divider(
-height: 20.0,
-color: Colors.black,
-
-
-
-           ),
-            
-            Text(
-              'Comprehensive Diabetes',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              '\& Endo care clinic',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black),
-            ),
-             SizedBox(
-              height: 110,
-            ),
-                _SignInWithMobile(),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 15),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _SignInButton(login_types[0], login_icons[0]),
-                    Padding(
-                      padding: EdgeInsets.all(15),
-                    ),
-                    _SignInButton(login_types[1], login_icons[1]),
-                  ],
-                ),
-              ],
-            ),
+        appBar: AppBar(
+          title: Text(
+            widget.title,
+            style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
           ),
+          centerTitle: true,
         ),
-      ),
-    );
-  }
-
-  Widget _SignInWithMobile() {
-    return RaisedButton(
-      splashColor: Colors.grey,
-      onPressed: () {
-        //TODO: Implement Mobile Phone Login
-        print('Implement Mobile Phone Login');
-      },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
-      highlightElevation: 20,
-      color: Colors.blue[800],
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Text(
-            'Continue With Phone Number',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _SignInButton(String text, AssetImage assetImage) {
-    return RaisedButton(
-      splashColor: Colors.grey,
-      onPressed: () {
-        if (text == login_types[0]) {
-          signInWithGoogle().whenComplete(() {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return UserForm();
-                },
-              ),
-            );
-          });
-        } else {
-          // TODO: Facebook Login!
-          print('Implement Facebook Login');
-        }
-      },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
-      highlightElevation: 20,
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        body: Stack(
           children: <Widget>[
-            Image(image: assetImage, height: 20.0),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                text,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.blue[800],
-                ),
-              ),
-            )
+            Center(
+              child: FlatButton(
+                  onPressed: handleSignIn,
+                  child: Text(
+                    'Sign In With Google',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  color: Color(0xffdd4b39),
+                  highlightColor: Color(0xffff7f7f),
+                  splashColor: Colors.transparent,
+                  textColor: Colors.white,
+                  padding: EdgeInsets.fromLTRB(30.0, 15.0, 30.0, 15.0)),
+            ),
+
+            // Loading
+            Positioned(
+              child: isLoading ? const Loading() : Container(),
+            ),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }

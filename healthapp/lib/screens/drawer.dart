@@ -1,9 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'profile.dart';
 import 'login_screen.dart';
 
-class DrawerWidget extends StatelessWidget {
+class DrawerWidget extends StatefulWidget {
+  @override
+  _DrawerWidgetState createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
+  SharedPreferences prefs;
+
+  String name;
+  String email;
+  String photo;
+  void readLocal() async {
+    prefs = await SharedPreferences.getInstance();
+
+    name = prefs.getString('name') ?? '';
+    email = prefs.getString('email') ?? '';
+    photo = prefs.getString('photoUrl') ?? '';
+
+    // Force refresh input
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    readLocal();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -17,7 +45,7 @@ class DrawerWidget extends StatelessWidget {
             CircleAvatar(
               child: ClipOval(
                 child: Image.network(
-                  g_imageUrl,
+                  photo,
                 ),
               ),
               radius: 40,
@@ -27,7 +55,7 @@ class DrawerWidget extends StatelessWidget {
             Container(
               child: Center(
                 child: Text(
-                  'Hi $g_name!',
+                  'Hi $name!',
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w400,
@@ -40,7 +68,7 @@ class DrawerWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 5.0),
               child: Center(
                 child: Text(
-                  '$g_email',
+                  '$email',
                   style: TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
@@ -108,7 +136,7 @@ class DrawerWidget extends StatelessWidget {
                 color: Colors.white,
               ),
               onTap: () {
-                signOutGoogle();
+               /// signOutGoogle();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) {
                   return LoginPage();

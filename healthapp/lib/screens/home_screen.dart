@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
+import 'package:healthapp/screens/chat_screen.dart';
 import 'package:healthapp/screens/doctor_list.dart';
 import 'package:healthapp/screens/drawer.dart';
 import 'package:healthapp/screens/index.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
+  final String currentUserId;
+
+  HomeScreen({Key key, @required this.currentUserId}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
+  // final String currentUserId;
+//  HomeScreenState({Key key, @required this.currentUserId});
+
   // TODO show blogs in the homescreen in the form of cards
   int selectedIndex = 0;
 
-  List<Widget> widgetOptions = [
-    //TODO appointments + payments along with+ cancel and reschedule button
-    
-    //TODO: chats with doctor
-    Doctor(),
-    //TODO : video calling with doctor
-    Container(
-      color: Colors.white,
-    ),
-    
-      IndexPage(),
-    
-  ];
   List<Text> headingOptions = [
     Text('Appointments'),
     Text('Chats'),
@@ -36,6 +30,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> widgetOptions = [
+      //TODO appointments + payments along with+ cancel and reschedule button
+
+      //TODO: chats with doctor
+      Doctor(),
+      //TODO : video calling with doctor
+      //push to chat screen
+      ChatScreen(currentUserId: widget.currentUserId),
+
+      IndexPage(),
+    ];
+
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
