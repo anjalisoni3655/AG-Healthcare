@@ -27,7 +27,7 @@ class SearchBar extends StatelessWidget {
             color: kOrangeColor,
             padding: EdgeInsets.symmetric(
               horizontal: 10,
-              vertical: 15,
+              vertical: 5,
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),

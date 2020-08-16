@@ -19,13 +19,8 @@ class Doctor extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    SvgPicture.asset('assets/icons/menu.svg'),
-                    SvgPicture.asset('assets/icons/profile.svg'),
-                  ],
-                ),
+              
+              
               ),
               SizedBox(
                 height: 50,
