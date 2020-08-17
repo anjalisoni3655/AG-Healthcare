@@ -99,6 +99,9 @@ String validateGender(String value) {
 // Widget for getting , validating and storing User Address
 class UserForm extends StatefulWidget {
   static const id = "user";
+   final String currentUserId;
+
+  UserForm({Key key, @required this.currentUserId}) : super(key: key);
   @override
   _UserFormState createState() => _UserFormState();
 }
@@ -266,7 +269,11 @@ class _UserFormState extends State<UserForm> {
                            marital:marital,
                           );
                        }
-                        Navigator.pushReplacementNamed(context, HomeScreen.id);
+                         Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  HomeScreen(currentUserId: widget.currentUserId)));
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0)),

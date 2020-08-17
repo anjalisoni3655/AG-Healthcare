@@ -11,6 +11,7 @@ import 'package:healthapp/widget/loading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:healthapp/screens/user_details.dart';
 
 const List<String> login_types = [' Google ', 'Facebook'];
 const List<AssetImage> login_icons = [
@@ -128,7 +129,7 @@ class LoginPageState extends State<LoginPage> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  HomeScreen(currentUserId: firebaseUser.uid)));
+                  UserForm(currentUserId: firebaseUser.uid)));
     } else {
       Fluttertoast.showToast(msg: "Sign in failed, Try Again");
       this.setState(() {

@@ -14,7 +14,7 @@ Future<void> uploadUserDetails({
   int weight,
   String marital,
 }) async {
-  await Firestore.instance.collection('user').document().setData(
+  await Firestore.instance.collection('user_details').document().setData(
     {
       'name': name,
       'email': email,

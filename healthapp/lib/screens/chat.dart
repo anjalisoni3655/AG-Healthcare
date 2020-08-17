@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -12,6 +12,35 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:healthapp/screens/index.dart';
+import 'call.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+Future<void> onJoin(BuildContext context) async {
+    
+   
+      // await for camera and mic permissions before pushing video page
+      await _handleCameraAndMic();
+      // push video page with given channel name
+
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CallPage(
+            channelName: 'abcd',
+            role: ClientRole.Broadcaster,
+          ),
+        ),
+      );
+    
+  }
+
+  Future<void> _handleCameraAndMic() async {
+    await Permission.camera.request();
+    await Permission.microphone.request();
+  }
+
 
 class Chat extends StatelessWidget {
   static const id = "chat";
@@ -30,6 +59,30 @@ class Chat extends StatelessWidget {
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                 onJoin(context);
+                },
+                child: Icon(
+                  Icons.video_call,
+                  size: 26.0,
+                ),
+              )),
+              Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                FlutterPhoneDirectCaller.callNumber(6370548663.toString());
+                },
+                child: Icon(
+                  Icons.call,
+                  size: 26.0,
+                ),
+              )),
+        ],
       ),
       body: ChatScreen(
         peerId: peerId,
@@ -223,7 +276,7 @@ class ChatScreenState extends State<ChatScreen> {
                             ),
                             errorWidget: (context, url, error) => Material(
                               child: Image.asset(
-                                'images/img_not_available.jpeg',
+                                'assets/images/img_not_available.jpeg',
                                 width: 200.0,
                                 height: 200.0,
                                 fit: BoxFit.cover,
@@ -257,7 +310,7 @@ class ChatScreenState extends State<ChatScreen> {
                   // Sticker
                   : Container(
                       child: Image.asset(
-                        'images/${document['content']}.gif',
+                        'assets/images/${document['content']}.gif',
                         width: 100.0,
                         height: 100.0,
                         fit: BoxFit.cover,
@@ -336,7 +389,7 @@ class ChatScreenState extends State<ChatScreen> {
                                   errorWidget: (context, url, error) =>
                                       Material(
                                     child: Image.asset(
-                                      'images/img_not_available.jpeg',
+                                      'assets/images/img_not_available.jpeg',
                                       width: 200.0,
                                       height: 200.0,
                                       fit: BoxFit.cover,
@@ -368,7 +421,7 @@ class ChatScreenState extends State<ChatScreen> {
                           )
                         : Container(
                             child: Image.asset(
-                              'images/${document['content']}.gif',
+                              'assets/images/${document['content']}.gif',
                               width: 100.0,
                               height: 100.0,
                               fit: BoxFit.cover,
@@ -476,7 +529,7 @@ class ChatScreenState extends State<ChatScreen> {
               FlatButton(
                 onPressed: () => onSendMessage('mimi1', 2),
                 child: Image.asset(
-                  'images/mimi1.gif',
+                  'assets/images/mimi1.gif',
                   width: 50.0,
                   height: 50.0,
                   fit: BoxFit.cover,
@@ -485,7 +538,7 @@ class ChatScreenState extends State<ChatScreen> {
               FlatButton(
                 onPressed: () => onSendMessage('mimi2', 2),
                 child: Image.asset(
-                  'images/mimi2.gif',
+                  'assets/images/mimi2.gif',
                   width: 50.0,
                   height: 50.0,
                   fit: BoxFit.cover,
@@ -494,7 +547,7 @@ class ChatScreenState extends State<ChatScreen> {
               FlatButton(
                 onPressed: () => onSendMessage('mimi3', 2),
                 child: Image.asset(
-                  'images/mimi3.gif',
+                  'assets/images/mimi3.gif',
                   width: 50.0,
                   height: 50.0,
                   fit: BoxFit.cover,
@@ -508,7 +561,7 @@ class ChatScreenState extends State<ChatScreen> {
               FlatButton(
                 onPressed: () => onSendMessage('mimi4', 2),
                 child: Image.asset(
-                  'images/mimi4.gif',
+                  'assets/images/mimi4.gif',
                   width: 50.0,
                   height: 50.0,
                   fit: BoxFit.cover,
@@ -517,7 +570,7 @@ class ChatScreenState extends State<ChatScreen> {
               FlatButton(
                 onPressed: () => onSendMessage('mimi5', 2),
                 child: Image.asset(
-                  'images/mimi5.gif',
+                  'assets/images/mimi5.gif',
                   width: 50.0,
                   height: 50.0,
                   fit: BoxFit.cover,
@@ -526,7 +579,7 @@ class ChatScreenState extends State<ChatScreen> {
               FlatButton(
                 onPressed: () => onSendMessage('mimi6', 2),
                 child: Image.asset(
-                  'images/mimi6.gif',
+                  'assets/images/mimi6.gif',
                   width: 50.0,
                   height: 50.0,
                   fit: BoxFit.cover,
@@ -540,7 +593,7 @@ class ChatScreenState extends State<ChatScreen> {
               FlatButton(
                 onPressed: () => onSendMessage('mimi7', 2),
                 child: Image.asset(
-                  'images/mimi7.gif',
+                  'assets/images/mimi7.gif',
                   width: 50.0,
                   height: 50.0,
                   fit: BoxFit.cover,
@@ -549,7 +602,7 @@ class ChatScreenState extends State<ChatScreen> {
               FlatButton(
                 onPressed: () => onSendMessage('mimi8', 2),
                 child: Image.asset(
-                  'images/mimi8.gif',
+                  'assets/images/mimi8.gif',
                   width: 50.0,
                   height: 50.0,
                   fit: BoxFit.cover,
@@ -558,7 +611,7 @@ class ChatScreenState extends State<ChatScreen> {
               FlatButton(
                 onPressed: () => onSendMessage('mimi9', 2),
                 child: Image.asset(
-                  'images/mimi9.gif',
+                  'assets/images/mimi9.gif',
                   width: 50.0,
                   height: 50.0,
                   fit: BoxFit.cover,

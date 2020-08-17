@@ -8,6 +8,7 @@ import 'package:healthapp/screens/user_details.dart';
 import 'package:healthapp/screens/profile.dart';
 import 'package:healthapp/screens/index.dart';
 import 'package:healthapp/screens/chat.dart';
+import 'package:healthapp/screens/contact.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -29,8 +30,7 @@ class MyApp extends StatelessWidget {
            Profile.id: (context) => Profile(),
            Disease.id:(context)=>Disease(),
            Doctor.id:(context)=>Doctor(),
-         //Chat.id:(context)=>Chat(),
-
+        
 
         });
   }

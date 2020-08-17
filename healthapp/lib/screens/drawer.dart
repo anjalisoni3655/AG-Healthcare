@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
+import 'package:healthapp/screens/contact.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'profile.dart';
 import 'login_screen.dart';
@@ -119,7 +120,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 Icons.contacts,
                 color: Colors.white,
               ),
-              onTap: () {},
+              onTap: () {
+                
+              },
             ),
             ListTileWidget(
               text: 'About the Hospital',
@@ -136,7 +139,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 color: Colors.white,
               ),
               onTap: () {
-               /// signOutGoogle();
+                /// signOutGoogle();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) {
                   return LoginPage();
