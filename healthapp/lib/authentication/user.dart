@@ -1,32 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+class User{
+  String name;
+  String email;
+  int age;
+  String gender;
+  String address;
+  int phone;
+  User(this.name, this.email, this.age,
+      this.gender, this.address, this.phone);
 
-Future<void> uploadUserDetails({
-  String name,
-  String email,
-  String gender,
-  String address,
-  int age,
-  int phone,
-  String dob,
-  String blood,
-  int height,
-  int weight,
-  String marital,
-}) async {
-  await Firestore.instance.collection('user').document().setData(
-    {
-      'name': name,
-      'email': email,
-      'gender': gender,
-      'phone': phone,
-      'dob': dob,
-      'address': address,
-      'age': age,
-      'blood': blood,
-      'height': height,
-      'weight': weight,
-      'marital': marital,
-    },
-  );
+  @override
+  String toString() {
+    return '$name, $email, $age, $gender, $address, $phone';
+  }
 }

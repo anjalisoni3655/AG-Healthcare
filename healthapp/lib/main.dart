@@ -1,37 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:healthapp/screens/chat.dart';
-import 'package:healthapp/screens/disease.dart';
-import 'package:healthapp/screens/doctor_list.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/screens/login_screen.dart';
 import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/screens/user_details.dart';
 import 'package:healthapp/screens/profile.dart';
-import 'package:healthapp/screens/index.dart';
-import 'package:healthapp/screens/chat.dart';
+import 'package:provider/provider.dart';
+import 'package:healthapp/screens/splash_page.dart';
+import 'package:healthapp/stores/login_store.dart';
+
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'AG Hospital',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: LoginPage(title:'log in'),
-        // initialRoute: LoginPage.id,
-        routes: {
-          IndexPage.id:(context)=>IndexPage(),
-          UserForm.id: (context) => UserForm(),
-          LoginPage.id: (context) => LoginPage(),
-        // HomeScreen.id: (context) => HomeScreen(),
-           Profile.id: (context) => Profile(),
-           Disease.id:(context)=>Disease(),
-           Doctor.id:(context)=>Doctor(),
-         //Chat.id:(context)=>Chat(),
-
-
-        });
+    return MultiProvider(
+      providers: [
+        Provider<LoginStore>(
+          create: (_) => LoginStore(),
+        )
+      ],
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'AG Hospital',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            textTheme: GoogleFonts.varelaRoundTextTheme(
+              Theme.of(context).textTheme,
+            ),
+          ),
+          home: SplashPage(),
+          routes: {
+            LoginPage.id: (context) =>LoginPage(),
+            UserForm.id: (context) => UserForm(),
+            LoginPage.id: (context) => LoginPage(),
+            HomeScreen.id: (context) => HomeScreen(),
+            Profile.id: (context) => Profile(),
+          }),
+    );
   }
 }

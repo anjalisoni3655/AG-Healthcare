@@ -32,22 +32,20 @@ dependencies:
   google_sign_in: ^4.4.4
   agora_rtc_engine: ^1.0.13
   permission_handler: ^5.0.1+1
-  cloud_firestore: ^0.13.6
-  firebase_storage:
-  fluttertoast:
-  shared_preferences:
-  image_picker:
-  cached_network_image:
-  intl:
-  firebase_messaging: 
-  flutter_local_notifications: 
-  photo_view: 
-  flutter_svg: ^0.18.0
+  expandable: ^4.1.4
   google_fonts: ^1.1.0
+  flutter_facebook_login: ^1.1.1
+  numeric_keyboard: ^1.0.0
+  firebase_core: ^0.4.4+3
+  mobx: ^1.1.1
+  flutter_mobx: ^1.1.0
+  provider: ^4.0.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^1.8.1
+  mobx_codegen: ^1.0.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
