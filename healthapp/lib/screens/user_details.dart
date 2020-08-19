@@ -221,7 +221,7 @@ class _UserFormState extends State<UserForm> {
         margin: EdgeInsets.all(24),
         child: Column(
           children: <Widget>[
-            Form(
+            Form( 
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

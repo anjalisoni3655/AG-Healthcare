@@ -120,9 +120,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 Icons.contacts,
                 color: Colors.white,
               ),
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
             ListTileWidget(
               text: 'About the Hospital',
@@ -139,11 +137,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 color: Colors.white,
               ),
               onTap: () {
-                /// signOutGoogle();
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) {
-                  return LoginPage();
-                }), ModalRoute.withName('/'));
+                Navigator.pushNamed(context, LoginPage.id);
               },
             ),
           ],
