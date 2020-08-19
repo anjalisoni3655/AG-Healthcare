@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:healthapp/authentication/facebook_login.dart';
@@ -24,50 +25,65 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       email = g_email;
       imageUrl = g_imageUrl;
     }
-    if (name != null) name = name.split(" ")[0];
+    if (email != null) email = email.split("@")[0];
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       return Drawer(
         child: Container(
-          color: Colors.blue,
-          padding: EdgeInsets.all(10.0),
+          color: Colors.black87,
           child: ListView(
             children: [
               //TODO :Make this dynamic later!
-              CircleAvatar(
-                child: ClipOval(
-                  child: Image.network(
-                    (imageUrl != null)
-                        ? imageUrl
-                        : 'https://unsplash.com/photos/rDEOVtE7vOs',
-                  ),
-                ),
-                radius: 40,
-                backgroundColor: Colors.transparent,
-              ),
-              SizedBox(height: 20),
               Container(
-                child: Center(
-                  child: Text(
-                    (name != null) ? 'Hi $name!' : 'Hi AB',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
+                color: Colors.blue[700],
+                padding: EdgeInsets.only(top: 20, bottom: 20),
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: CircleAvatar(
+                        child: ClipOval(
+                          child: Image.network(
+                            (imageUrl != null)
+                                ? imageUrl
+                                : 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80',
+                          ),
+                        ),
+                        radius: 50,
+                        backgroundColor: Colors.transparent,
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 5.0),
-                child: Center(
-                  child: Text(
-                    (email != null) ? '$email' : 'absatyaprakash01@gmail.com',
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          child: Center(
+                            child: Text(
+                              (name != null) ? '$name' : 'Kate Williams',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          child: Center(
+                            child: Text(
+                              (email != null)
+                                  ? '$email \n@gmail.com'
+                                  : 'katewilliams01 \n @gmail.com',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                  ],
                 ),
               ),
               ListTileWidget(
@@ -81,7 +97,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ListTileWidget(
                 text: 'My prescriptions',
                 icon: Icon(
-                  Icons.speaker_notes,
+                  Icons.assignment,
                   color: Colors.white,
                 ),
                 onTap: () {},
@@ -94,7 +110,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 onTap: () {},
               ),
-
               ListTileWidget(
                 text: 'Edit Profile',
                 icon: Icon(
@@ -105,40 +120,48 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   Navigator.pushNamed(context, Profile.id);
                 },
               ),
-
+              Divider(
+                thickness: 1,
+                color: Colors.white,
+              ),
               ListTileWidget(
-                text: 'Contact Available doctor',
+                text: 'Support',
                 icon: Icon(
-                  Icons.contacts,
+                  Icons.headset_mic,
                   color: Colors.white,
                 ),
                 onTap: () {},
               ),
               ListTileWidget(
-                text: 'About the Hospital',
+                text: 'Terms of Use',
                 icon: Icon(
-                  Icons.local_hospital,
-                  color: Colors.white,
-                ),
-                onTap: () {},
-              ),
-              ListTileWidget(
-                text: 'Signout',
-                icon: Icon(
-                  Icons.arrow_back_ios,
+                  Icons.speaker_notes,
                   color: Colors.white,
                 ),
                 onTap: () {
-                  loginStore.signOut(context);
-                  if (type == 'Google')
-                    signOutGoogle();
-                  else
-                    signOutFacebook();
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  }), ModalRoute.withName('/'));
+                  Navigator.pushNamed(context, Profile.id);
                 },
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 40),
+                child: ListTileWidget(
+                  text: 'Signout',
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                  ),
+                  onTap: () {
+                    loginStore.signOut(context);
+                    if (type == 'Google')
+                      signOutGoogle();
+                    else
+                      signOutFacebook();
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) {
+                      return LoginPage();
+                    }), ModalRoute.withName('/'));
+                  },
+                ),
               ),
             ],
           ),

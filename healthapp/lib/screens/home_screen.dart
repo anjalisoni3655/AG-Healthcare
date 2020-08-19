@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:healthapp/screens/appointment_page.dart';
 import 'package:healthapp/screens/drawer.dart';
+import 'package:healthapp/screens/home/home_page.dart';
+import 'package:healthapp/screens/mobile_auth_screens/otp_page.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -12,9 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   List<Widget> widgetOptions = [
-    Container(
-      color: Colors.white,
-    ),
+    HomePage(),
     Container(
       color: Colors.white,
     ),
