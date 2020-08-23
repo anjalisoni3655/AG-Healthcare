@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:healthapp/authentication/facebook_login.dart';
+import 'package:healthapp/screens/appointments/appointments_page.dart';
 import 'profile.dart';
 import 'login_screen.dart';
 import "package:provider/provider.dart";
@@ -92,7 +93,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   Icons.work,
                   color: Colors.white,
                 ),
-                onTap: () {},
+                onTap: () {Navigator.pushNamed(context, AppointmentPage.id);},
               ),
               ListTileWidget(
                 text: 'My prescriptions',
@@ -100,7 +101,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   Icons.assignment,
                   color: Colors.white,
                 ),
-                onTap: () {},
+                onTap: () {
+
+                },
               ),
               ListTileWidget(
                 text: 'My payments',

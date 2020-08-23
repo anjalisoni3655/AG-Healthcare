@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:healthapp/screens/book_appointments/doctors_list.dart';
 import 'package:healthapp/screens/home/accordion.dart';
 import 'package:healthapp/screens/home/articles.dart';
 import 'package:healthapp/screens/home/videos.dart';
@@ -16,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Color(0xFFF8F8F8),
       child: Container(
         color: Color(0xFFF8F8F8),
         margin: EdgeInsets.symmetric(horizontal: 10),
@@ -61,6 +63,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           //TODO : Implemennt the book appointment here
           print('Book appointment!');
+          Navigator.pushNamed(context,DoctorsList.id);
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
         highlightElevation: 20,
@@ -130,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         //TODO : Implemennt the book appointment here
                         print('Book appointment!');
+                        Navigator.pushNamed(context, DoctorsList.id);
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(7)),

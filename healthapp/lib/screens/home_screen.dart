@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:healthapp/screens/appointment_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:healthapp/screens/appointments/appointments_page.dart';
+import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/drawer.dart';
 import 'package:healthapp/screens/home/home_page.dart';
-import 'package:healthapp/screens/mobile_auth_screens/otp_page.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -16,22 +17,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> widgetOptions = [
     HomePage(),
-    Container(
-      color: Colors.white,
-    ),
-    Container(
-      color: Colors.white,
-    ),
+    AppointmentPage(),
+    BlogsPage(),
   ];
   List<Text> headingOptions = [
     Text(
       'Home',
+      style: GoogleFonts.varelaRound(fontWeight: FontWeight.w700, color: Color(0xFFFFFFFF),),
     ),
     Text(
-      'Appointments',
+      'My Bookings',
+      style: GoogleFonts.varelaRound(fontWeight: FontWeight.w700, color: Color(0xFFFFFFFF),),
     ),
     Text(
-      'Blogs',
+      'All Blogs',
+      style: GoogleFonts.varelaRound(fontWeight: FontWeight.w700, color: Color(0xFFFFFFFF),),
     ),
   ];
 

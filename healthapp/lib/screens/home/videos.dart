@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Videos extends StatelessWidget{
@@ -23,11 +23,7 @@ class Videos extends StatelessWidget{
 }
 
 _launchURL(url) async {
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
+  await FlutterWebBrowser.openWebPage(url: url, androidToolbarColor: Colors.blue[700]);
 }
 
 

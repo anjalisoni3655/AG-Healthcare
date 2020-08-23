@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:healthapp/stores/login_store.dart';
 import 'package:healthapp/widgets/loader_hud.dart';
@@ -84,8 +85,8 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                                 clearButtonMode: OverlayVisibilityMode.editing,
                                 keyboardType: TextInputType.phone,
                                 maxLines: 1,
-                                placeholder: '+91         Phone number',
-                                placeholderStyle: const TextStyle(
+                                placeholder: '+91       Phone number',
+                                placeholderStyle: GoogleFonts.varelaRound(
                                   fontSize: 18,
                                   color: Color(0xFF8F8F8F),
                                   fontWeight: FontWeight.w600,
