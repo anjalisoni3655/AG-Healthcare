@@ -30,13 +30,15 @@ class _AppointmentPageState extends State<AppointmentPage> {
         color: Color(0xFFF8F8F8),
         height: double.infinity,
         margin: EdgeInsets.only(left: 10, right: 10, top: 10),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              for (var i = 0; i < 4; i++)
-                _appointmentsTab('assets/icons/' + doc_images[i] + '.png',
-                    doc_names[i], type[i], visitType[i], time[i], date[i]),
-            ],
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                for (var i = 0; i < 4; i++)
+                  _appointmentsTab('assets/icons/' + doc_images[i] + '.png',
+                      doc_names[i], type[i], visitType[i], time[i], date[i]),
+              ],
+            ),
           ),
         ),
       ),
@@ -84,7 +86,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   Widget _upcomingDate(String day, String month) {
     return Container(
-      padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      padding: EdgeInsets.only(left: 15, right: 15, top: 4),
       decoration: BoxDecoration(
           color: Colors.lightBlue[200], borderRadius: BorderRadius.circular(7)),
       child: Column(

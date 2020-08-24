@@ -23,23 +23,21 @@ class _DoctorsListState extends State<DoctorsList> {
       appBar: customAppBar('All doctors', context),
       body: Material(
         color: Color(0xFFF8F8F8),
-        child: SafeArea(
-          child: Container(
-            color: Color(0xFFF8F8F8),
-            height: double.infinity,
-            margin: EdgeInsets.only(left: 10, right: 10, top: 10),
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  for (var i = 0; i < 10; i++)
-                    _doctorTile(
-                        doc_names[i % 2],
-                        'assets/icons/' + doc_images[i % 2] + '.png',
-                        doc_fields[i % 2],
-                        doc_exp[i % 2],
-                        doc_costs[i % 2]),
-                ],
-              ),
+        child: Container(
+          color: Color(0xFFF8F8F8),
+          height: double.infinity,
+          margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                for (var i = 0; i < 10; i++)
+                  _doctorTile(
+                      doc_names[i % 2],
+                      'assets/icons/' + doc_images[i % 2] + '.png',
+                      doc_fields[i % 2],
+                      doc_exp[i % 2],
+                      doc_costs[i % 2]),
+              ],
             ),
           ),
         ),

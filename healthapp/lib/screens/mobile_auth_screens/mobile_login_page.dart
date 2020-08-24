@@ -86,7 +86,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
                                 keyboardType: TextInputType.phone,
                                 maxLines: 1,
                                 placeholder: '+91       Phone number',
-                                placeholderStyle: GoogleFonts.varelaRound(
+                                placeholderStyle: GoogleFonts.nunito(
                                   fontSize: 18,
                                   color: Color(0xFF8F8F8F),
                                   fontWeight: FontWeight.w600,

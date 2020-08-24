@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:healthapp/screens/book_appointments/appointment_details.dart';
 
 class DoctorDetails extends StatefulWidget {
   @override
@@ -26,7 +27,8 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                       image: AssetImage('assets/images/docdet.png'),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 20, right: 20, top: 150),
+                      margin: EdgeInsets.only(
+                          left: 20, right: 20, top: 150, bottom: 100),
                       child: Column(
                         children: [
                           _textTitle(
@@ -73,12 +75,19 @@ class _DoctorDetailsState extends State<DoctorDetails> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: 20, right: 20, top: 500),
+            margin: EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: MediaQuery.of(context).size.height * 0.75),
             child: RaisedButton(
               elevation: 10,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, AppointmentDetails.id);
+                print('Redirect to appointment details!');
+              },
               color: Color(0xFF408AEB),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7)),
               child: Container(
                 width: double.infinity,
                 alignment: Alignment.center,
@@ -212,7 +221,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     height: 40,
                     width: 40,
                   )),
-              title: _textTitle(name, Color(0xFF08134D), 15, FontWeight.normal),
+              title: _textTitle(name, Color(0xFF08134D), 15, FontWeight.w600),
               subtitle: RatingBar(
                 itemSize: 20,
                 initialRating: rating,

@@ -78,7 +78,7 @@ class _MyAccordionWidgetState extends State<MyAccordionWidget> {
                     item.headerValue,
                     style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: Color(0xFF08134D)),
                   ),
                 ),
@@ -91,7 +91,7 @@ class _MyAccordionWidgetState extends State<MyAccordionWidget> {
                   item.expandedValue,
                   style: TextStyle(
                       fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: Color(0xFF8F8F8F)),
                 ),
               ),

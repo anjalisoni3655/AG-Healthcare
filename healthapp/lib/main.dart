@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/screens/appointments/appointments_page.dart';
 import 'package:healthapp/screens/blogs/blogs_page.dart';
+import 'package:healthapp/screens/book_appointments/appointment_details.dart';
 import 'package:healthapp/screens/book_appointments/doctor_details.dart';
 import 'package:healthapp/screens/book_appointments/doctors_list.dart';
 import 'package:healthapp/screens/login_screen.dart';
@@ -33,7 +34,7 @@ class _MyAppState extends State<MyApp> {
         title: 'AG Hospital',
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          textTheme: GoogleFonts.varelaRoundTextTheme(
+          textTheme: GoogleFonts.nunitoTextTheme(
             Theme.of(context).textTheme,
           ),
         ),
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
           BlogsPage.id: (context) => BlogsPage(),
           DoctorsList.id: (context) => DoctorsList(),
           DoctorDetails.id: (context) => DoctorDetails(),
+          AppointmentDetails.id: (context) => AppointmentDetails(),
         },
       ),
     );

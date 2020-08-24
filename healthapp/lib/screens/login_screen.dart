@@ -5,7 +5,7 @@ import 'package:healthapp/screens/mobile_auth_screens/mobile_login_page.dart';
 import 'package:healthapp/authentication/facebook_login.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const List<String> login_types = ['  Google  ', 'Facebook'];
+const List<String> login_types = ['Google', 'Facebook'];
 const List<AssetImage> login_icons = [
   AssetImage('assets/icons/google.png'),
   AssetImage('assets/icons/facebook.png')
@@ -104,18 +104,20 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  _SignInWithMobile(),
+                  Row(
+                    children: [
+                      Expanded(child: _SignInWithMobile()),
+                    ],
+                  ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 15),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      _SignInButton(login_types[1], login_icons[1]),
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                      ),
-                      _SignInButton(login_types[0], login_icons[0]),
+                      Expanded(child: _SignInButton(login_types[1], login_icons[1])),
+                      Padding(padding: EdgeInsets.all(10),),
+                      Expanded(child: _SignInButton(login_types[0], login_icons[0])),
                     ],
                   ),
                 ],
@@ -129,7 +131,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _SignInWithMobile() {
     return RaisedButton(
-      splashColor: Colors.grey,
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context){
@@ -140,15 +141,14 @@ class _LoginPageState extends State<LoginPage> {
         print('Implement Mobile Phone Login');
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
-      highlightElevation: 20,
       color: Color(0xFF408AEB),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        padding: EdgeInsets.symmetric(vertical: 10),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Text(
             'Continue With Phone Number',
-            style: GoogleFonts.varelaRound(
+            style: TextStyle(
               fontSize: 16,
               color: Colors.white,
               fontWeight: FontWeight.w600,
@@ -200,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(10),
               child: Text(
                 text,
-                style: GoogleFonts.varelaRound(
+                style: TextStyle(
                   fontSize: 16,
                   color: Colors.blue[900],
                   fontWeight: FontWeight.w600,
