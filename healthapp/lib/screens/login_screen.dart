@@ -164,15 +164,16 @@ class _LoginPageState extends State<LoginPage> {
       splashColor: Colors.grey,
       onPressed: () {
         if (text == login_types[0]) {
-          signInWithGoogle().whenComplete(() {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return MobileLoginPage();
-                },
-              ),
-            );
-          });
+          handleSignIn(context);
+          // signInWithGoogle().whenComplete(() {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (context) {
+          //         return MobileLoginPage();
+          //       },
+          //     ),
+          //   );
+          // });
         } else {
           // TODO: Facebook Login!
           print('Implement Facebook Login');

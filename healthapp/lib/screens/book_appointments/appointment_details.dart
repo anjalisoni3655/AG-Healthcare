@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/widgets/app_bar.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:toast/toast.dart';
+
 
 List<Color> _textColor = [
   Color(0xFF8F8F8F),
@@ -79,6 +82,65 @@ class AppointmentDetails extends StatefulWidget {
 }
 
 class _AppointmentDetailsState extends State<AppointmentDetails> {
+   Razorpay razorpay;
+  
+
+  @override
+  void initState() {
+    super.initState();
+
+    razorpay = new Razorpay();
+
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerErrorFailure);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    razorpay.clear();
+  }
+
+  void openCheckout(){
+    var options = {
+      "key" : "rzp_test_7ygVzTh2b1Y9df",
+      "amount" :1000,
+      "name" : "Sample App",
+      "description" : "Payment for the some random product",
+      "prefill" : {
+        "contact" : "",
+        "email" : ""
+      },
+      "external" : {
+        "wallets" : ["paytm"]
+      }
+    };
+
+    try{
+      razorpay.open(options);
+
+    }catch(e){
+      print(e.toString());
+    }
+
+  }
+
+  void handlerPaymentSuccess(){
+    print("Pament success");
+    Toast.show("Pament success", context);
+  }
+
+  void handlerErrorFailure(){
+    print("Pament error");
+    Toast.show("Pament error", context);
+  }
+
+  void handlerExternalWallet(){
+    print("External Wallet");
+    Toast.show("External Wallet", context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -172,7 +234,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                         vertical: 10),
                                     child: _timeTable(),
                                   ),
-                                  Padding(padding: EdgeInsets.only(bottom: 100)),
+                                  Padding(
+                                      padding: EdgeInsets.only(bottom: 100)),
                                 ],
                               ),
                             ),
@@ -189,7 +252,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   children: [
                     Expanded(
                       child: Container(
-                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.75),
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.75),
                         child: RaisedButton(
                           elevation: 10,
                           padding: EdgeInsets.all(15),
@@ -198,6 +262,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           onPressed: () {
+                            openCheckout();
                             print('Yes confirm and pay! Hi Anjali!');
                           },
                         ),
@@ -380,7 +445,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           setState(() {
             if (_bodyColor[index] == Color(0xFFFFFFFF)) {
               selectedDate = null;
-              anyColorSelected=false;
+              anyColorSelected = false;
               _bodyColor[_compIndex(index)] = _bodyColor[index];
               _textColor[_compIndex(index)] = _textColor[index];
               _bodyColor[index] = Color(0xFFDFE9F7);
@@ -391,7 +456,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               }
             } else {
               selectedDate = null;
-              anyColorSelected=false;
+              anyColorSelected = false;
               _bodyColor[index] = Color(0xFFFFFFFF);
               _textColor[index] = Color(0xFF8F8F8F);
             }

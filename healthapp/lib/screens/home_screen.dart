@@ -4,9 +4,12 @@ import 'package:healthapp/screens/appointments/appointments_page.dart';
 import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/drawer.dart';
 import 'package:healthapp/screens/home/home_page.dart';
-
+import 'package:healthapp/screens/chat_screen.dart';
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
+final String currentUserId;
+
+  HomeScreen({Key key, @required this.currentUserId}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -15,11 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
-  List<Widget> widgetOptions = [
-    HomePage(),
-    AppointmentPage(),
-    BlogsPage(),
-  ];
+  
   List<Text> headingOptions = [
     Text(
       'Home',
@@ -37,6 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> widgetOptions = [
+    HomePage(),
+    ChatScreen(currentUserId: widget.currentUserId),
+    BlogsPage(),
+  ];
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(

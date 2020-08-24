@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/authentication/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:healthapp/screens/mobile_auth_screens/mobile_login_page.dart';
 
 String name;
 String email;
@@ -8,6 +10,11 @@ String gender;
 String address;
 int age;
 int phone;
+String dob;
+String blood;
+int height;
+int weight;
+String marital;
 
 String validateAge(String age) {
   Pattern pattern = r'[.,|_]';
@@ -93,6 +100,9 @@ String validateGender(String value) {
 // Widget for getting , validating and storing User Address
 class UserForm extends StatefulWidget {
   static const id = "user";
+   final String currentUserId;
+
+  UserForm({Key key, @required this.currentUserId}) : super(key: key);
   @override
   _UserFormState createState() => _UserFormState();
 }
@@ -156,6 +166,48 @@ class _UserFormState extends State<UserForm> {
         });
   }
 
+  Widget _buildDOB() {
+    return TextFormField(
+        decoration: InputDecoration(labelText: "Date of Birth(dd-mm-yyyy)"),
+        onSaved: (String value) {
+          dob = value;
+        });
+  }
+
+  Widget _buildBlood() {
+    return TextFormField(
+        decoration: InputDecoration(labelText: "Blood Group"),
+        onSaved: (String value) {
+          blood = value;
+        });
+  }
+
+  Widget _buildHeight() {
+    return TextFormField(
+        decoration: InputDecoration(labelText: "height(cm)"),
+        keyboardType: TextInputType.number,
+        onSaved: (String value) {
+          height = int.tryParse(value);
+        });
+  }
+
+  Widget _buildWeight() {
+    return TextFormField(
+        decoration: InputDecoration(labelText: "weight(kg)"),
+        keyboardType: TextInputType.number,
+        onSaved: (String value) {
+          weight = int.tryParse(value);
+        });
+  }
+
+  Widget _buildMarital() {
+    return TextFormField(
+        decoration: InputDecoration(labelText: "Marital Status(Y/N)"),
+        onSaved: (String value) {
+          gender = value;
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,46 +218,63 @@ class _UserFormState extends State<UserForm> {
         //  backgroundColor: kAppbarColor,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.all(24),
-          child: Column(
-            children: <Widget>[
-              Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _buildName(),
-                    _buildEmail(),
-                    _buildPhone(),
-                    _buildAddress(),
-                    _buildAge(),
-                    _buildGender(),
-                    SizedBox(height: 100),
-                    RaisedButton(
+          child: Container(
+        margin: EdgeInsets.all(24),
+        child: Column(
+          children: <Widget>[
+            Form( 
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  _buildName(),
+                  _buildEmail(),
+                  _buildPhone(),
+                  _buildAddress(),
+                  _buildAge(),
+                  _buildGender(),
+                  _buildDOB(),
+                  _buildBlood(),
+                  _buildHeight(),
+                  _buildWeight(),
+                  _buildMarital(),
+                  SizedBox(height: 200),
+                  Container(
+                    child: RaisedButton(
                       key: Key('Submit'),
                       color: Colors.blue,
                       textColor: Colors.white,
-                      onPressed: () {
+                      onPressed: ()async {
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
                         // If the form is valid , all the values are saved in respective variables
                         _formKey.currentState.save();
-                        User user = User(
-                          name,
-                          email,
-                          age,
-                          gender,
-                          address,
-                          phone,
-                        );
-                        //Available policies corresponding to the pincode is saved in list .
 
-                        Navigator.pushReplacementNamed(context, HomeScreen.id,
-                            arguments: {
-                              'user': user,
-                            });
+                        final doc = await Firestore.instance
+                             .collection('user')
+                            .where('email', isEqualTo: email)
+                             .getDocuments();
+
+                         if (doc.documents.length == 0) {
+                        await  uploadUserDetails(
+                             name: name,
+                          email: email,
+                             gender: gender,
+                             phone: phone,
+                             address: address,
+                             age: age,
+                             blood:blood,
+                             height:height,
+                             weight:weight,
+                           marital:marital,
+                          );
+                       }
+                         Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  HomeScreen(currentUserId: widget.currentUserId)));
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0)),
@@ -218,13 +287,13 @@ class _UserFormState extends State<UserForm> {
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ),
+      )),
     );
   }
 }

@@ -43,6 +43,22 @@ dependencies:
   font_awesome_flutter: ^8.8.1
   flutter_web_browser: ^0.11.0
   flutter_rating_bar: ^3.0.1+1
+  razorpay_flutter: ^1.2.1
+  toast: ^0.1.5
+  url_launcher: ^5.5.0
+  cloud_firestore: ^0.13.6
+  firebase_storage:
+  fluttertoast:
+  shared_preferences:
+  image_picker:
+  cached_network_image:
+  intl:
+  firebase_messaging: 
+  flutter_local_notifications: 
+  photo_view: 
+  flutter_svg: ^0.18.0
+  flutter_phone_direct_caller: ^1.0.1 
+
 
 dev_dependencies:
   flutter_test:
