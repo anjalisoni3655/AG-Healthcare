@@ -30,3 +30,20 @@ Future<void> uploadUserDetails({
     },
   );
 }
+Future<void> uploadBookingDetails({
+  String doctorName,
+  String years,
+  String field,
+  String cost,
+ 
+}) async {
+  await Firestore.instance.collection('booking_details').document().setData(
+    {
+      'doctorName': doctorName,
+      'years':years,
+      'field': field,
+      'cost':cost,
+      
+    },
+  );
+}

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/screens/book_appointments/doctor_details.dart';
 import 'package:healthapp/widgets/app_bar.dart';
+import 'package:healthapp/authentication/user.dart';
 
 const List<String> doc_names = ['Dr. Amit Goel', 'Dr Sonali Gupta'];
 const List<String> doc_images = ['doc1', 'doc2'];
@@ -50,8 +51,14 @@ class _DoctorsListState extends State<DoctorsList> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: RaisedButton(
-        onPressed: () {
+        onPressed: () async {
           print('Pay me my fees quick!');
+          await uploadBookingDetails(
+            doctorName: name,
+            years: expYears,
+            field: fields,
+            cost: costs,
+          );
           Navigator.pushNamed(context, DoctorDetails.id);
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),

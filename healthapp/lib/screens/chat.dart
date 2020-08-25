@@ -67,7 +67,7 @@ class Chat extends StatelessWidget {
                  onJoin(context);
                 },
                 child: Icon(
-                  Icons.video_call,
+                  Icons.videocam,
                   size: 26.0,
                 ),
               )),
