@@ -1,6 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+class User {
+  int cost;
+ 
+}
+
 Future<String> uploadUserDetails({
   String name,
   String email,
@@ -39,6 +44,10 @@ Future<String> uploadBookingDetails({
   String years,
   String field,
   String cost,
+  DateTime selectedDate,
+  String visitTime,
+  String visitType,
+  String visitDuration,
 }) async {
   final _firestore = Firestore.instance;
   final _id = _firestore.collection('booking_details').document().documentID;
@@ -48,6 +57,10 @@ Future<String> uploadBookingDetails({
       'years': years,
       'field': field,
       'cost': cost,
+      'selectedDate': selectedDate,
+      'visitTime': visitTime,
+      'visitType': visitType,
+      'visitDuration': visitDuration,
     },
   );
   return _id;
@@ -55,11 +68,10 @@ Future<String> uploadBookingDetails({
 // Future<List<String>> getBookings(String userId) async {
 //   Firestore _database;
 
-    
 //     QuerySnapshot snapshot = await _database
 //         .collection('policy')
 //         .where('id', isEqualTo: userId)
-        
+
 //         .getDocuments();
 //     List<String> list = [];
 //     for (var doc in snapshot.documents) {

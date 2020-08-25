@@ -48,18 +48,19 @@ class _DoctorsListState extends State<DoctorsList> {
 
   Widget _doctorTile(String name, String imgUrl, String fields, String expYears,
       String costs) {
+    String id;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: RaisedButton(
         onPressed: () async {
-          print('Pay me my fees quick!');
-          await uploadBookingDetails(
-            doctorName: name,
-            years: expYears,
-            field: fields,
-            cost: costs,
-          );
-          Navigator.pushNamed(context, DoctorDetails.id);
+          print(name);
+       
+          Navigator.pushNamed(context, DoctorDetails.id,arguments: {
+            'name': name,
+            'expYears': expYears,
+            'fields': fields,
+            'costs': costs,
+          });
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
         color: Colors.white,

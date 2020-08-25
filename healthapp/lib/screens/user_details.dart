@@ -100,9 +100,10 @@ String validateGender(String value) {
 // Widget for getting , validating and storing User Address
 class UserForm extends StatefulWidget {
   static const id = "user";
-   final String currentUserId;
+  final String currentUserId;
 
   UserForm({Key key, @required this.currentUserId}) : super(key: key);
+
   @override
   _UserFormState createState() => _UserFormState();
 }
@@ -222,7 +223,7 @@ class _UserFormState extends State<UserForm> {
         margin: EdgeInsets.all(24),
         child: Column(
           children: <Widget>[
-            Form( 
+            Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -244,7 +245,7 @@ class _UserFormState extends State<UserForm> {
                       key: Key('Submit'),
                       color: Colors.blue,
                       textColor: Colors.white,
-                      onPressed: ()async {
+                      onPressed: () async {
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
@@ -252,29 +253,29 @@ class _UserFormState extends State<UserForm> {
                         _formKey.currentState.save();
 
                         final doc = await Firestore.instance
-                             .collection('user')
+                            .collection('user')
                             .where('email', isEqualTo: email)
-                             .getDocuments();
+                            .getDocuments();
 
-                         if (doc.documents.length == 0) {
-                        await  uploadUserDetails(
-                             name: name,
-                          email: email,
-                             gender: gender,
-                             phone: phone,
-                             address: address,
-                             age: age,
-                             blood:blood,
-                             height:height,
-                             weight:weight,
-                           marital:marital,
+                        if (doc.documents.length == 0) {
+                          await uploadUserDetails(
+                            name: name,
+                            email: email,
+                            gender: gender,
+                            phone: phone,
+                            address: address,
+                            age: age,
+                            blood: blood,
+                            height: height,
+                            weight: weight,
+                            marital: marital,
                           );
-                       }
-                         Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  HomeScreen(currentUserId: widget.currentUserId)));
+                        }
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen(
+                                    currentUserId: widget.currentUserId)));
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0)),

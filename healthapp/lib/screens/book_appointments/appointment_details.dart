@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/widgets/app_bar.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:healthapp/authentication/user.dart';
 import 'package:toast/toast.dart';
-
 
 List<Color> _textColor = [
   Color(0xFF8F8F8F),
@@ -66,6 +66,7 @@ List<Color> _bodyColorTimeTable = [
 
 bool anyColorSelected = false;
 DateTime selectedDate = null;
+String visitType, visitTime = 'Morning', visitDuration;
 
 int _compIndex(int index) {
   if (index % 2 == 1)
@@ -82,8 +83,7 @@ class AppointmentDetails extends StatefulWidget {
 }
 
 class _AppointmentDetailsState extends State<AppointmentDetails> {
-   Razorpay razorpay;
-  
+  Razorpay razorpay;
 
   @override
   void initState() {
@@ -103,46 +103,55 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     razorpay.clear();
   }
 
-  void openCheckout(){
+  User user = new User();
+
+  void openCheckout() {
+   
     var options = {
-      "key" : "rzp_test_7ygVzTh2b1Y9df",
-      "amount" :1000,
-      "name" : "Sample App",
-      "description" : "Payment for the some random product",
-      "prefill" : {
-        "contact" : "",
-        "email" : ""
-      },
-      "external" : {
-        "wallets" : ["paytm"]
+      "key": "rzp_test_7ygVzTh2b1Y9df",
+      "amount": 300 * 100,
+      "name": "Sample App",
+      "description": "Payment for the some random product",
+      "prefill": {"contact": "", "email": ""},
+      "external": {
+        "wallets": ["paytm"]
       }
     };
 
-    try{
+    try {
       razorpay.open(options);
-
-    }catch(e){
+    } catch (e) {
       print(e.toString());
     }
-
   }
 
-  void handlerPaymentSuccess(){
-    print("Pament success");
+  void handlerPaymentSuccess() {
+    print("Payment success");
     Toast.show("Pament success", context);
   }
 
-  void handlerErrorFailure(){
-    print("Pament error");
+  void handlerErrorFailure() {
+    print("Payment error");
     Toast.show("Pament error", context);
   }
 
-  void handlerExternalWallet(){
+  void handlerExternalWallet() {
     print("External Wallet");
     Toast.show("External Wallet", context);
   }
+
   @override
   Widget build(BuildContext context) {
+     print(user.cost);
+     print('user.cost');
+    String name, expYears, fields, costs;
+    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    if (arguments != null) {
+      name = arguments['name'];
+      expYears = arguments['expYears'];
+      fields = arguments['fields'];
+      costs = arguments['costs'];
+    }
     return Scaffold(
       appBar: customAppBar('Appointment', context),
       body: Material(
@@ -261,10 +270,18 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           child: _getText('Confirm', 16, Colors.white),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
-                          onPressed: () {
-                            
+                          onPressed: () async {
+                            await uploadBookingDetails(
+                              doctorName: name,
+                              years: expYears,
+                              field: fields,
+                              cost: costs,
+                              selectedDate: selectedDate,
+                              visitTime: visitTime,
+                              visitType: visitType,
+                              visitDuration: visitDuration,
+                            );
                             openCheckout();
-                            print('Yes confirm and pay! Hi Anjali!');
                           },
                         ),
                       ),
@@ -310,6 +327,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           setState(() {
             anyColorSelected = true;
             if (_bodyColorTimeTable[index] == Color(0xFFFFFFFF)) {
+              visitDuration = '9:00-9:15';
               _bodyColorTimeTable[index] = Color(0xFFDFE9F7);
               _textColorTimeTable[index] = Color(0xFF408AEB);
               for (int i = 0; i < 18; i++) {
@@ -370,6 +388,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
         onPressed: () {
           setState(() {
             if (_bodyColorMorningEvening[index] == Color(0xFFFFFFFF)) {
+              visitTime = (index == 0) ? 'Morning' : 'Evening';
               _bodyColorMorningEvening[index] = Color(0xFF408AEB);
               _textColorMorningEvening[index] = Color(0xFFFFFFFF);
               _bodyColorMorningEvening[_compIndex(index)] = Color(0xFFFFFFFF);
@@ -452,6 +471,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               _bodyColor[index] = Color(0xFFDFE9F7);
               _textColor[index] = Color(0xFF408AEB);
               if (index == 0 || index == 1) {
+                visitType = (index == 0) ? 'Online' : 'Clinic';
                 _bodyColor[2] = _bodyColor[3] = Color(0xFFFFFFFF);
                 _textColor[2] = _textColor[3] = Color(0xFF8F8F8F);
               }

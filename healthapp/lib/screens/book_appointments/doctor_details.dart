@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:healthapp/screens/book_appointments/appointment_details.dart';
+import 'package:healthapp/authentication/user.dart';
 
 class DoctorDetails extends StatefulWidget {
   @override
@@ -14,6 +15,19 @@ class DoctorDetails extends StatefulWidget {
 class _DoctorDetailsState extends State<DoctorDetails> {
   @override
   Widget build(BuildContext context) {
+    String name, expYears, fields, costs;
+    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    if (arguments != null) {
+      name = arguments['name'];
+      expYears = arguments['expYears'];
+      fields = arguments['fields'];
+      costs = arguments['costs'];
+      print(name);
+    }
+    User user = new User();
+    user.cost = int.parse(costs.substring(3));
+    print(user.cost);
+    
     return Scaffold(
       appBar: _appBar(),
       body: Stack(
@@ -82,8 +96,13 @@ class _DoctorDetailsState extends State<DoctorDetails> {
             child: RaisedButton(
               elevation: 10,
               onPressed: () {
-                Navigator.pushNamed(context, AppointmentDetails.id);
-                print('Redirect to appointment details!');
+                //  print(name);
+                Navigator.pushNamed(context, AppointmentDetails.id, arguments: {
+                  'name': name,
+                  'expYears': expYears,
+                  'fields': fields,
+                  'costs': costs,
+                });
               },
               color: Color(0xFF408AEB),
               shape: RoundedRectangleBorder(
