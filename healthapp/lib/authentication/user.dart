@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-Future<void> uploadUserDetails({
+Future<String> uploadUserDetails({
   String name,
   String email,
   String gender,
@@ -14,6 +14,8 @@ Future<void> uploadUserDetails({
   int weight,
   String marital,
 }) async {
+  final _firestore = Firestore.instance;
+  final _id = _firestore.collection('user').document().documentID;
   await Firestore.instance.collection('user_details').document().setData(
     {
       'name': name,
@@ -29,21 +31,40 @@ Future<void> uploadUserDetails({
       'marital': marital,
     },
   );
+  return _id;
 }
-Future<void> uploadBookingDetails({
+
+Future<String> uploadBookingDetails({
   String doctorName,
   String years,
   String field,
   String cost,
- 
 }) async {
+  final _firestore = Firestore.instance;
+  final _id = _firestore.collection('booking_details').document().documentID;
   await Firestore.instance.collection('booking_details').document().setData(
     {
       'doctorName': doctorName,
-      'years':years,
+      'years': years,
       'field': field,
-      'cost':cost,
-      
+      'cost': cost,
     },
   );
+  return _id;
 }
+// Future<List<String>> getBookings(String userId) async {
+//   Firestore _database;
+
+    
+//     QuerySnapshot snapshot = await _database
+//         .collection('policy')
+//         .where('id', isEqualTo: userId)
+        
+//         .getDocuments();
+//     List<String> list = [];
+//     for (var doc in snapshot.documents) {
+//       list.add(
+//           new String(doc.data['cost']));
+//     }
+//     return list;
+//   }

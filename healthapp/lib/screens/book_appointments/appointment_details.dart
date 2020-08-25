@@ -262,6 +262,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           onPressed: () {
+                            
                             openCheckout();
                             print('Yes confirm and pay! Hi Anjali!');
                           },
