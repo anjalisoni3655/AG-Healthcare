@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:healthapp/screens/book_appointments/appointment_details.dart';
-import 'package:healthapp/authentication/user.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
+
 
 class DoctorDetails extends StatefulWidget {
   @override
@@ -24,9 +25,9 @@ class _DoctorDetailsState extends State<DoctorDetails> {
       costs = arguments['costs'];
       print(name);
     }
-    User user = new User();
-    user.cost = int.parse(costs.substring(3));
-    print(user.cost);
+   
+    globals.user.cost = int.parse(costs.substring(3));
+   
     
     return Scaffold(
       appBar: _appBar(),

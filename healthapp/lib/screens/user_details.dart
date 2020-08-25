@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthapp/screens/home_screen.dart';
-import 'package:healthapp/authentication/user.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:healthapp/screens/mobile_auth_screens/mobile_login_page.dart';
 
@@ -258,7 +258,7 @@ class _UserFormState extends State<UserForm> {
                             .getDocuments();
 
                         if (doc.documents.length == 0) {
-                          await uploadUserDetails(
+                          await globals.uploadUserDetails(
                             name: name,
                             email: email,
                             gender: gender,

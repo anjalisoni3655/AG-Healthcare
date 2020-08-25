@@ -1,10 +1,13 @@
+library globals;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class User {
   int cost;
- 
 }
+
+User user = User();
 
 Future<String> uploadUserDetails({
   String name,

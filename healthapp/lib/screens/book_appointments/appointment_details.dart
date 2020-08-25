@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/widgets/app_bar.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:healthapp/authentication/user.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:toast/toast.dart';
 
 List<Color> _textColor = [
@@ -103,13 +103,14 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     razorpay.clear();
   }
 
-  User user = new User();
+  
 
   void openCheckout() {
+    
    
     var options = {
       "key": "rzp_test_7ygVzTh2b1Y9df",
-      "amount": 300 * 100,
+      "amount": (globals.user.cost)* 100,
       "name": "Sample App",
       "description": "Payment for the some random product",
       "prefill": {"contact": "", "email": ""},
@@ -142,8 +143,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
 
   @override
   Widget build(BuildContext context) {
-     print(user.cost);
-     print('user.cost');
+     
+     print(globals.user.cost);
     String name, expYears, fields, costs;
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
@@ -271,7 +272,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           onPressed: () async {
-                            await uploadBookingDetails(
+                            await globals.uploadBookingDetails(
                               doctorName: name,
                               years: expYears,
                               field: fields,
