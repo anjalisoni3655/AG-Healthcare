@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/authentication/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:healthapp/screens/mobile_auth_screens/mobile_login_page.dart';
+import 'package:healthapp/widgets/app_bar.dart';
 
 String name;
 String email;
@@ -97,6 +100,19 @@ String validateGender(String value) {
   }
 }
 
+List<Color> _textColor = [
+  Color(0xFF8F8F8F),
+  Color(0xFF8F8F8F),
+  Color(0xFF8F8F8F),
+];
+List<Color> _bodyColor = [
+  Color(0xFFFFFFFF),
+  Color(0xFFFFFFFF),
+  Color(0xFFFFFFFF),
+];
+List<String> _category = ['Male', 'Female', 'Other'];
+DateTime selectedDate = null;
+
 // Widget for getting , validating and storing User Address
 class UserForm extends StatefulWidget {
   static const id = "user";
@@ -111,190 +127,494 @@ class UserForm extends StatefulWidget {
 class _UserFormState extends State<UserForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Widget _buildAddress() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: "Address"),
-        validator: validateAddress,
-        onSaved: (String value) {
-          address = value;
-        });
-  }
+  TextStyle textStyle1 = TextStyle(
+      color: Color(0xFF8F8F8F), fontSize: 15, fontWeight: FontWeight.w600);
+  TextStyle textStyle2 = TextStyle(
+      color: Color(0xFF408AEB), fontSize: 15, fontWeight: FontWeight.w600);
+  InputDecoration inputDecoration = InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+    enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+    disabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+  );
 
   Widget _buildName() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: " Name "),
-        validator: validateAddress,
-        onSaved: (String value) {
-          name = value;
-        });
-  }
-
-  Widget _buildAge() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: "Age"),
-        validator: validateAge,
-        keyboardType: TextInputType.number,
-        onSaved: (String value) {
-          age = int.tryParse(value);
-        });
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Your full name', style: textStyle1),
+          ),
+          TextFormField(
+              decoration: inputDecoration,
+              cursorColor: Color(0xFF8F8F8F),
+              cursorRadius: Radius.circular(10),
+              cursorWidth: 0.5,
+              style: textStyle2,
+              validator: validateName,
+              onSaved: (String value) {
+                name = value;
+              }),
+        ],
+      ),
+    );
   }
 
   Widget _buildEmail() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: " email "),
-        validator: validateEmail,
-        onSaved: (String value) {
-          email = value;
-        });
-  }
-
-  Widget _buildPhone() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: "Mobile No."),
-        keyboardType: TextInputType.number,
-        validator: validatePhone,
-        onSaved: (String value) {
-          phone = int.tryParse(value);
-        });
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Email Address', style: textStyle1),
+          ),
+          TextFormField(
+              decoration: inputDecoration,
+              cursorColor: Color(0xFF8F8F8F),
+              cursorRadius: Radius.circular(10),
+              cursorWidth: 0.5,
+              style: textStyle2,
+              validator: validateEmail,
+              onSaved: (String value) {
+                email = value;
+              }),
+        ],
+      ),
+    );
   }
 
   Widget _buildGender() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: "Gender(M/F/O)"),
-        validator: validateGender,
-        onSaved: (String value) {
-          gender = value;
-        });
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Gender', style: textStyle1),
+          ),
+          Row(
+            children: [
+              _customButton('Male', 18, 0, 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+              ),
+              _customButton('Female', 18, 1, 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+              ),
+              _customButton('Other', 18, 2, 20),
+            ],
+          )
+        ],
+      ),
+    );
   }
 
-  Widget _buildDOB() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: "Date of Birth(dd-mm-yyyy)"),
-        onSaved: (String value) {
-          dob = value;
-        });
+  Widget _buildDOB(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Date of Birth', style: textStyle1),
+          ),
+          _getDateTime(context),
+        ],
+      ),
+    );
   }
 
   Widget _buildBlood() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: "Blood Group"),
-        onSaved: (String value) {
-          blood = value;
-        });
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Blood Group', style: textStyle1),
+          ),
+          TextFormField(
+              decoration: inputDecoration,
+              cursorColor: Color(0xFF8F8F8F),
+              cursorRadius: Radius.circular(10),
+              cursorWidth: 0.5,
+              style: textStyle2,
+              onSaved: (String value) {
+                blood = value;
+              }),
+        ],
+      ),
+    );
   }
 
   Widget _buildHeight() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: "height(cm)"),
-        keyboardType: TextInputType.number,
-        onSaved: (String value) {
-          height = int.tryParse(value);
-        });
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Height', style: textStyle1),
+          ),
+          TextFormField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(7)),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(7)),
+                disabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(7)),
+                hintText: 'cm',
+                hintStyle: TextStyle(
+                    color: Color(0x6F8F8F8F),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600),
+              ),
+              cursorColor: Color(0xFF8F8F8F),
+              cursorRadius: Radius.circular(10),
+              cursorWidth: 0.5,
+              keyboardType: TextInputType.number,
+              style: textStyle2,
+              onSaved: (String value) {
+                height = int.tryParse(value);
+              }),
+        ],
+      ),
+    );
   }
 
   Widget _buildWeight() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: "weight(kg)"),
-        keyboardType: TextInputType.number,
-        onSaved: (String value) {
-          weight = int.tryParse(value);
-        });
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Weight', style: textStyle1),
+          ),
+          TextFormField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(7)),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(7)),
+                disabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(7)),
+                hintText: 'kg',
+                hintStyle: TextStyle(
+                    color: Color(0x6F8F8F8F),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600),
+              ),
+              cursorColor: Color(0xFF8F8F8F),
+              cursorRadius: Radius.circular(10),
+              cursorWidth: 0.5,
+              keyboardType: TextInputType.number,
+              style: textStyle2,
+              onSaved: (String value) {
+                weight = int.tryParse(value);
+              }),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAddress() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Address', style: textStyle1),
+          ),
+          TextFormField(
+              decoration: inputDecoration,
+              cursorColor: Color(0xFF8F8F8F),
+              cursorRadius: Radius.circular(10),
+              cursorWidth: 0.5,
+              style: textStyle2,
+              onSaved: (String value) {
+                address = value;
+              }),
+        ],
+      ),
+    );
   }
 
   Widget _buildMarital() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: "Marital Status(Y/N)"),
-        onSaved: (String value) {
-          gender = value;
-        });
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Marital Status', style: textStyle1),
+          ),
+          TextFormField(
+              decoration: inputDecoration,
+              cursorColor: Color(0xFF8F8F8F),
+              cursorRadius: Radius.circular(10),
+              cursorWidth: 0.5,
+              style: textStyle2,
+              onSaved: (String value) {
+                marital = value;
+              }),
+        ],
+      ),
+    );
+  }
+
+  Widget _customButton(String text, double tSize, int index, double padding) {
+    return Expanded(
+      child: RaisedButton(
+        elevation: 0,
+        padding: EdgeInsets.all(padding),
+        color: _bodyColor[index],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: _getText(text, tSize, _textColor[index]),
+        onPressed: () {
+          gender = _category[index];
+          print(gender);
+          setState(() {
+            if (_bodyColor[index] == Color(0xFFFFFFFF)) {
+              _bodyColor[index] = Color(0xFFDFE9F7);
+              _textColor[index] = Color(0xFF408AEB);
+              int i = 0, j = 1;
+              if (index == 0) {
+                i = 1;
+                j = 2;
+              } else if (index == 1) {
+                i = 0;
+                j = 2;
+              }
+              _bodyColor[i] = Color(0xFFFFFFFF);
+              _bodyColor[j] = Color(0xFFFFFFFF);
+              _textColor[i] = Color(0xFF8F8F8F);
+              _textColor[j] = Color(0xFF8F8F8F);
+            } else {
+              _bodyColor[index] = Color(0xFFFFFFFF);
+              _textColor[index] = Color(0xFF8F8F8F);
+            }
+          });
+        },
+      ),
+    );
+  }
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2050),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            textTheme: GoogleFonts.nunitoTextTheme(),
+            colorScheme: ColorScheme.light(
+              primary: Color(0xFF408AEB),
+            ),
+          ),
+          child: child,
+        );
+      },
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
+  Widget _getDateTime(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        _selectDate(context);
+        dob = '${selectedDate.toLocal()}'.split(' ')[0];
+        print(dob);
+      },
+      child: Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(7),
+          color: (selectedDate == null) ? Colors.white : Color(0xFFDFE9F7),
+        ),
+        child: Row(
+          children: [
+            (selectedDate == null)
+                ? _getText('yyyy-mm-dd', 15, Color(0xFF8F8F8F))
+                : _getText('${selectedDate.toLocal()}'.split(' ')[0], 15,
+                    Color(0xFF408AEB)),
+            Spacer(),
+            Icon(Icons.calendar_today,
+                color: (selectedDate == null)
+                    ? Color(0xFF8F8F8F)
+                    : Color(0xFF408AEB),
+                size: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getText(String text, double size, Color color) {
+    return Text(
+      text,
+      style:
+          TextStyle(fontSize: size, color: color, fontWeight: FontWeight.w600),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-        title: Text('My Profile'),
-        centerTitle: true,
-        //  backgroundColor: kAppbarColor,
-      ),
-      body: SingleChildScrollView(
-          child: Container(
-        margin: EdgeInsets.all(24),
-        child: Column(
-          children: <Widget>[
-            Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  _buildName(),
-                  _buildEmail(),
-                  _buildPhone(),
-                  _buildAddress(),
-                  _buildAge(),
-                  _buildGender(),
-                  _buildDOB(),
-                  _buildBlood(),
-                  _buildHeight(),
-                  _buildWeight(),
-                  _buildMarital(),
-                  SizedBox(height: 200),
-                  Container(
-                    child: RaisedButton(
-                      key: Key('Submit'),
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                      onPressed: () async {
-                        if (!_formKey.currentState.validate()) {
-                          return;
-                        }
-                        // If the form is valid , all the values are saved in respective variables
-                        _formKey.currentState.save();
+      appBar: customAppBar('', context),
+      body: Material(
+        color: Color(0xFFF8F8F8),
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          color: Color(0xFFF8F8F8),
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Hello there!',
+                      style: TextStyle(
+                        fontSize: 29,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF08134D),
+                      ),
+                    ),
+                    Text(
+                      'Let\'s get your account set up',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF8F8F8F),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          _buildName(),
+                          _buildEmail(),
+                          _buildGender(),
+                          _buildDOB(context),
+                          _buildBlood(),
+                          _buildHeight(),
+                          _buildWeight(),
+                          _buildAddress(),
+                          _buildMarital(),
+                          Padding(
+                            padding: EdgeInsets.all(150),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.60),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: RaisedButton(
+                        key: Key('Submit'),
+                        elevation: 10,
+                        color: Colors.blue,
+                        padding: EdgeInsets.all(15),
+                        onPressed: () async {
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          }
+                          // If the form is valid , all the values are saved in respective variables
+                          _formKey.currentState.save();
 
-                        final doc = await Firestore.instance
-                            .collection('user')
-                            .where('email', isEqualTo: email)
-                            .getDocuments();
+                          final doc = await Firestore.instance
+                              .collection('user_details')
+                              .where('email', isEqualTo: email)
+                              .getDocuments();
 
-                        if (doc.documents.length == 0) {
-                          await uploadUserDetails(
-                            name: name,
-                            email: email,
-                            gender: gender,
-                            phone: phone,
-                            address: address,
-                            age: age,
-                            blood: blood,
-                            height: height,
-                            weight: weight,
-                            marital: marital,
-                          );
-                        }
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen(
-                                    currentUserId: widget.currentUserId)));
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
-                      splashColor: Colors.blueGrey,
-                      child: Text(
-                        'SUBMIT',
-                        style: TextStyle(
-                          //color: Colors.black54,
-                          fontSize: 16,
+                          if (doc.documents.length == 0) {
+                            await uploadUserDetails(
+                              name: name,
+                              email: email,
+                              gender: gender,
+                              phone: phone,
+                              address: address,
+                              age: age,
+                              blood: blood,
+                              height: height,
+                              weight: weight,
+                              marital: marital,
+                            );
+                          }
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen(
+                                      currentUserId: widget.currentUserId)));
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(7)),
+                        child: Text(
+                          'SUBMIT',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

@@ -1,17 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:healthapp/authentication/google_login.dart';
-import 'package:healthapp/screens/home_screen.dart';
-import 'package:healthapp/components/const.dart';
 import 'dart:async';
 import 'package:healthapp/screens/user_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:healthapp/widgets/loading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:healthapp/screens/user_details.dart';
 
 
 

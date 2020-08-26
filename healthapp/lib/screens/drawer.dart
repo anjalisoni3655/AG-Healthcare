@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:healthapp/authentication/facebook_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,6 +44,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   String name;
   String email;
   String photo;
+
   void readLocal() async {
     prefs = await SharedPreferences.getInstance();
 
@@ -50,6 +52,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     email = prefs.getString('email') ?? '';
     photo = prefs.getString('photoUrl') ?? '';
 
+    email = email.split('@')[0];
     // Force refresh input
     setState(() {});
   }
@@ -65,129 +68,175 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       return Drawer(
         child: Container(
-          color: Colors.black87,
-          padding: EdgeInsets.all(10.0),
+          color: Colors.white,
           child: ListView(
             children: [
               //TODO :Make this dynamic later!
-              Container(
-                color: Colors.blue[700],
-                padding: EdgeInsets.only(top: 20, bottom: 20),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: CircleAvatar(
-                        child: ClipOval(
-                          child: Image.network(
-                            (photo != null)
-                                ? photo
-                                : 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80',
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, Profile.id);
+                },
+                child: Container(
+                  color: Colors.blue[700],
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: CircleAvatar(
+                          child: ClipOval(
+                            child: Image.network(
+                              (photo != null)
+                                  ? (photo.substring(0, photo.length - 5) +
+                                      's400-c')
+                                  : 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80',
+                            ),
                           ),
+                          radius: 30,
+                          backgroundColor: Colors.transparent,
                         ),
-                        radius: 50,
-                        backgroundColor: Colors.transparent,
                       ),
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Container(
-                          child: Center(
-                            child: Text(
+                      Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
                               (name != null) ? '$name' : 'Kate Williams',
                               style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 5.0),
-                          child: Center(
-                            child: Text(
-                              (email != null)
-                                  ? '$email'
-                                  : 'katewilliams01 \n @gmail.com',
+                            Text(
+                              (email != null) ? '$email' : 'katewilliams01',
                               style: TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              ListTileWidget(
-                text: 'My Appointments',
-                icon: Icon(
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+              ),
+              ListTile(
+                dense: true,
+                title: Text(
+                  'My appointments',
+                  style: TextStyle(
+                      color: Color(0xFF8F8F8F),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                ),
+                leading: Icon(
                   Icons.work,
-                  color: Colors.white,
+                  color: Color(0xFF408AEB),
                 ),
                 onTap: () {
                   Navigator.pushNamed(context, AppointmentPage.id);
                 },
               ),
-              ListTileWidget(
-                text: 'My prescriptions',
-                icon: Icon(
-                  Icons.assignment,
-                  color: Colors.white,
+              ListTile(
+                dense: true,
+                title: Text(
+                  'Blogs',
+                  style: TextStyle(
+                      color: Color(0xFF8F8F8F),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
                 ),
-                onTap: () {},
-              ),
-              ListTileWidget(
-                text: 'My payments',
-                icon: Icon(
-                  Icons.payment,
-                  color: Colors.white,
-                ),
-                onTap: () {},
-              ),
-              ListTileWidget(
-                text: 'Edit Profile',
-                icon: Icon(
+                leading: Icon(
                   Icons.edit,
-                  color: Colors.white,
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, Profile.id);
-                },
-              ),
-              Divider(
-                thickness: 1,
-                color: Colors.white,
-              ),
-              ListTileWidget(
-                text: 'Support',
-                icon: Icon(
-                  Icons.headset_mic,
-                  color: Colors.white,
+                  color: Color(0xFF408AEB),
                 ),
                 onTap: () {},
               ),
-              ListTileWidget(
-                text: 'Terms of Use',
-                icon: Icon(
-                  Icons.speaker_notes,
-                  color: Colors.white,
+              ListTile(
+                dense: true,
+                title: Text(
+                  'Refer a friend',
+                  style: TextStyle(
+                      color: Color(0xFF8F8F8F),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
                 ),
-                onTap: () {
-                  Navigator.pushNamed(context, Profile.id);
-                },
+                leading: Icon(
+                  Icons.group,
+                  color: Color(0xFF408AEB),
+                ),
+                onTap: () {},
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 40),
-                child: ListTileWidget(
-                  text: 'Signout',
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Divider(
+                  thickness: 1,
+                  color: Color(0x4F8F8F8F),
+                  indent: 20,
+                  endIndent: 20,
+                ),
+              ),
+              Container(
+                  margin: EdgeInsets.only(left: 20),
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Text(
+                    'Others',
+                    style: TextStyle(
+                        color: Color(0xFF262626),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  )),
+              ListTile(
+                dense: true,
+                title: Text(
+                  'Support',
+                  style: TextStyle(
+                      color: Color(0xFF8F8F8F),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                ),
+                leading: Icon(
+                  Icons.headset_mic,
+                  color: Color(0xFF408AEB),
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                dense: true,
+                title: Text(
+                  'Terms of Use',
+                  style: TextStyle(
+                      color: Color(0xFF8F8F8F),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                ),
+                leading: Icon(
+                  Icons.speaker_notes,
+                  color: Color(0xFF408AEB),
+                ),
+                onTap: () {},
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 100),
+                child: ListTile(
+                  title: Text(
+                    'Logout',
+                    style: TextStyle(
+                        color: Color(0xFF8F8F8F),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18),
+                  ),
+                  leading: FaIcon(
+                    FontAwesomeIcons.arrowCircleLeft,
+                    color: Color(0xFF408AEB),
                   ),
                   onTap: () {
                     handleSignOut();
