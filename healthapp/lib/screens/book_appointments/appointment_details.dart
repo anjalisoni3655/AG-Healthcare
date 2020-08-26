@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/widgets/app_bar.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:toast/toast.dart';
+import 'package:healthapp/paymentSuccess.dart';
+import 'package:healthapp/paymentFailed.dart';
 
 List<Color> _textColor = [
   Color(0xFF8F8F8F),
@@ -105,7 +108,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   void openCheckout() {
     var options = {
       "key": "rzp_test_7ygVzTh2b1Y9df",
-      "amount": 1000,
+      "amount": (globals.user.cost) * 100,
       "name": "Sample App",
       "description": "Payment for the some random product",
       "prefill": {"contact": "", "email": ""},
@@ -121,23 +124,59 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     }
   }
 
-  void handlerPaymentSuccess() {
-    print("Pament success");
-    Toast.show("Pament success", context);
+  void handlerPaymentSuccess(PaymentSuccessResponse response) {
+  //  print(response.paymentId);
+    globals.user.paymentId = response.paymentId;
+    print("Payment success");
+    Toast.show("Payment success", context);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => SuccessPage(
+          response: response,
+        ),
+      ),
+      (Route<dynamic> route) => false,
+    );
+    razorpay.clear();
   }
 
-  void handlerErrorFailure() {
-    print("Pament error");
-    Toast.show("Pament error", context);
+  void handlerErrorFailure(PaymentFailureResponse response) {
+
+    print("Payment error");
+    Toast.show("Payment error", context);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => FailedPage(
+          response: response,
+        ),
+      ),
+      (Route<dynamic> route) => false,
+    );
+    razorpay.clear();
   }
 
-  void handlerExternalWallet() {
+  void handlerExternalWallet(ExternalWalletResponse response) {
     print("External Wallet");
     Toast.show("External Wallet", context);
+    razorpay.clear();
   }
 
   @override
   Widget build(BuildContext context) {
+   // PaymentSuccessResponse response;
+   
+
+    print(globals.user.cost);
+    String name, expYears, fields, costs;
+    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    if (arguments != null) {
+      name = arguments['name'];
+      expYears = arguments['expYears'];
+      fields = arguments['fields'];
+      costs = arguments['costs'];
+    }
     return Scaffold(
       appBar: customAppBar('Appointment', context),
       body: Material(
@@ -256,11 +295,18 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           child: _getText('Confirm', 16, Colors.white),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
-                          onPressed: () {
-                            print(selectedDate);
-                            print(visitTime);
-                            print(visitType);
-                            print(visitDuration);
+                          onPressed: () async {
+                            await globals.uploadBookingDetails(
+                              doctorName: name,
+                              years: expYears,
+                              field: fields,
+                              cost: costs,
+                              selectedDate: selectedDate,
+                              visitTime: visitTime,
+                              visitType: visitType,
+                              visitDuration: visitDuration,
+                              paymentId: globals.user.paymentId,
+                            );
                             openCheckout();
                           },
                         ),
@@ -307,7 +353,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           setState(() {
             anyColorSelected = true;
             if (_bodyColorTimeTable[index] == Color(0xFFFFFFFF)) {
-              visitDuration='9:00-9:15';
+              visitDuration = '9:00-9:15';
               _bodyColorTimeTable[index] = Color(0xFFDFE9F7);
               _textColorTimeTable[index] = Color(0xFF408AEB);
               for (int i = 0; i < 18; i++) {
@@ -451,7 +497,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               _bodyColor[index] = Color(0xFFDFE9F7);
               _textColor[index] = Color(0xFF408AEB);
               if (index == 0 || index == 1) {
-                visitType=(index==0)?'Online':'Clinic';
+                visitType = (index == 0) ? 'Online' : 'Clinic';
                 _bodyColor[2] = _bodyColor[3] = Color(0xFFFFFFFF);
                 _textColor[2] = _textColor[3] = Color(0xFF8F8F8F);
               }

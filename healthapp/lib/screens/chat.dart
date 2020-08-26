@@ -17,30 +17,27 @@ import 'call.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+
 Future<void> onJoin(BuildContext context) async {
-    
-   
-      // await for camera and mic permissions before pushing video page
-      await _handleCameraAndMic();
-      // push video page with given channel name
+  // await for camera and mic permissions before pushing video page
+  await _handleCameraAndMic();
+  // push video page with given channel name
 
-      await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CallPage(
-            channelName: 'abcd',
-            role: ClientRole.Broadcaster,
-          ),
-        ),
-      );
-    
-  }
+  await Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => CallPage(
+        channelName: 'abcd',
+        role: ClientRole.Broadcaster,
+      ),
+    ),
+  );
+}
 
-  Future<void> _handleCameraAndMic() async {
-    await Permission.camera.request();
-    await Permission.microphone.request();
-  }
-
+Future<void> _handleCameraAndMic() async {
+  await Permission.camera.request();
+  await Permission.microphone.request();
+}
 
 class Chat extends StatelessWidget {
   static const id = "chat";
@@ -64,18 +61,18 @@ class Chat extends StatelessWidget {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                 onJoin(context);
+                  onJoin(context);
                 },
                 child: Icon(
                   Icons.videocam,
                   size: 26.0,
                 ),
               )),
-              Padding(
+          Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                FlutterPhoneDirectCaller.callNumber(6370548663.toString());
+                  FlutterPhoneDirectCaller.callNumber(9100453919.toString());
                 },
                 child: Icon(
                   Icons.call,
@@ -117,7 +114,7 @@ class ChatScreenState extends State<ChatScreen> {
 
   File imageFile;
   bool isLoading;
- 
+
   String imageUrl;
 
   final TextEditingController textEditingController = TextEditingController();
@@ -132,7 +129,7 @@ class ChatScreenState extends State<ChatScreen> {
     groupChatId = '';
 
     isLoading = false;
-   
+
     imageUrl = '';
 
     readLocal();
@@ -141,9 +138,7 @@ class ChatScreenState extends State<ChatScreen> {
   void onFocusChange() {
     if (focusNode.hasFocus) {
       // Hide sticker when keyboard appear
-      setState(() {
-       
-      });
+      setState(() {});
     }
   }
 
@@ -174,8 +169,6 @@ class ChatScreenState extends State<ChatScreen> {
       uploadFile();
     }
   }
-
- 
 
   Future uploadFile() async {
     String fileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -473,13 +466,11 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   Future<bool> onBackPress() {
-    
-      Firestore.instance
-          .collection('users')
-          .document(id)
-          .updateData({'chattingWith': null});
-      Navigator.pop(context);
-    
+    Firestore.instance
+        .collection('users')
+        .document(id)
+        .updateData({'chattingWith': null});
+    Navigator.pop(context);
 
     return Future.value(false);
   }
@@ -495,7 +486,6 @@ class ChatScreenState extends State<ChatScreen> {
               buildListMessage(),
 
               // Sticker
-              
 
               // Input content
               buildInput(),
@@ -510,7 +500,6 @@ class ChatScreenState extends State<ChatScreen> {
     );
   }
 
- 
   Widget buildLoading() {
     return Positioned(
       child: isLoading ? const Loading() : Container(),
@@ -533,7 +522,6 @@ class ChatScreenState extends State<ChatScreen> {
             ),
             color: Colors.white,
           ),
-          
 
           // Edit text
           Flexible(
