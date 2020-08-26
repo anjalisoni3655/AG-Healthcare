@@ -111,7 +111,8 @@ List<Color> _bodyColor = [
   Color(0xFFFFFFFF),
 ];
 List<String> _category = ['Male', 'Female', 'Other'];
-DateTime selectedDate = null;
+DateTime selectedDate = DateTime.now();
+String dropdownValue = 'O+';
 
 // Widget for getting , validating and storing User Address
 class UserForm extends StatefulWidget {
@@ -249,15 +250,35 @@ class _UserFormState extends State<UserForm> {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text('Blood Group', style: textStyle1),
           ),
-          TextFormField(
-              decoration: inputDecoration,
-              cursorColor: Color(0xFF8F8F8F),
-              cursorRadius: Radius.circular(10),
-              cursorWidth: 0.5,
-              style: textStyle2,
-              onSaved: (String value) {
-                blood = value;
-              }),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(7)),
+            child: DropdownButton<String>(
+              value: dropdownValue,
+              icon: Icon(Icons.arrow_drop_down),
+              iconSize: 24,
+              isExpanded: true,
+              underline: SizedBox(),
+              style: TextStyle(
+                  color: Color(0xFF408AEB),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValue = newValue;
+                  blood=dropdownValue;
+                });
+              },
+              items: <String>['O+', 'O-', 'AB+', 'AB-', 'A+', 'A-', 'B+', 'B-']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+          ),
         ],
       ),
     );
@@ -436,7 +457,7 @@ class _UserFormState extends State<UserForm> {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2015, 8),
+      firstDate: DateTime(1900),
       lastDate: DateTime(2050),
       builder: (BuildContext context, Widget child) {
         return Theme(
@@ -453,6 +474,7 @@ class _UserFormState extends State<UserForm> {
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
+        dob = '${selectedDate.toLocal()}'.split(' ')[0];
       });
   }
 
@@ -460,7 +482,6 @@ class _UserFormState extends State<UserForm> {
     return InkWell(
       onTap: () {
         _selectDate(context);
-        dob = '${selectedDate.toLocal()}'.split(' ')[0];
         print(dob);
       },
       child: Container(
@@ -556,7 +577,7 @@ class _UserFormState extends State<UserForm> {
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20),
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.60),
+                    top: MediaQuery.of(context).size.height * 0.65),
                 child: Row(
                   children: [
                     Expanded(
@@ -572,6 +593,16 @@ class _UserFormState extends State<UserForm> {
                           // If the form is valid , all the values are saved in respective variables
                           _formKey.currentState.save();
 
+                          print(name);
+                          print(email);
+                          print(gender);
+                          print(address);
+                          print(dob);
+                          print(blood);
+                          print(height);
+                          print(weight);
+                          print(marital);
+
                           final doc = await Firestore.instance
                               .collection('user_details')
                               .where('email', isEqualTo: email)
@@ -581,9 +612,8 @@ class _UserFormState extends State<UserForm> {
                               name: name,
                               email: email,
                               gender: gender,
-                              phone: phone,
                               address: address,
-                              age: age,
+                              dob: dob,
                               blood: blood,
                               height: height,
                               weight: weight,

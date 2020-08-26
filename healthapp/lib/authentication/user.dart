@@ -1,7 +1,6 @@
 library globals;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 
 class User {
@@ -17,8 +16,6 @@ Future<String> uploadUserDetails({
   String email,
   String gender,
   String address,
-  int age,
-  int phone,
   String dob,
   String blood,
   int height,
@@ -38,10 +35,8 @@ Future<String> uploadUserDetails({
       'name': name,
       'email': email,
       'gender': gender,
-      'phone': phone,
       'dob': dob,
       'address': address,
-      'age': age,
       'blood': blood,
       'height': height,
       'weight': weight,

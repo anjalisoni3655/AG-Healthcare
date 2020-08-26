@@ -68,7 +68,7 @@ Future<Null> handleSignIn(BuildContext context) async {
       await prefs.setString('photoUrl', documents[0]['photoUrl']);
       await prefs.setString('aboutMe', documents[0]['aboutMe']);
     }
-    Fluttertoast.showToast(msg: "Successfully Signed in");
+    print( "Successfully Signed in");
 
     Navigator.push(
         context,
