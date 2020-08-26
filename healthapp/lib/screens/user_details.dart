@@ -246,6 +246,7 @@ class _UserFormState extends State<UserForm> {
                       color: Colors.blue,
                       textColor: Colors.white,
                       onPressed: () async {
+                        // print(globals.user.email);
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
@@ -277,10 +278,12 @@ class _UserFormState extends State<UserForm> {
                                 builder: (context) => HomeScreen(
                                     currentUserId: widget.currentUserId)));
                       },
+                      
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0)),
                       splashColor: Colors.blueGrey,
                       child: Text(
+                       
                         'SUBMIT',
                         style: TextStyle(
                           //color: Colors.black54,

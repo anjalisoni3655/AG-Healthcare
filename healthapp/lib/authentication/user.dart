@@ -2,9 +2,12 @@ library globals;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
 
 class User {
   int cost;
+  String email;
+  String paymentId;
 }
 
 User user = User();
@@ -23,8 +26,14 @@ Future<String> uploadUserDetails({
   String marital,
 }) async {
   final _firestore = Firestore.instance;
-  final _id = _firestore.collection('user').document().documentID;
-  await Firestore.instance.collection('user_details').document().setData(
+  final _id = _firestore
+      .collection('user_details')
+      .document(globals.user.email)
+      .documentID;
+  await Firestore.instance
+      .collection('user_details')
+      .document(globals.user.email)
+      .setData(
     {
       'name': name,
       'email': email,
@@ -51,10 +60,18 @@ Future<String> uploadBookingDetails({
   String visitTime,
   String visitType,
   String visitDuration,
+  String paymentId,
 }) async {
+  print('email:${globals.user.email}');
   final _firestore = Firestore.instance;
-  final _id = _firestore.collection('booking_details').document().documentID;
-  await Firestore.instance.collection('booking_details').document().setData(
+  final _id = _firestore
+      .collection('booking_details')
+      .document(globals.user.email)
+      .documentID;
+  await Firestore.instance
+      .collection('booking_details')
+      .document(globals.user.email)
+      .setData(
     {
       'doctorName': doctorName,
       'years': years,
@@ -64,6 +81,7 @@ Future<String> uploadBookingDetails({
       'visitTime': visitTime,
       'visitType': visitType,
       'visitDuration': visitDuration,
+      'paymentId':paymentId,
     },
   );
   return _id;

@@ -6,6 +6,8 @@ import 'package:healthapp/widgets/app_bar.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:toast/toast.dart';
+import 'package:healthapp/paymentSuccess.dart';
+import 'package:healthapp/paymentFailed.dart';
 
 List<Color> _textColor = [
   Color(0xFF8F8F8F),
@@ -103,14 +105,10 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     razorpay.clear();
   }
 
-  
-
   void openCheckout() {
-    
-   
     var options = {
       "key": "rzp_test_7ygVzTh2b1Y9df",
-      "amount": (globals.user.cost)* 100,
+      "amount": (globals.user.cost) * 100,
       "name": "Sample App",
       "description": "Payment for the some random product",
       "prefill": {"contact": "", "email": ""},
@@ -126,25 +124,51 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     }
   }
 
-  void handlerPaymentSuccess() {
+  void handlerPaymentSuccess(PaymentSuccessResponse response) {
+  //  print(response.paymentId);
+    globals.user.paymentId = response.paymentId;
     print("Payment success");
-    Toast.show("Pament success", context);
+    Toast.show("Payment success", context);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => SuccessPage(
+          response: response,
+        ),
+      ),
+      (Route<dynamic> route) => false,
+    );
+    razorpay.clear();
   }
 
-  void handlerErrorFailure() {
+  void handlerErrorFailure(PaymentFailureResponse response) {
+
     print("Payment error");
-    Toast.show("Pament error", context);
+    Toast.show("Payment error", context);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => FailedPage(
+          response: response,
+        ),
+      ),
+      (Route<dynamic> route) => false,
+    );
+    razorpay.clear();
   }
 
-  void handlerExternalWallet() {
+  void handlerExternalWallet(ExternalWalletResponse response) {
     print("External Wallet");
     Toast.show("External Wallet", context);
+    razorpay.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-     
-     print(globals.user.cost);
+   // PaymentSuccessResponse response;
+   
+
+    print(globals.user.cost);
     String name, expYears, fields, costs;
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
@@ -281,6 +305,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               visitTime: visitTime,
                               visitType: visitType,
                               visitDuration: visitDuration,
+                              paymentId: globals.user.paymentId,
                             );
                             openCheckout();
                           },
