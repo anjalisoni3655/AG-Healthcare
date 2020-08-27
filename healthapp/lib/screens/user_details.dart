@@ -14,7 +14,7 @@ String address;
 int age;
 int phone;
 String dob;
-String blood;
+String blood='O+';
 int height;
 int weight;
 String marital;
