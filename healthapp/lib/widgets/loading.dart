@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:healthapp/components/const.dart';
 
 class Loading extends StatelessWidget {

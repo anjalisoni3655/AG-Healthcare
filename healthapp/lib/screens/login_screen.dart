@@ -5,7 +5,7 @@ import 'package:healthapp/screens/mobile_auth_screens/mobile_login_page.dart';
 import 'package:healthapp/authentication/facebook_login.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const List<String> login_types = ['Google', 'Facebook'];
+const List<String> login_types = ['Sign in with Google', 'Facebook'];
 const List<AssetImage> login_icons = [
   AssetImage('assets/icons/google.png'),
   AssetImage('assets/icons/facebook.png')
@@ -104,19 +104,19 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  Row(
-                    children: [
-                      Expanded(child: _SignInWithMobile()),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 15),
-                  ),
+//                  Row(
+//                    children: [
+//                      Expanded(child: _SignInWithMobile()),
+//                    ],
+//                  ),
+//                  Padding(
+//                    padding: EdgeInsets.only(bottom: 15),
+//                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Expanded(child: _SignInButton(login_types[1], login_icons[1])),
-                      Padding(padding: EdgeInsets.all(10),),
+//                      Expanded(child: _SignInButton(login_types[1], login_icons[1])),
+//                      Padding(padding: EdgeInsets.all(10),),
                       Expanded(child: _SignInButton(login_types[0], login_icons[0])),
                     ],
                   ),
@@ -165,15 +165,6 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {
         if (text == login_types[0]) {
           handleSignIn(context);
-          // signInWithGoogle().whenComplete(() {
-          //   Navigator.of(context).push(
-          //     MaterialPageRoute(
-          //       builder: (context) {
-          //         return MobileLoginPage();
-          //       },
-          //     ),
-          //   );
-          // });
         } else {
           // TODO: Facebook Login!
           print('Implement Facebook Login');

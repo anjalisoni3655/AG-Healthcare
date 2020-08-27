@@ -1,7 +1,6 @@
 library globals;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 
 class User {
@@ -17,14 +16,13 @@ Future<String> uploadUserDetails({
   String email,
   String gender,
   String address,
-  int age,
-  int phone,
   String dob,
   String blood,
   int height,
   int weight,
   String marital,
 }) async {
+  print('email:${globals.user.email}');
   final _firestore = Firestore.instance;
   final _id = _firestore
       .collection('user_details')
@@ -38,10 +36,8 @@ Future<String> uploadUserDetails({
       'name': name,
       'email': email,
       'gender': gender,
-      'phone': phone,
       'dob': dob,
       'address': address,
-      'age': age,
       'blood': blood,
       'height': height,
       'weight': weight,
@@ -83,9 +79,45 @@ Future<String> uploadBookingDetails({
       'visitDuration': visitDuration,
       'paymentId':paymentId,
     },
-  );
+    merge:true).then((_){
+ print("payment id added");
+    });
+
   return _id;
+
 }
+
+void getAllBookings() {
+  firestoreInstance.collection("booking_details").getDocuments().then((querySnapshot) {
+    querySnapshot.documents.forEach((result) {
+      print(result.data);
+    });
+  });
+}
+
+  void getPatient() async{
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    firestoreInstance.collection("user_details").document(globals.user.email).get().then((value){
+      print(value.data);
+      print(value.data["address"]["city"]);
+print(value.data["name"]);
+    });
+  }
+
+  void getPatientofGivenBookingId() {
+firestoreInstance
+    .collection("booking_details")
+    .where("paymentId", isEqualTo: "paymentId")
+    .getDocuments()
+    .then((value) {
+  value.documents.forEach((result) {
+    print(result.data);
+  });
+});
+}
+
+//          
+
 // Future<List<String>> getBookings(String userId) async {
 //   Firestore _database;
 

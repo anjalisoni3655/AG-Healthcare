@@ -3,6 +3,8 @@ import 'package:healthapp/screens/home/home_page.dart';
 import 'package:healthapp/screens/home_screen.dart';
 
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
 
 class SuccessPage extends StatelessWidget {
   final PaymentSuccessResponse response;
@@ -18,7 +20,15 @@ class SuccessPage extends StatelessWidget {
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () {
+                onTap: () async{
+  
+  
+  await Firestore.instance.collection("booking_details").document(globals.user.email).updateData(
+  {
+   "paymentId" : response.paymentId,
+  }).then((_){
+      print("success!");
+  });
                   Navigator.pushNamed(context, HomeScreen.id);
                 },
                 child: Icon(

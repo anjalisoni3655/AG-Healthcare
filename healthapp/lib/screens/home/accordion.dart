@@ -9,6 +9,15 @@ List<String> images = [
   'parathyroid'
 ];
 
+List<String> description = [
+  'Adrenal Insufficiency, Adrenal Tumors , Cushing Syndrome etc',
+  'We treat both Hypothyroidism , Hyperthyroidism and Thyroid disorders in Pregnant women & Children',
+  'Type 1 DM , Type II DM , Diabetes in Pregnancy , Diabetes in Youth , LADA , Monogenic Diabetes, Fibrocalcific Pancreatic Diabetes etc',
+  'Specialist Care for Polycystic Ovarian Syndrome and various other issues among women for menses related problems',
+  'Short Height ,Poor Height Gain , Obesity , Type 1 Diabetes Milletus , Issues with Puberty, Rickets',
+  'Hyper & Hypoparathyroid Disorders Hypercalcemia'
+];
+
 // stores ExpansionPanel state information
 class Item {
   Item({
@@ -28,8 +37,7 @@ List<Item> generateItems(int numberOfItems) {
   return List.generate(numberOfItems, (int index) {
     String img = images[index];
     String header = img[0].toUpperCase() + img.substring(1);
-    String desc =
-        'Adrenal Insufficiency, Adrenal Tumors , Cushing Syndrome etc';
+    String desc=description[index];
     return Item(
       id: index,
       headerValue: '$header Disorders',

@@ -5,7 +5,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:healthapp/screens/book_appointments/appointment_details.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 
-
 class DoctorDetails extends StatefulWidget {
   @override
   static const id = "doctor_details";
@@ -25,10 +24,9 @@ class _DoctorDetailsState extends State<DoctorDetails> {
       costs = arguments['costs'];
       print(name);
     }
-   
+
     globals.user.cost = int.parse(costs.substring(3));
-   
-    
+
     return Scaffold(
       appBar: _appBar(),
       body: Stack(
@@ -49,10 +47,10 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                           _textTitle(
                               'About', Color(0xFF08134D), 15, FontWeight.w700),
                           _descText(
-                              'Dr. M. R. Pujari is highly qualified and highly experienced doctor'
-                              ' with 13 years of vast experience. Working as a chief consultant in various'
-                              ' dental clinics, cosmetic dentist, root canal specialist, TMJ and oral medicine'
-                              ' specialist.',
+                              'Dr Amit Goel has a decade of experience in the field of medicine with '
+                              'an experience as an Endocrinologist for over 4 years. Dr Amit’s published '
+                              'articles are one of the best in the world for research on prevention and early '
+                              'detection of diabetic neuropathy.',
                               Color(0xFF8F8F8F)),
                           _textTitle('Reviews', Color(0xFF08134D), 15,
                               FontWeight.w700),
