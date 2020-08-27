@@ -33,7 +33,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
-              children: <Widget>[
+              children:[
                 for (var i = 0; i < 4; i++)
                   _appointmentsTab('assets/icons/' + doc_images[i] + '.png',
                       doc_names[i], type[i], visitType[i], time[i], date[i]),

@@ -17,6 +17,19 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:healthapp/main.dart';
 
+const List<String> doc_images = ['doc1', 'doc2', 'doc3', 'doc4'];
+const List<String> doc_names = [
+  'Dr.Amit Goel',
+  'Dr. Ushita Das',
+  'Dr. David Hussen',
+  'Dr. William Lin',
+];
+const List<String> type = ['Future', 'Future', 'Completed', 'Ongoing'];
+const List<String> visitType = ['Clinic Visit', 'Online Visit', '', ''];
+const List<String> date = ['01 Jun', '04 Jun', '', ''];
+const List<String> time = ['6:30 PM', '6:45PM', '', ''];
+const String message = 'Last message: Thank you do ...';
+
 class ChatScreen extends StatefulWidget {
   final String currentUserId;
 
@@ -36,7 +49,6 @@ class ChatScreenState extends State<ChatScreen> {
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   bool isLoading = false;
- 
 
   @override
   void initState() {
@@ -82,7 +94,6 @@ class ChatScreenState extends State<ChatScreen> {
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
- 
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
       Platform.isAndroid
@@ -112,9 +123,6 @@ class ChatScreenState extends State<ChatScreen> {
 //        payload: 'item x');
   }
 
- 
-
- 
   Future<Null> handleSignOut() async {
     this.setState(() {
       isLoading = true;
@@ -135,9 +143,9 @@ class ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-     
-      body: WillPopScope(
+    return Material(
+      color: Color(0xFFF8F8F8),
+      child: WillPopScope(
         child: Stack(
           children: <Widget>[
             // List
@@ -146,18 +154,18 @@ class ChatScreenState extends State<ChatScreen> {
                 stream: Firestore.instance.collection('user').snapshots(),
                 builder: (context, snapshot) {
                   print(snapshot);
-                   
+
                   if (!snapshot.hasData) {
                     return Center(
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
                       ),
                     );
                   } else {
                     return ListView.builder(
-                      padding: EdgeInsets.all(10.0),
-                      itemBuilder: (context, index) =>
-                          buildItem(context, snapshot.data.documents[index]),
+                      padding: EdgeInsets.all(20.0),
+                      itemBuilder: (context, index) => buildItem(
+                          context, snapshot.data.documents[index]),
                       itemCount: snapshot.data.documents.length,
                     );
                   }
@@ -171,7 +179,7 @@ class ChatScreenState extends State<ChatScreen> {
             )
           ],
         ),
-      //  onWillPop:,
+        //  onWillPop:,
       ),
     );
   }
@@ -180,64 +188,10 @@ class ChatScreenState extends State<ChatScreen> {
     if (document['id'] == currentUserId) {
       return Container();
     } else {
-      return Container(
-        child: FlatButton(
-          child: Row(
-            children: <Widget>[
-              Material(
-                child: document['photoUrl'] != null
-                    ? CachedNetworkImage(
-                        placeholder: (context, url) => Container(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1.0,
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(themeColor),
-                          ),
-                          width: 50.0,
-                          height: 50.0,
-                          padding: EdgeInsets.all(15.0),
-                        ),
-                        imageUrl: document['photoUrl'],
-                        width: 50.0,
-                        height: 50.0,
-                        fit: BoxFit.cover,
-                      )
-                    : Icon(
-                        Icons.account_circle,
-                        size: 50.0,
-                        color: greyColor,
-                      ),
-                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                clipBehavior: Clip.hardEdge,
-              ),
-              Flexible(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          ' ${document['name']}',
-                          style: TextStyle(color: primaryColor),
-                        ),
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 5.0),
-                      ),
-                      Container(
-                        child: Text(
-                          ' ${document['address'] ?? 'Online Visit'}',
-                          style: TextStyle(color: primaryColor),
-                        ),
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                      )
-                    ],
-                  ),
-                  margin: EdgeInsets.only(left: 20.0),
-                ),
-              ),
-            ],
-          ),
-          onPressed: () {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: InkWell(
+          onTap: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -246,14 +200,147 @@ class ChatScreenState extends State<ChatScreen> {
                           peerAvatar: document['photoUrl'],
                         )));
           },
-          color: greyColor2,
-          padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Ink(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7), color: Colors.white),
+            padding: EdgeInsets.symmetric(vertical: 5),
+            child: ListTile(
+              leading: _imageIcon(document['photoUrl']),
+              title: _doctorName('${document['name']}'),
+              subtitle: _ongoingOrCompletedSubtitle(
+                  'Ongoing', 'last message was awesome !'),
+            ),
+          ),
         ),
-        margin: EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
       );
     }
+  }
+
+  Widget _appointmentsTab(String imgUrl, String name, String type,
+      String visitType, String time, String date) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(7), color: Colors.white),
+        padding: EdgeInsets.symmetric(vertical: 10),
+        child: ListTile(
+          leading: _imageIcon(imgUrl),
+          title: _doctorName(name),
+          subtitle: _upcomingSubtitle(visitType, time),
+          trailing: _upcomingDate(date.split(" ")[0], date.split(" ")[1]),
+        ),
+      ),
+    );
+  }
+
+  Widget _imageIcon(String imgUrl) {
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: Image(image: NetworkImage(imgUrl)));
+  }
+
+  Widget _doctorName(String name) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Text(
+        name,
+        style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF08134D),
+            fontSize: 18),
+      ),
+    );
+  }
+
+  Widget _upcomingDate(String day, String month) {
+    return Container(
+      padding: EdgeInsets.only(left: 15, right: 15, top: 4),
+      decoration: BoxDecoration(
+          color: Colors.lightBlue[200], borderRadius: BorderRadius.circular(7)),
+      child: Column(
+        children: [
+          Text(
+            day,
+            style: TextStyle(
+              color: Color(0xFF262626),
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            month,
+            style: TextStyle(
+              color: Color(0xFF262626),
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _upcomingSubtitle(String type, String time) {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: Text(
+            type,
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF08134D),
+                fontSize: 15),
+          ),
+        ),
+        Text(
+          time,
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF408AEB),
+              fontSize: 15),
+        ),
+      ],
+    );
+  }
+
+  Widget _ongoingOrCompletedSubtitle(String type, String message) {
+    var _colorForSubtitle = Color(0xFFF3AB65);
+    if (type == 'Completed') _colorForSubtitle = Color(0xFF30AB6A);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: _colorForSubtitle, shape: BoxShape.circle),
+                height: 9,
+                width: 9,
+              ),
+            ),
+            Text(
+              type,
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: _colorForSubtitle,
+                  fontSize: 15),
+            ),
+          ],
+        ),
+        Text(
+          message,
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF8F8F8F),
+              fontSize: 15),
+        ),
+      ],
+    );
   }
 }
 

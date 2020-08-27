@@ -1,22 +1,25 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:healthapp/components/const.dart';
 import 'package:healthapp/widgets/full_photo.dart';
 import 'package:healthapp/widgets/loading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:healthapp/components/const.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:healthapp/screens/index.dart';
 import 'call.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+
+final themeColor = Color(0xfff5a623);
 
 Future<void> onJoin(BuildContext context) async {
   // await for camera and mic permissions before pushing video page
@@ -51,34 +54,60 @@ class Chat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'CHAT',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
-        ),
+        backgroundColor: Color(0xFFF8F8F8),
+        elevation: 0,
         centerTitle: true,
+        title: Text(
+          'Chat',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: Color(0xFF262626),
+          ),
+        ),
+        leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.blue[700],
+            )),
         actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  onJoin(context);
-                },
-                child: Icon(
-                  Icons.videocam,
-                  size: 26.0,
-                ),
-              )),
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  FlutterPhoneDirectCaller.callNumber(9100453919.toString());
-                },
-                child: Icon(
-                  Icons.call,
-                  size: 26.0,
-                ),
-              )),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 5),
+            decoration: BoxDecoration(
+                color: Color(0xFFDFE9F7),
+                borderRadius: BorderRadius.circular(7)),
+            child: GestureDetector(
+              onTap: () {
+                FlutterPhoneDirectCaller.callNumber(9100453919.toString());
+              },
+              child: Icon(
+                Icons.call,
+                size: 24,
+                color: Color(0xFF007CC2),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 10, bottom: 10, right: 20),
+            padding: EdgeInsets.symmetric(horizontal: 5),
+            decoration: BoxDecoration(
+                color: Color(0xFFDFE9F7),
+                borderRadius: BorderRadius.circular(7)),
+            child: GestureDetector(
+              onTap: () {
+                onJoin(context);
+              },
+              child: Icon(
+                Icons.videocam,
+                size: 24,
+                color: Color(0xFF007CC2),
+              ),
+            ),
+          ),
         ],
       ),
       body: ChatScreen(
@@ -107,6 +136,11 @@ class ChatScreenState extends State<ChatScreen> {
   String peerId;
   String peerAvatar;
   String id;
+
+  TextStyle textStyle1 = TextStyle(
+      color: Color(0xFFFFFFFF), fontSize: 15, fontWeight: FontWeight.w600);
+  TextStyle textStyle2 = TextStyle(
+      color: Color(0xFF08134D), fontSize: 15, fontWeight: FontWeight.w600);
 
   var listMessage;
   String groupChatId;
@@ -227,14 +261,14 @@ class ChatScreenState extends State<ChatScreen> {
           document['type'] == 0
               // Text
               ? Container(
+                  constraints: BoxConstraints(maxWidth: 250),
                   child: Text(
                     document['content'],
-                    style: TextStyle(color: primaryColor),
+                    style: textStyle1,
                   ),
-                  padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                  width: 200.0,
+                  padding: EdgeInsets.all(20.0),
                   decoration: BoxDecoration(
-                      color: greyColor2,
+                      color: Color(0xFF408AEB),
                       borderRadius: BorderRadius.circular(8.0)),
                   margin: EdgeInsets.only(
                       bottom: isLastMessageRight(index) ? 20.0 : 10.0,
@@ -342,14 +376,14 @@ class ChatScreenState extends State<ChatScreen> {
                     : Container(width: 35.0),
                 document['type'] == 0
                     ? Container(
+                        constraints: BoxConstraints(maxWidth: 250),
                         child: Text(
                           document['content'],
-                          style: TextStyle(color: Colors.white),
+                          style: textStyle2,
                         ),
-                        padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                        width: 200.0,
+                        padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                            color: primaryColor,
+                            color: Color(0xFFF8F8F8),
                             borderRadius: BorderRadius.circular(8.0)),
                         margin: EdgeInsets.only(left: 10.0),
                       )
@@ -477,26 +511,26 @@ class ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      child: Stack(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              // List of messages
-              buildListMessage(),
+    return Material(
+      color: Colors.white,
+      child: WillPopScope(
+        child: Stack(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                // List of messages
+                buildListMessage(),
+                // Input content
+                buildInput(),
+              ],
+            ),
 
-              // Sticker
-
-              // Input content
-              buildInput(),
-            ],
-          ),
-
-          // Loading
-          buildLoading()
-        ],
+            // Loading
+            buildLoading()
+          ],
+        ),
+        onWillPop: onBackPress,
       ),
-      onWillPop: onBackPress,
     );
   }
 
@@ -508,30 +542,45 @@ class ChatScreenState extends State<ChatScreen> {
 
   Widget buildInput() {
     return Container(
+      padding: EdgeInsets.all(10),
       child: Row(
         children: <Widget>[
           // Button send image
-          Material(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 1.0),
-              child: IconButton(
-                icon: Icon(Icons.image),
-                onPressed: getImage,
-                color: primaryColor,
-              ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Color(0xFFF8F8F8),
             ),
-            color: Colors.white,
+            child: IconButton(
+              icon: FaIcon(FontAwesomeIcons.link),
+              onPressed: getImage,
+              color: Color(0xFF8F8F8F),
+              iconSize: 25,
+            ),
           ),
 
           // Edit text
           Flexible(
             child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Color(0xFFF8F8F8),
+              ),
               child: TextField(
-                style: TextStyle(color: primaryColor, fontSize: 15.0),
+                style: textStyle2,
                 controller: textEditingController,
+                cursorColor: Colors.grey[400],
+                cursorWidth: 0.8,
+                cursorRadius: Radius.circular(10),
                 decoration: InputDecoration.collapsed(
-                  hintText: 'Type your message...',
-                  hintStyle: TextStyle(color: greyColor),
+                  hintText: 'Type a message...',
+                  hintStyle: TextStyle(
+                    color: Color(0xFF8F8F8F),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 focusNode: focusNode,
               ),
@@ -539,24 +588,37 @@ class ChatScreenState extends State<ChatScreen> {
           ),
 
           // Button send message
-          Material(
+          InkWell(
+            onTap: () => onSendMessage(textEditingController.text, 0),
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 8.0),
-              child: IconButton(
-                icon: Icon(Icons.send),
-                onPressed: () => onSendMessage(textEditingController.text, 0),
-                color: primaryColor,
+              decoration: BoxDecoration(
+                  color: Color(0xFF408AEB),
+                  borderRadius: BorderRadius.circular(12)),
+              padding: EdgeInsets.only(right: 15),
+              child: Row(
+                children: [
+                  Transform.rotate(
+                    angle: -45 * math.pi / 180,
+                    child: IconButton(
+                      padding: EdgeInsets.all(0),
+                      icon: Icon(
+                        Icons.send,
+                        size: 20,
+                      ),
+                      onPressed: () =>
+                          onSendMessage(textEditingController.text, 0),
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text('Send', style: textStyle1),
+                ],
               ),
             ),
-            color: Colors.white,
           ),
         ],
       ),
       width: double.infinity,
-      height: 50.0,
-      decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: greyColor2, width: 0.5)),
-          color: Colors.white),
+      color: Colors.white,
     );
   }
 
