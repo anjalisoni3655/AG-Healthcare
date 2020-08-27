@@ -87,8 +87,8 @@ Future<String> uploadBookingDetails({
 
 }
 
-void getAllBookings() {
-  firestoreInstance.collection("booking_details").getDocuments().then((querySnapshot) {
+void getAllBookings()   {
+   Firestore.instance.collection("booking_details").getDocuments().then((querySnapshot) {
     querySnapshot.documents.forEach((result) {
       print(result.data);
     });
@@ -96,8 +96,8 @@ void getAllBookings() {
 }
 
   void getPatient() async{
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    firestoreInstance.collection("user_details").document(globals.user.email).get().then((value){
+  //  var firebaseUser = await FirebaseAuth.instance.currentUser();
+    Firestore.instance.collection("user_details").document(globals.user.email).get().then((value){
       print(value.data);
       print(value.data["address"]["city"]);
 print(value.data["name"]);
@@ -105,7 +105,7 @@ print(value.data["name"]);
   }
 
   void getPatientofGivenBookingId() {
-firestoreInstance
+Firestore.instance
     .collection("booking_details")
     .where("paymentId", isEqualTo: "paymentId")
     .getDocuments()
