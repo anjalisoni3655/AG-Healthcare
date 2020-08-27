@@ -16,6 +16,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:healthapp/main.dart';
+import 'package:intl/intl.dart';
 
 const List<String> doc_images = ['doc1', 'doc2', 'doc3', 'doc4'];
 const List<String> doc_names = [
@@ -158,14 +159,15 @@ class ChatScreenState extends State<ChatScreen> {
                   if (!snapshot.hasData) {
                     return Center(
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
                       ),
                     );
                   } else {
                     return ListView.builder(
                       padding: EdgeInsets.all(20.0),
-                      itemBuilder: (context, index) => buildItem(
-                          context, snapshot.data.documents[index]),
+                      itemBuilder: (context, index) =>
+                          buildItem(context, snapshot.data.documents[index]),
                       itemCount: snapshot.data.documents.length,
                     );
                   }
@@ -208,7 +210,9 @@ class ChatScreenState extends State<ChatScreen> {
               leading: _imageIcon(document['photoUrl']),
               title: _doctorName('${document['name']}'),
               subtitle: _ongoingOrCompletedSubtitle(
-                  'Ongoing', 'last message was awesome !'),
+                'Ongoing',
+                'I have taken medicines ... ',
+              ),
             ),
           ),
         ),

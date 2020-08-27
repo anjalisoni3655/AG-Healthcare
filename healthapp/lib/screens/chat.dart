@@ -20,6 +20,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 final themeColor = Color(0xfff5a623);
+TextStyle textStyle1 = TextStyle(
+    color: Color(0xFFFFFFFF), fontSize: 15, fontWeight: FontWeight.w600);
+TextStyle textStyle2 = TextStyle(
+    color: Color(0xFF08134D), fontSize: 15, fontWeight: FontWeight.w600);
 
 Future<void> onJoin(BuildContext context) async {
   // await for camera and mic permissions before pushing video page
@@ -50,65 +54,111 @@ class Chat extends StatelessWidget {
   Chat({Key key, @required this.peerId, @required this.peerAvatar})
       : super(key: key);
 
+  Widget _ongoingOrCompletedSubtitle(String type) {
+    var _colorForSubtitle = Color(0xFFF3AB65);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: _colorForSubtitle, shape: BoxShape.circle),
+                height: 9,
+                width: 9,
+              ),
+            ),
+            Text(
+              type,
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: _colorForSubtitle,
+                  fontSize: 15),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFFF8F8F8),
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          'Chat',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-            color: Color(0xFF262626),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(75),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: AppBar(
+            backgroundColor: Color(0xFFF8F8F8),
+            elevation: 0,
+            title: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7),
+                color: Color(0xFFF8F8F8),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: ListTile(
+                leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image(
+                      image: NetworkImage(peerAvatar),
+                      width: 40,
+                    )),
+                title: Text(
+                  'Dr. Amit',
+                  style: textStyle2,
+                ),
+                subtitle: _ongoingOrCompletedSubtitle('Ongoing'),
+              ),
+            ),
+            leading: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.blue[700],
+                )),
+            actions: <Widget>[
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(
+                    color: Color(0xFFDFE9F7),
+                    borderRadius: BorderRadius.circular(7)),
+                child: GestureDetector(
+                  onTap: () {
+                    FlutterPhoneDirectCaller.callNumber(9100453919.toString());
+                  },
+                  child: Icon(
+                    Icons.call,
+                    size: 24,
+                    color: Color(0xFF007CC2),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10, bottom: 10, right: 20),
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(
+                    color: Color(0xFFDFE9F7),
+                    borderRadius: BorderRadius.circular(7)),
+                child: GestureDetector(
+                  onTap: () {
+                    onJoin(context);
+                  },
+                  child: Icon(
+                    Icons.videocam,
+                    size: 24,
+                    color: Color(0xFF007CC2),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.blue[700],
-            )),
-        actions: <Widget>[
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            decoration: BoxDecoration(
-                color: Color(0xFFDFE9F7),
-                borderRadius: BorderRadius.circular(7)),
-            child: GestureDetector(
-              onTap: () {
-                FlutterPhoneDirectCaller.callNumber(9100453919.toString());
-              },
-              child: Icon(
-                Icons.call,
-                size: 24,
-                color: Color(0xFF007CC2),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 10, bottom: 10, right: 20),
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            decoration: BoxDecoration(
-                color: Color(0xFFDFE9F7),
-                borderRadius: BorderRadius.circular(7)),
-            child: GestureDetector(
-              onTap: () {
-                onJoin(context);
-              },
-              child: Icon(
-                Icons.videocam,
-                size: 24,
-                color: Color(0xFF007CC2),
-              ),
-            ),
-          ),
-        ],
       ),
       body: ChatScreen(
         peerId: peerId,
@@ -136,11 +186,6 @@ class ChatScreenState extends State<ChatScreen> {
   String peerId;
   String peerAvatar;
   String id;
-
-  TextStyle textStyle1 = TextStyle(
-      color: Color(0xFFFFFFFF), fontSize: 15, fontWeight: FontWeight.w600);
-  TextStyle textStyle2 = TextStyle(
-      color: Color(0xFF08134D), fontSize: 15, fontWeight: FontWeight.w600);
 
   var listMessage;
   String groupChatId;
