@@ -105,7 +105,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0+1"
+    version: "2.0.0-rc.1"
   characters:
     dependency: transitive
     description:
@@ -294,7 +294,7 @@ packages:
       name: firebase_messaging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.16"
+    version: "6.0.13"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -334,7 +334,7 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.4+4"
+    version: "1.4.0"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
@@ -400,7 +400,7 @@ packages:
       name: fluttertoast
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.0.2"
+    version: "3.1.3"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -484,7 +484,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.7+6"
+    version: "0.6.7+7"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -498,7 +498,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.1"
+    version: "0.15.8"
   io:
     dependency: transitive
     description:
@@ -680,7 +680,7 @@ packages:
       name: photo_view
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.2"
+    version: "0.5.0"
   platform:
     dependency: transitive
     description:

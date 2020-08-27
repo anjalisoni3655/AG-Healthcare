@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:healthapp/components/const.dart';
@@ -67,7 +68,7 @@ String marital='';
   void readLocal() async {
     prefs = await SharedPreferences.getInstance();
     id = prefs.getString('id') ?? '';
-    address = prefs.getString('address') ?? '';
+    name= prefs.getString('name') ?? '';
     email = prefs.getString('email') ?? '';
     photoUrl = prefs.getString('photoUrl') ?? '';
 
@@ -101,9 +102,9 @@ String marital='';
         storageTaskSnapshot.ref.getDownloadURL().then((downloadUrl) {
           photoUrl = downloadUrl;
           Firestore.instance
-              .collection('user_details')
+              .collection('user')
               .document(id)
-              .updateData({'nickname': name, 'aboutMe': address, 'photoUrl': photoUrl}).then((data) async {
+              .updateData({'name': name, 'email': email, 'photoUrl': photoUrl}).then((data) async {
             await prefs.setString('photoUrl', photoUrl);
             setState(() {
               isLoading = false;
@@ -144,11 +145,11 @@ String marital='';
     });
 
     Firestore.instance
-        .collection('user_details')
+        .collection('user')
         .document()
-        .updateData({'name': name, 'address': address, 'photoUrl': photoUrl}).then((data) async {
+        .updateData({'name': name, 'email': email, 'photoUrl': photoUrl}).then((data) async {
       await prefs.setString('name', name);
-      await prefs.setString('address', address);
+      await prefs.setString('email', address);
       await prefs.setString('photoUrl', photoUrl);
 
       setState(() {
@@ -264,7 +265,7 @@ String marital='';
                   // About me
                   Container(
                     child: Text(
-                      'Address',
+                      'email',
                       style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: primaryColor),
                     ),
                     margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
@@ -274,7 +275,7 @@ String marital='';
                       data: Theme.of(context).copyWith(primaryColor: primaryColor),
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: 'enter your address...',
+                          hintText: 'enter your email...',
                           contentPadding: EdgeInsets.all(5.0),
                           hintStyle: TextStyle(color: greyColor),
                         ),

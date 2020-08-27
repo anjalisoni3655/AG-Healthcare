@@ -66,7 +66,7 @@ Future<Null> handleSignIn(BuildContext context) async {
       await prefs.setString('email', currentUser.email);
     } else {
       // Write data to local
-        globals.user.email = documents[0]['email'];
+       // globals.user.email = documents[0]['email'];
       await prefs.setString('id', documents[0]['id']);
       await prefs.setString('name', documents[0]['name']);
       await prefs.setString('email', documents[0]['email']);
