@@ -9,6 +9,7 @@ class User {
   String email;
   String paymentId;
   int phone;
+  String photo;
 }
 
 User user = User();
@@ -26,11 +27,8 @@ Future<String> uploadUserDetails({
 }) async {
   print('email:${globals.user.email}');
   final _firestore = Firestore.instance;
-  final _id = _firestore
-      .collection('user_details')
-      .document()
-      .documentID;
-      print('userdetailsId:$_id');
+  final _id = _firestore.collection('user_details').document().documentID;
+  print('userdetailsId:$_id');
   await Firestore.instance
       .collection('user_details')
       .document(globals.user.email)
@@ -64,14 +62,8 @@ Future<String> uploadBookingDetails({
 }) async {
   print('email:${globals.user.email}');
   final _firestore = Firestore.instance;
-  final _id = _firestore
-      .collection('booking_details')
-      .document()
-      .documentID;
-  await Firestore.instance
-      .collection('booking_details')
-      .document(_id)
-      .setData({
+  final _id = _firestore.collection('booking_details').document().documentID;
+  await Firestore.instance.collection('booking_details').document(_id).setData({
     'doctorName': doctorName,
     'years': years,
     'field': field,
@@ -81,7 +73,7 @@ Future<String> uploadBookingDetails({
     'visitType': visitType,
     'visitDuration': visitDuration,
     'paymentId': paymentId,
-    'email':globals.user.email,
+    'email': globals.user.email,
   }, merge: true).then((_) {
     print("payment id added");
   });

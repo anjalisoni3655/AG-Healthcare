@@ -29,6 +29,7 @@ class _SplashPageState extends State<SplashPage> {
         .then((result) {
       if (result) {
         globals.user.email = prefs.getString('id');
+        globals.user.photo = prefs.getString('photoUrl');
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (_) =>

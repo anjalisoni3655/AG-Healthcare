@@ -33,6 +33,7 @@ Future<Null> handleSignIn(BuildContext context) async {
 
     if (firebaseUser != null) {
       globals.user.email = firebaseUser.email;
+       globals.user.photo = firebaseUser.photoUrl;
       // print('email');
       // print(globals.user.email);
       // Check is already sign up

@@ -12,7 +12,7 @@ class Loading extends StatelessWidget {
           valueColor: AlwaysStoppedAnimation<Color>(themeColor),
         ),
       ),
-      color: Colors.blue,
+      color: Colors.white.withOpacity(0.8),,
     );
   }
 }
