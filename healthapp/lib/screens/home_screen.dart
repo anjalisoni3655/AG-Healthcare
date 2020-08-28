@@ -5,9 +5,11 @@ import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/drawer.dart';
 import 'package:healthapp/screens/home/home_page.dart';
 import 'package:healthapp/screens/chat_screen.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
+
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
-final String currentUserId;
+  final String currentUserId;
 
   HomeScreen({Key key, @required this.currentUserId}) : super(key: key);
 
@@ -18,29 +20,38 @@ final String currentUserId;
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
-  
   List<Text> headingOptions = [
     Text(
       'Home',
-      style: GoogleFonts.varelaRound(fontWeight: FontWeight.w700, color: Color(0xFFFFFFFF),),
+      style: GoogleFonts.varelaRound(
+        fontWeight: FontWeight.w700,
+        color: Color(0xFFFFFFFF),
+      ),
     ),
     Text(
       'My Bookings',
-      style: GoogleFonts.varelaRound(fontWeight: FontWeight.w700, color: Color(0xFFFFFFFF),),
+      style: GoogleFonts.varelaRound(
+        fontWeight: FontWeight.w700,
+        color: Color(0xFFFFFFFF),
+      ),
     ),
     Text(
       'All Blogs',
-      style: GoogleFonts.varelaRound(fontWeight: FontWeight.w700, color: Color(0xFFFFFFFF),),
+      style: GoogleFonts.varelaRound(
+        fontWeight: FontWeight.w700,
+        color: Color(0xFFFFFFFF),
+      ),
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    globals.getPatient();
     List<Widget> widgetOptions = [
-    HomePage(),
-    ChatScreen(currentUserId: widget.currentUserId),
-    BlogsPage(),
-  ];
+      HomePage(),
+      ChatScreen(currentUserId: widget.currentUserId),
+      BlogsPage(),
+    ];
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(

@@ -22,6 +22,7 @@ class SuccessPage extends StatelessWidget {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () async {
+                  final _id = Firestore.instance.collection('booking_details').document().documentID;
                   await Firestore.instance
                       .collection("booking_details")
                       .document(globals.user.email)

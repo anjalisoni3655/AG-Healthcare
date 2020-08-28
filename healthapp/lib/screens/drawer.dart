@@ -10,7 +10,7 @@ import 'login_screen.dart';
 import "package:provider/provider.dart";
 import 'package:healthapp/stores/login_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:healthapp/authentication/user.dart'as globals;
+import 'package:healthapp/authentication/user.dart' as globals;
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({Key key}) : super(key: key);
@@ -54,6 +54,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     photo = prefs.getString('photoUrl') ?? globals.user.photo;
 
     email = email.split('@')[0];
+    print('name');
+    print('email');
+    print('photoUrl');
     // Force refresh input
     setState(() {});
   }
