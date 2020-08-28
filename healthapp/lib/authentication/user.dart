@@ -67,56 +67,59 @@ Future<String> uploadBookingDetails({
   await Firestore.instance
       .collection('booking_details')
       .document(globals.user.email)
-      .setData(
-    {
-      'doctorName': doctorName,
-      'years': years,
-      'field': field,
-      'cost': cost,
-      'selectedDate': selectedDate,
-      'visitTime': visitTime,
-      'visitType': visitType,
-      'visitDuration': visitDuration,
-      'paymentId':paymentId,
-    },
-    merge:true).then((_){
- print("payment id added");
-    });
+      .setData({
+    'doctorName': doctorName,
+    'years': years,
+    'field': field,
+    'cost': cost,
+    'selectedDate': selectedDate,
+    'visitTime': visitTime,
+    'visitType': visitType,
+    'visitDuration': visitDuration,
+    'paymentId': paymentId,
+  }, merge: true).then((_) {
+    print("payment id added");
+  });
 
   return _id;
-
 }
 
-void getAllBookings()   {
-   Firestore.instance.collection("booking_details").getDocuments().then((querySnapshot) {
+void getAllBookings() {
+  Firestore.instance
+      .collection("booking_details")
+      .getDocuments()
+      .then((querySnapshot) {
     querySnapshot.documents.forEach((result) {
       print(result.data);
     });
   });
 }
 
-  void getPatient() async{
-  //  var firebaseUser = await FirebaseAuth.instance.currentUser();
-    Firestore.instance.collection("user_details").document(globals.user.email).get().then((value){
-      print(value.data);
-      print(value.data["address"]["city"]);
-print(value.data["name"]);
-    });
-  }
-
-  void getPatientofGivenBookingId() {
-Firestore.instance
-    .collection("booking_details")
-    .where("paymentId", isEqualTo: "paymentId")
-    .getDocuments()
-    .then((value) {
-  value.documents.forEach((result) {
-    print(result.data);
+void getPatient() async {
+  Firestore.instance
+      .collection("user_details")
+      .document(globals.user.email)
+      .get()
+      .then((value) {
+    print(value.data);
+    print(value.data["address"]["city"]);
+    print(value.data["name"]);
   });
-});
 }
 
-//          
+void getPatientofGivenBookingId() {
+  Firestore.instance
+      .collection("booking_details")
+      .where("paymentId", isEqualTo: "paymentId")
+      .getDocuments()
+      .then((value) {
+    value.documents.forEach((result) {
+      print(result.data);
+    });
+  });
+}
+
+//
 
 // Future<List<String>> getBookings(String userId) async {
 //   Firestore _database;
