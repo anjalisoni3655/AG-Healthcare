@@ -11,6 +11,8 @@ class User {
   int phone;
   String photo;
   String name;
+  String gender, dob, bloodGroup, maritalStatus, address;
+  int height, weight;
 }
 
 User user = User();
@@ -64,7 +66,10 @@ Future<String> uploadBookingDetails({
   print('email:${globals.user.email}');
   final _firestore = Firestore.instance;
   final _id = _firestore.collection('booking_details').document().documentID;
-  await Firestore.instance.collection('booking_details').document(globals.user.email).setData({
+  await Firestore.instance
+      .collection('booking_details')
+      .document(globals.user.email)
+      .setData({
     'doctorName': doctorName,
     'years': years,
     'field': field,

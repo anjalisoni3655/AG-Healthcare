@@ -38,7 +38,9 @@ Future<String> signInWithFacebook() async {
   f_imageUrl = user.photoUrl;
   f_imageUrl+='?height=500';
 
-  type='Facebook';
+  //
+  
+  //type='Facebook';
   print(f_imageUrl);
   return 'SignIn with Facebook succeeded: $user';
 }

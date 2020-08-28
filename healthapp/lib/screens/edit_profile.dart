@@ -8,12 +8,13 @@ import 'package:healthapp/components/const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class Profile extends StatelessWidget {
-  static const id ="profile";
+  static const id = "profile";
   //User user;
 //Profile({this.user});
-@override
-   Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -41,17 +42,17 @@ class SettingsScreenState extends State<SettingsScreen> {
   String id = '';
   String photoUrl = '';
   String name;
-String email='';
+  String email = '';
 
-String gender='';
-String address='';
-int age;
-int phone;
-String dob='';
-String blood='';
-int height;
-int weight;
-String marital='';
+  String gender = '';
+  String address = '';
+  int age;
+  int phone;
+  String dob = '';
+  String blood = '';
+  int height;
+  int weight;
+  String marital = '';
 
   bool isLoading = false;
   File avatarImageFile;
@@ -68,20 +69,19 @@ String marital='';
   void readLocal() async {
     prefs = await SharedPreferences.getInstance();
     id = prefs.getString('id') ?? '';
-    name= prefs.getString('name') ?? '';
+    name = prefs.getString('name') ?? '';
     email = prefs.getString('email') ?? '';
     photoUrl = prefs.getString('photoUrl') ?? '';
 
     controllerName = TextEditingController(text: name);
-    controllerEmail= TextEditingController(text: email);
+    controllerEmail = TextEditingController(text: email);
 
     // Force refresh input
     setState(() {});
   }
 
   Future getImage() async {
-
-     ImagePicker imagePicker = ImagePicker();
+    ImagePicker imagePicker = ImagePicker();
     PickedFile pickedFile;
 
     pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
@@ -107,10 +107,11 @@ String marital='';
         storageTaskSnapshot = value;
         storageTaskSnapshot.ref.getDownloadURL().then((downloadUrl) {
           photoUrl = downloadUrl;
-          Firestore.instance
-              .collection('user')
-              .document(id)
-              .updateData({'name': name, 'email': email, 'photoUrl': photoUrl}).then((data) async {
+          Firestore.instance.collection('user').document(id).updateData({
+            'name': name,
+            'email': email,
+            'photoUrl': photoUrl
+          }).then((data) async {
             await prefs.setString('photoUrl', photoUrl);
             setState(() {
               isLoading = false;
@@ -153,7 +154,8 @@ String marital='';
     Firestore.instance
         .collection('user')
         .document(id)
-        .updateData({'name': name, 'email': email, 'photoUrl': photoUrl}).then((data) async {
+        .updateData({'name': name, 'email': email, 'photoUrl': photoUrl}).then(
+            (data) async {
       await prefs.setString('name', name);
       await prefs.setString('email', email);
       await prefs.setString('photoUrl', photoUrl);
@@ -163,6 +165,7 @@ String marital='';
       });
 
       Fluttertoast.showToast(msg: "Update success");
+      print(email);
     }).catchError((err) {
       setState(() {
         isLoading = false;
@@ -191,7 +194,9 @@ String marital='';
                                     placeholder: (context, url) => Container(
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2.0,
-                                        valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                themeColor),
                                       ),
                                       width: 90.0,
                                       height: 90.0,
@@ -202,7 +207,8 @@ String marital='';
                                     height: 90.0,
                                     fit: BoxFit.cover,
                                   ),
-                                  borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(45.0)),
                                   clipBehavior: Clip.hardEdge,
                                 )
                               : Icon(
@@ -217,7 +223,8 @@ String marital='';
                                 height: 90.0,
                                 fit: BoxFit.cover,
                               ),
-                              borderRadius: BorderRadius.all(Radius.circular(45.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(45.0)),
                               clipBehavior: Clip.hardEdge,
                             ),
                       IconButton(
@@ -245,13 +252,17 @@ String marital='';
                   Container(
                     child: Text(
                       'name',
-                      style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: primaryColor),
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                     margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
                   ),
                   Container(
                     child: Theme(
-                      data: Theme.of(context).copyWith(primaryColor: primaryColor),
+                      data: Theme.of(context)
+                          .copyWith(primaryColor: primaryColor),
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: 'your name',
@@ -272,13 +283,17 @@ String marital='';
                   Container(
                     child: Text(
                       'email',
-                      style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: primaryColor),
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                     margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
                   ),
                   Container(
                     child: Theme(
-                      data: Theme.of(context).copyWith(primaryColor: primaryColor),
+                      data: Theme.of(context)
+                          .copyWith(primaryColor: primaryColor),
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: 'enter your email...',
@@ -287,7 +302,7 @@ String marital='';
                         ),
                         controller: controllerEmail,
                         onChanged: (value) {
-                          address = value;
+                          email = value;
                         },
                         focusNode: focusNodeAboutMe,
                       ),
@@ -324,7 +339,8 @@ String marital='';
           child: isLoading
               ? Container(
                   child: Center(
-                    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(themeColor)),
+                    child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(themeColor)),
                   ),
                   color: Colors.white.withOpacity(0.8),
                 )

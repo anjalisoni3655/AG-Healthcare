@@ -5,12 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:healthapp/screens/appointments/appointments_page.dart';
+import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/user_profile.dart';
 import 'login_screen.dart';
 import "package:provider/provider.dart";
 import 'package:healthapp/stores/login_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
+import 'package:healthapp/screens/edit_profile.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({Key key}) : super(key: key);
@@ -18,10 +20,6 @@ class DrawerWidget extends StatefulWidget {
   @override
   _DrawerWidgetState createState() => _DrawerWidgetState();
 }
-
-String type;
-String gender, dob, bloodGroup, maritalStatus, address;
-int height, weight;
 
 class _DrawerWidgetState extends State<DrawerWidget> {
   Future<Null> handleSignOut() async {
@@ -51,7 +49,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   void readLocal() async {
     prefs = await SharedPreferences.getInstance();
 
-    name = prefs.getString('name') ?? '';
+    name = prefs.getString('name') ?? globals.user.name;
     email = prefs.getString('email') ?? globals.user.email;
     photo = prefs.getString('photoUrl') ?? globals.user.photo;
 
@@ -63,24 +61,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     setState(() {});
   }
 
-  void getPatient() async {
-    prefs = await SharedPreferences.getInstance();
-    email = prefs.getString('email') ?? '';
-    await Firestore.instance
-        .collection("user_details")
-        .document(email)
-        .get()
-        .then((value) {
-      gender = value.data['gender'];
-      dob = value.data['dob'];
-      bloodGroup = value.data['blood'];
-      height = value.data['height'];
-      weight = value.data['weight'];
-      maritalStatus = value.data['marital'];
-      address = value.data['address'];
-    });
-  }
-
   @override
   void initState() {
     readLocal();
@@ -89,7 +69,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    getPatient();
+    // getPatient();
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       return Drawer(
         child: Container(
@@ -112,10 +92,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         child: CircleAvatar(
                           child: ClipOval(
                             child: Image.network(
-                              (photo != null)
-                                  ? (photo.substring(0, photo.length - 5) +
-                                      's400-c')
-                                  : 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80',
+                              (photo != null) ? photo : globals.user.photo,
                             ),
                           ),
                           radius: 30,
@@ -136,7 +113,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               ),
                             ),
                             Text(
-                              (email != null) ? '${email.split('@')[0]}' : 'katewilliams01',
+                              (email != null)
+                                  ? '${email.split('@')[0]}'
+                                  : 'katewilliams01',
                               style: TextStyle(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w500,
@@ -183,7 +162,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   Icons.edit,
                   color: Color(0xFF408AEB),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, BlogsPage.id);
+                },
               ),
               ListTile(
                 dense: true,

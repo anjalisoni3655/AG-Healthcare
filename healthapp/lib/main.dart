@@ -44,6 +44,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           LoginPage.id: (context) => LoginPage(),
           UserForm.id: (context) => UserForm(),
+        
           LoginPage.id: (context) => LoginPage(),
           HomeScreen.id: (context) => HomeScreen(),
           Profile.id: (context) => Profile(),
