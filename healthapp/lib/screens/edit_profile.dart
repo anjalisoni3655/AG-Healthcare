@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:healthapp/components/const.dart';
@@ -35,7 +34,7 @@ class SettingsScreen extends StatefulWidget {
 
 class SettingsScreenState extends State<SettingsScreen> {
   TextEditingController controllerName;
-  TextEditingController controllerAddress;
+  TextEditingController controllerEmail;
 
   SharedPreferences prefs;
 
@@ -43,6 +42,7 @@ class SettingsScreenState extends State<SettingsScreen> {
   String photoUrl = '';
   String name;
 String email='';
+
 String gender='';
 String address='';
 int age;
@@ -73,14 +73,20 @@ String marital='';
     photoUrl = prefs.getString('photoUrl') ?? '';
 
     controllerName = TextEditingController(text: name);
-    controllerAddress = TextEditingController(text: address);
+    controllerEmail= TextEditingController(text: email);
 
     // Force refresh input
     setState(() {});
   }
 
   Future getImage() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+     ImagePicker imagePicker = ImagePicker();
+    PickedFile pickedFile;
+
+    pickedFile = await imagePicker.getImage(source: ImageSource.gallery);
+
+    File image = File(pickedFile.path);
 
     if (image != null) {
       setState(() {
@@ -146,10 +152,10 @@ String marital='';
 
     Firestore.instance
         .collection('user')
-        .document()
+        .document(id)
         .updateData({'name': name, 'email': email, 'photoUrl': photoUrl}).then((data) async {
       await prefs.setString('name', name);
-      await prefs.setString('email', address);
+      await prefs.setString('email', email);
       await prefs.setString('photoUrl', photoUrl);
 
       setState(() {
@@ -279,7 +285,7 @@ String marital='';
                           contentPadding: EdgeInsets.all(5.0),
                           hintStyle: TextStyle(color: greyColor),
                         ),
-                        controller: controllerAddress,
+                        controller: controllerEmail,
                         onChanged: (value) {
                           address = value;
                         },
@@ -297,7 +303,7 @@ String marital='';
                 child: FlatButton(
                   onPressed: handleUpdateData,
                   child: Text(
-                    'UPDATE',
+                    'Update',
                     style: TextStyle(fontSize: 16.0),
                   ),
                   color: primaryColor,

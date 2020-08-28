@@ -2,6 +2,13 @@
   <library name="Dart Packages" type="DartPackagesLibraryType">
     <properties>
       <option name="packageNameToDirsMap">
+        <entry key="_discoveryapis_commons">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/_discoveryapis_commons-0.2.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="_fe_analyzer_shared">
           <value>
             <list>
@@ -447,6 +454,20 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1+1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="googleapis">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/googleapis-0.55.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="googleapis_auth">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/googleapis_auth-0.2.12/lib" />
             </list>
           </value>
         </entry>
@@ -1006,6 +1027,7 @@
       </option>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/_discoveryapis_commons-0.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-6.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-1.0.13/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/analyzer-0.39.14/lib" />
@@ -1067,6 +1089,8 @@
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-4.5.3/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_platform_interface-1.1.2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1+1/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/googleapis-0.55.0/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/googleapis_auth-0.2.12/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/graphs-0.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/html-0.14.0+3/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2/lib" />

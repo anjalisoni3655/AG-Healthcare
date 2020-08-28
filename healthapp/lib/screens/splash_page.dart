@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:healthapp/stores/login_store.dart';
 import 'package:healthapp/screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:healthapp/authentication/user.dart'as globals;
 
 SharedPreferences prefs;
 
@@ -27,6 +28,8 @@ class _SplashPageState extends State<SplashPage> {
         .isAlreadyAuthenticated()
         .then((result) {
       if (result) {
+        globals.user.email = prefs.getString('id');
+        globals.user.photo = prefs.getString('photoUrl');
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (_) =>
