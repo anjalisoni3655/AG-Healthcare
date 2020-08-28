@@ -129,21 +129,3 @@ void getPatientofGivenBookingId(String paymentId) {
     });
   });
 }
-
-//
-
-// Future<List<String>> getBookings(String userId) async {
-//   Firestore _database;
-
-//     QuerySnapshot snapshot = await _database
-//         .collection('policy')
-//         .where('id', isEqualTo: userId)
-
-//         .getDocuments();
-//     List<String> list = [];
-//     for (var doc in snapshot.documents) {
-//       list.add(
-//           new String(doc.data['cost']));
-//     }
-//     return list;
-//   }

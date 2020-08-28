@@ -126,11 +126,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   }
 
   void handlerPaymentSuccess(PaymentSuccessResponse response) {
-  //  print(response.paymentId);
+    //  print(response.paymentId);
     globals.user.paymentId = response.paymentId;
     print("Payment success");
     Toast.show("Payment success", context);
-     globals.getPatientofGivenBookingId(response.paymentId);
+    globals.getPatientofGivenBookingId(response.paymentId);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
@@ -138,7 +138,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           response: response,
         ),
       ),
-      (Route<dynamic> route) => false,
+          (Route<dynamic> route) => false,
     );
     razorpay.clear();
   }
@@ -154,7 +154,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           response: response,
         ),
       ),
-      (Route<dynamic> route) => false,
+          (Route<dynamic> route) => false,
     );
     razorpay.clear();
   }
@@ -167,8 +167,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
 
   @override
   Widget build(BuildContext context) {
-   // PaymentSuccessResponse response;
-   
+    // PaymentSuccessResponse response;
+
 
     print(globals.user.cost);
     String name, expYears, fields, costs;
@@ -199,7 +199,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child:
-                                _getText('Select type', 15, Color(0xFF8F8F8F)),
+                            _getText('Select type', 15, Color(0xFF8F8F8F)),
                           ),
                           Row(
                             children: [
@@ -262,7 +262,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10),
                                     child:
-                                        _getText('Time', 15, Color(0xFF8F8F8F)),
+                                    _getText('Time', 15, Color(0xFF8F8F8F)),
                                   ),
                                   _switchMorningEvening(),
                                   Padding(
@@ -309,8 +309,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               visitDuration: visitDuration,
                               paymentId: globals.user.paymentId,
                             );
-                             print('done');
-    globals.getAllPatientDetail();
+                            print('done');
+                            globals.getAllPatientDetail();
                             openCheckout();
                           },
                         ),
@@ -405,8 +405,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               child: Image(
                 image: (index == 0)
                     ? AssetImage(
-                        'assets/icons/sun.png',
-                      )
+                  'assets/icons/sun.png',
+                )
                     : AssetImage('assets/icons/moon.png'),
                 width: 20,
                 height: 20,
@@ -470,7 +470,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             (selectedDate == null)
                 ? _getText('yyyy-mm-dd', 15, Color(0xFF8F8F8F))
                 : _getText('${selectedDate.toLocal()}'.split(' ')[0], 15,
-                    Color(0xFF408AEB)),
+                Color(0xFF408AEB)),
             Spacer(),
             Icon(Icons.calendar_today,
                 color: (selectedDate == null)
@@ -521,7 +521,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     return Text(
       text,
       style:
-          TextStyle(fontSize: size, color: color, fontWeight: FontWeight.w600),
+      TextStyle(fontSize: size, color: color, fontWeight: FontWeight.w600),
     );
   }
 }

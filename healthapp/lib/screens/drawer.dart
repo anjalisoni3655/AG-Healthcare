@@ -1,11 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:healthapp/authentication/google_login.dart';
-import 'package:healthapp/authentication/facebook_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:healthapp/screens/appointments/appointments_page.dart';
-import 'edit_profile.dart';
+import 'package:healthapp/screens/user_profile.dart';
 import 'login_screen.dart';
 import "package:provider/provider.dart";
 import 'package:healthapp/stores/login_store.dart';
@@ -20,6 +20,8 @@ class DrawerWidget extends StatefulWidget {
 }
 
 String type;
+String gender, dob, bloodGroup, maritalStatus, address;
+int height, weight;
 
 class _DrawerWidgetState extends State<DrawerWidget> {
   Future<Null> handleSignOut() async {
@@ -61,6 +63,24 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     setState(() {});
   }
 
+  void getPatient() async {
+    prefs = await SharedPreferences.getInstance();
+    email = prefs.getString('email') ?? '';
+    await Firestore.instance
+        .collection("user_details")
+        .document(email)
+        .get()
+        .then((value) {
+      gender = value.data['gender'];
+      dob = value.data['dob'];
+      bloodGroup = value.data['blood'];
+      height = value.data['height'];
+      weight = value.data['weight'];
+      maritalStatus = value.data['marital'];
+      address = value.data['address'];
+    });
+  }
+
   @override
   void initState() {
     readLocal();
@@ -69,6 +89,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    getPatient();
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       return Drawer(
         child: Container(
@@ -78,7 +99,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               //TODO :Make this dynamic later!
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, Profile.id);
+                  Navigator.pushNamed(context, UserProfile.id);
                 },
                 child: Container(
                   color: Colors.blue[700],
@@ -115,7 +136,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               ),
                             ),
                             Text(
-                              (email != null) ? '$email' : 'katewilliams01',
+                              (email != null) ? '${email.split('@')[0]}' : 'katewilliams01',
                               style: TextStyle(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w500,
