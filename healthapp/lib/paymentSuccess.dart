@@ -47,7 +47,7 @@ class SuccessPage extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 22,
-              color: Colors.green,
+              color: Colors.black,
             ),
           ),
         ),

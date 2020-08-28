@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:healthapp/screens/home_screen.dart';
 
@@ -12,7 +11,7 @@ class FailedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Payment Success"),
+        title: Text("Payment Failed"),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
@@ -34,7 +33,7 @@ class FailedPage extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 22,
-              color: Colors.green,
+              color: Colors.black,
             ),
           ),
         ),

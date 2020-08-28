@@ -8,6 +8,7 @@ class User {
   int cost;
   String email;
   String paymentId;
+  int phone;
 }
 
 User user = User();
@@ -27,8 +28,9 @@ Future<String> uploadUserDetails({
   final _firestore = Firestore.instance;
   final _id = _firestore
       .collection('user_details')
-      .document(globals.user.email)
+      .document()
       .documentID;
+      print('userdetailsId:$_id');
   await Firestore.instance
       .collection('user_details')
       .document(globals.user.email)
@@ -58,52 +60,58 @@ Future<String> uploadBookingDetails({
   String visitType,
   String visitDuration,
   String paymentId,
+  String email,
 }) async {
   print('email:${globals.user.email}');
   final _firestore = Firestore.instance;
   final _id = _firestore
       .collection('booking_details')
-      .document(globals.user.email)
+      .document()
       .documentID;
   await Firestore.instance
       .collection('booking_details')
-      .document(globals.user.email)
-      .setData(
-    {
-      'doctorName': doctorName,
-      'years': years,
-      'field': field,
-      'cost': cost,
-      'selectedDate': selectedDate,
-      'visitTime': visitTime,
-      'visitType': visitType,
-      'visitDuration': visitDuration,
-      'paymentId':paymentId,
-    },
-    merge:true).then((_){
- print("payment id added");
-    });
+      .document(_id)
+      .setData({
+    'doctorName': doctorName,
+    'years': years,
+    'field': field,
+    'cost': cost,
+    'selectedDate': selectedDate,
+    'visitTime': visitTime,
+    'visitType': visitType,
+    'visitDuration': visitDuration,
+    'paymentId': paymentId,
+    'email':globals.user.email,
+  }, merge: true).then((_) {
+    print("payment id added");
+  });
 
   return _id;
-
 }
 
-void getAllBookings()   {
-   Firestore.instance.collection("booking_details").getDocuments().then((querySnapshot) {
+void getAllBookings() {
+  Firestore.instance
+      .collection("booking_details")
+      .getDocuments()
+      .then((querySnapshot) {
     querySnapshot.documents.forEach((result) {
       print(result.data);
     });
   });
 }
 
-  void getPatient()async {
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    Firestore.instance.collection("user_details").document(firebaseUser.email).get().then((value){
-      print(value.data);
+void getPatient() async {
+  var firebaseUser = await FirebaseAuth.instance.currentUser();
+  Firestore.instance
+      .collection("user_details")
+      .document(firebaseUser.email)
+      .get()
+      .then((value) {
+    print(value.data);
     //  print(value.data["address"]["city"]);
 //print(value.data["name"]);
-    });
-  }
+  });
+}
 
 void getAllPatientDetail() {
   Firestore.instance
@@ -117,19 +125,19 @@ void getAllPatientDetail() {
   });
 }
 
-  void getPatientofGivenBookingId(String paymentId) {
-Firestore.instance
-    .collection("booking_details")
-    .where("paymentId", isEqualTo: paymentId)
-    .getDocuments()
-    .then((value) {
-  value.documents.forEach((result) {
-    print(result.data);
+void getPatientofGivenBookingId(String paymentId) {
+  Firestore.instance
+      .collection("booking_details")
+      .where("paymentId", isEqualTo: paymentId)
+      .getDocuments()
+      .then((value) {
+    value.documents.forEach((result) {
+      print(result.data);
+    });
   });
-});
 }
 
-//          
+//
 
 // Future<List<String>> getBookings(String userId) async {
 //   Firestore _database;

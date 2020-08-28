@@ -57,14 +57,14 @@ Future<Null> handleSignIn(BuildContext context) async {
 
         // Write data to local
         currentUser = firebaseUser;
-        globals.user.email = currentUser.email;
+     //   globals.user.email = currentUser.email;
         await prefs.setString('id', currentUser.uid);
         await prefs.setString('name', currentUser.displayName);
         await prefs.setString('photoUrl', currentUser.photoUrl);
         await prefs.setString('email', currentUser.email);
       } else {
         // Write data to local
-        globals.user.email = documents[0]['email'];
+       // globals.user.email = documents[0]['email'];
         await prefs.setString('id', documents[0]['id']);
         await prefs.setString('name', documents[0]['name']);
         await prefs.setString('email', documents[0]['email']);

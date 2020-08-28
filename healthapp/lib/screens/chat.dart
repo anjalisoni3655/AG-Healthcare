@@ -34,7 +34,12 @@ Future<void> onJoin(BuildContext context) async {
     context,
     MaterialPageRoute(
       builder: (context) => CallPage(
-        channelName: 'abcd',
+        // if(globals.user.email=='dramitgoelhyd@gmail.com'){
+ channelName: 'abcd',
+ //TODO:  make channel name unique for two doctor and patient  
+ //channelName: 
+       
+       
         role: ClientRole.Broadcaster,
       ),
     ),
