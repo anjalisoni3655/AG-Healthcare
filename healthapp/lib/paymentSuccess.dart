@@ -13,6 +13,7 @@ class SuccessPage extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       appBar: AppBar(
         title: Text("Payment Success"),
@@ -20,15 +21,16 @@ class SuccessPage extends StatelessWidget {
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () async{
-  
-  
-  await Firestore.instance.collection("booking_details").document(globals.user.email).updateData(
-  {
-   "paymentId" : response.paymentId,
-  }).then((_){
-      print("success!");
-  });
+                onTap: () async {
+                  await Firestore.instance
+                      .collection("booking_details")
+                      .document(globals.user.email)
+                      .updateData({
+                    "paymentId": response.paymentId,
+                  }).then((_) {
+                    print("success!");
+                  });
+
                   Navigator.pushNamed(context, HomeScreen.id);
                 },
                 child: Icon(

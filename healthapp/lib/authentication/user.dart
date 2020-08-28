@@ -1,6 +1,7 @@
 library globals;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 
 class User {
@@ -95,19 +96,31 @@ void getAllBookings()   {
   });
 }
 
-  void getPatient() async{
-  //  var firebaseUser = await FirebaseAuth.instance.currentUser();
-    Firestore.instance.collection("user_details").document(globals.user.email).get().then((value){
+  void getPatient()async {
+    var firebaseUser = await FirebaseAuth.instance.currentUser();
+    Firestore.instance.collection("user_details").document(firebaseUser.email).get().then((value){
       print(value.data);
-      print(value.data["address"]["city"]);
-print(value.data["name"]);
+    //  print(value.data["address"]["city"]);
+//print(value.data["name"]);
     });
   }
 
-  void getPatientofGivenBookingId() {
+void getAllPatientDetail() {
+  Firestore.instance
+      .collection("booking_details")
+      .where("doctorName", isEqualTo: "Dr Amit Goel")
+      .snapshots()
+      .listen((result) {
+    result.documents.forEach((result) {
+      print(result.data);
+    });
+  });
+}
+
+  void getPatientofGivenBookingId(String paymentId) {
 Firestore.instance
     .collection("booking_details")
-    .where("paymentId", isEqualTo: "paymentId")
+    .where("paymentId", isEqualTo: paymentId)
     .getDocuments()
     .then((value) {
   value.documents.forEach((result) {

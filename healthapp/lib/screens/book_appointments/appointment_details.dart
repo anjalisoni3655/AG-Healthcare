@@ -9,6 +9,7 @@ import 'package:toast/toast.dart';
 import 'package:healthapp/paymentSuccess.dart';
 import 'package:healthapp/paymentFailed.dart';
 
+
 List<Color> _textColor = [
   Color(0xFF8F8F8F),
   Color(0xFF8F8F8F),
@@ -129,6 +130,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     globals.user.paymentId = response.paymentId;
     print("Payment success");
     Toast.show("Payment success", context);
+     globals.getPatientofGivenBookingId(response.paymentId);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
@@ -307,6 +309,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               visitDuration: visitDuration,
                               paymentId: globals.user.paymentId,
                             );
+                             print('done');
+    globals.getAllPatientDetail();
                             openCheckout();
                           },
                         ),
