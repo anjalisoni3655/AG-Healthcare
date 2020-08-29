@@ -30,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
       if (result) {
         globals.user.email = prefs.getString('email');
          globals.user.photo = prefs.getString('photo');
-  //       globals.user.name = prefs.getString('name');
+        globals.user.name = prefs.getString('name');
   //       //TODO : also take the phone number
   //         globals.user.marital = prefs.getString('marital');
   //    globals.user.address =prefs.getString('address');

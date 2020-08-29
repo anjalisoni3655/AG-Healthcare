@@ -407,7 +407,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         ),
                         controller: controllergender,
                         onChanged: (value) {
-                          name = value;
+                        gender= value;
                         },
                         focusNode: focusNodeGender,
                       ),
@@ -438,7 +438,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         ),
                         controller: controllerblood,
                         onChanged: (value) {
-                          email = value;
+                          blood = value;
                         },
                         focusNode: focusNodeBlood,
                       ),
@@ -474,7 +474,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         ),
                         controller: controllerdob,
                         onChanged: (value) {
-                          name = value;
+                          dob= value;
                         },
                         focusNode: focusNodeDob,
                       ),
@@ -505,7 +505,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         ),
                         controller: controllerheight,
                         onChanged: (value) {
-                          email = value;
+                          height= value;
                         },
                         focusNode: focusNodeHeight,
                       ),
@@ -541,7 +541,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         ),
                         controller: controllerweight,
                         onChanged: (value) {
-                          name = value;
+                          weight = value;
                         },
                         focusNode: focusNodeWeight,
                       ),
@@ -572,7 +572,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         ),
                         controller: controlleraddress,
                         onChanged: (value) {
-                          email = value;
+                          address= value;
                         },
                         focusNode: focusNodeAddress,
                       ),
@@ -608,7 +608,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         ),
                         controller: controllermarital,
                         onChanged: (value) {
-                          name = value;
+                          marital= value;
                         },
                         focusNode: focusNodeMarital,
                       ),

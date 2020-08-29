@@ -55,9 +55,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     photo = prefs.getString('photo') ?? globals.user.photo;
 
     email = email.split('@')[0];
-    print('name');
-    print('email');
-    print('photoUrl');
+    print(name);
+    print(globals.user.email);
+    print(photo);
     // Force refresh input
     setState(() {
        
