@@ -311,6 +311,7 @@ await Firestore.instance
 }).then((_) {
 print("success!");
 });
+
 Navigator.pushNamed(context, HomeScreen.id);
 },
  */

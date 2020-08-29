@@ -624,12 +624,10 @@ class _UserFormState extends State<UserForm> {
                               weight: weight,
                               marital: marital,
                             );
-                            await prefs.setString('name', name);
-                            await prefs.setString('email',email);
-                            await prefs.setString('photo', "https://photos.google.com/search/_cAF1QipN~uCjsUcvgbdB4vHF3B~u4KBN3Xzi2Ve8yc_Anjali%20Soni/photo/AF1QipPJlJBW_cI7OoYgCZn1msZnuKdhp5t-lOBXhdfJ");
+                            await prefs.setString('gender', gender);
                             await prefs.setString('dob', dob);
                             await prefs.setString('gender', gender);
-                            await prefs.setString('phone', "6203402847");
+                            await prefs.setString('dob', dob);
                             await prefs.setString('blood', blood);
                             await prefs.setString('height', height.toString());
                             await prefs.setString('weight', weight.toString());

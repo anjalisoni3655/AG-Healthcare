@@ -48,7 +48,7 @@ class SettingsScreenState extends State<SettingsScreen> {
   SharedPreferences prefs;
 
   String id = '';
-  String photoUrl = '';
+  String photo = '';
   String name;
   String email = '';
 
@@ -89,7 +89,7 @@ class SettingsScreenState extends State<SettingsScreen> {
     id = prefs.getString('id') ?? '';
     name = prefs.getString('name') ?? '';
     email = prefs.getString('email') ?? '';
-    photoUrl = prefs.getString('photo') ?? '';
+    photo = prefs.getString('photo') ?? '';
     gender = prefs.getString('gender') ?? '';
     dob = prefs.getString('dob') ?? '';
     blood = prefs.getString('blood') ?? '';
@@ -140,14 +140,14 @@ class SettingsScreenState extends State<SettingsScreen> {
       if (value.error == null) {
         storageTaskSnapshot = value;
         storageTaskSnapshot.ref.getDownloadURL().then((downloadUrl) {
-          photoUrl = downloadUrl;
+          photo = downloadUrl;
           final _id = Firestore.instance.collection('user_details').document().documentID;
           Firestore.instance
               .collection('user_details')
               .document(globals.user.id)
               .updateData({
             //TODO: chnage this photo with the one that user will uplaod
-            'photo': photoUrl,
+            'photo': photo,
              'name': name,
       'email': email,
       //TODO: chnage this photo with the one that user will uplaod
@@ -160,7 +160,7 @@ class SettingsScreenState extends State<SettingsScreen> {
       'marital': marital,
       'address': address,
           }).then((data) async {
-            await prefs.setString('photo', photoUrl);
+            await prefs.setString('photo', photo);
             setState(() {
               isLoading = false;
             });
@@ -258,7 +258,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                   child: Stack(
                     children: <Widget>[
                       (avatarImageFile == null)
-                          ? (photoUrl != ''
+                          ? (photo!= ''
                               ? Material(
                                   child: CachedNetworkImage(
                                     placeholder: (context, url) => Container(
@@ -272,7 +272,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                                       height: 90.0,
                                       padding: EdgeInsets.all(20.0),
                                     ),
-                                    imageUrl: photoUrl,
+                                    imageUrl: photo,
                                     width: 90.0,
                                     height: 90.0,
                                     fit: BoxFit.cover,

@@ -82,7 +82,7 @@ name = prefs.getString('name') ?? globals.user.name;
     
    
 
-   // print('gender$gender');
+    print('gender$gender');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _appBar(context),
@@ -100,12 +100,13 @@ name = prefs.getString('name') ?? globals.user.name;
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(50),
                           child: Image(
-                            image: NetworkImage(globals.user.photo),
+                            image: NetworkImage(photo),
                             width: 100,
                             height: 100,
                           ),
                         ),
                       ),
+                      
                       _text(name, Color(0xFF08134D), FontWeight.w700, 29, 0),
                       _text(email, Color(0xFF08134D), FontWeight.w700, 15, 5),
                       _text('9937590845', Color(0xFF08134D), FontWeight.w700,
@@ -147,6 +148,7 @@ name = prefs.getString('name') ?? globals.user.name;
       double padding) {
        
     //getPatient();
+    print(name);
     return Padding(
       padding: EdgeInsets.all(padding),
       child: Text(

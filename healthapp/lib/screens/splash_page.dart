@@ -29,17 +29,17 @@ class _SplashPageState extends State<SplashPage> {
         .then((result) {
       if (result) {
         globals.user.email = prefs.getString('email');
-        globals.user.photo = prefs.getString('photo');
-        globals.user.name = prefs.getString('name');
-        //TODO : also take the phone number
-          globals.user.marital = prefs.getString('marital');
-     globals.user.address =prefs.getString('address');
-     globals.user.gender = prefs.getString('gender');
-     globals.user.dob = prefs.getString('dob');
-    globals.user.blood =prefs.getString('blood');
-  globals.user.weight = prefs.getString('weight');
-     globals.user.height = prefs.getString('height');
-       globals.user.id = prefs.getString('id');
+         globals.user.photo = prefs.getString('photo');
+  //       globals.user.name = prefs.getString('name');
+  //       //TODO : also take the phone number
+  //         globals.user.marital = prefs.getString('marital');
+  //    globals.user.address =prefs.getString('address');
+  //    globals.user.gender = prefs.getString('gender');
+  //    globals.user.dob = prefs.getString('dob');
+  //   globals.user.blood =prefs.getString('blood');
+  // globals.user.weight = prefs.getString('weight');
+  //    globals.user.height = prefs.getString('height');
+        globals.user.id = prefs.getString('id');
      
 
      //TODO: also add the reason of visting

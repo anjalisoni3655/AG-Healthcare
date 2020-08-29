@@ -236,7 +236,7 @@ class ChatScreenState extends State<ChatScreen> {
     }
 
     Firestore.instance
-        .collection('users')
+        .collection('user')
         .document(id)
         .updateData({'chattingWith': peerId});
 
