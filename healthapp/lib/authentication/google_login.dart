@@ -32,8 +32,8 @@ Future<Null> handleSignIn(BuildContext context) async {
         (await firebaseAuth.signInWithCredential(credential)).user;
 
     if (firebaseUser != null) {
-      globals.user.email = firebaseUser.email;
-       globals.user.photo = firebaseUser.photoUrl;
+      // globals.user.email = firebaseUser.email;
+      //  globals.user.photo = firebaseUser.photoUrl;
       // print('email');
       // print(globals.user.email);
       // Check is already sign up
@@ -60,17 +60,17 @@ Future<Null> handleSignIn(BuildContext context) async {
         currentUser = firebaseUser;
      //   globals.user.email = currentUser.email;
         await prefs.setString('id', currentUser.uid);
-        await prefs.setString('name', currentUser.displayName);
-        await prefs.setString('photoUrl', currentUser.photoUrl);
-        await prefs.setString('email', currentUser.email);
+        // await prefs.setString('name', currentUser.displayName);
+        // await prefs.setString('photoUrl', currentUser.photoUrl);
+        // await prefs.setString('email', currentUser.email);
       } else {
         // Write data to local
        // globals.user.email = documents[0]['email'];
         await prefs.setString('id', documents[0]['id']);
-        await prefs.setString('name', documents[0]['name']);
-        await prefs.setString('email', documents[0]['email']);
-        await prefs.setString('photoUrl', documents[0]['photoUrl']);
-        await prefs.setString('aboutMe', documents[0]['aboutMe']);
+        // await prefs.setString('name', documents[0]['name']);
+        // await prefs.setString('email', documents[0]['email']);
+        // await prefs.setString('photoUrl', documents[0]['photoUrl']);
+        // await prefs.setString('aboutMe', documents[0]['aboutMe']);
       }
       print("Successfully Signed in");
 

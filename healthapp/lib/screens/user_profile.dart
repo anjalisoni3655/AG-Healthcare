@@ -10,8 +10,8 @@ import 'package:healthapp/screens/edit_profile.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 
 String type;
-String gender, dob, bloodGroup, maritalStatus, address, name, email;
-int height, weight;
+String gender, dob, blood, marital, address, name, email;
+String height, weight,photo;
 
 class UserProfile extends StatefulWidget {
   @override
@@ -19,9 +19,10 @@ class UserProfile extends StatefulWidget {
 
   UserProfileState createState() => UserProfileState();
 }
+SharedPreferences prefs;
 
 class UserProfileState extends State<UserProfile> {
-  void getPatient() async {
+  /*Future<void> getPatient() async {
     var firebaseUser = await FirebaseAuth.instance.currentUser();
     Firestore.instance
         .collection("user_details")
@@ -31,10 +32,10 @@ class UserProfileState extends State<UserProfile> {
       print(value.data);
       gender = value.data['gender'];
       dob = value.data['dob'];
-      bloodGroup = value.data['blood'];
+      blood = value.data['blood'];
       height = value.data['height'];
       weight = value.data['weight'];
-      maritalStatus = value.data['marital'];
+      marital = value.data['marital'];
       address = value.data['address'];
       name = value.data['name'];
       email = value.data['email'];
@@ -42,21 +43,46 @@ class UserProfileState extends State<UserProfile> {
       //  print(value.data["address"]["city"]);
       print(value.data["address"]);
     });
+  }*/
+   
+
+  
+
+  void readLocal() async {
+    prefs = await SharedPreferences.getInstance();
+name = prefs.getString('name') ?? globals.user.name;
+    email = prefs.getString('email') ?? globals.user.email;
+    photo = prefs.getString('photo') ?? globals.user.photo;
+    gender = prefs.getString('gender') ?? globals.user.gender;
+    dob = prefs.getString('dob') ?? globals.user.dob;
+    blood = prefs.getString('blood') ?? globals.user.blood;
+    height = prefs.getString('height') ?? globals.user.height;
+  weight= prefs.getString('dob') ?? globals.user.weight;
+    marital = prefs.getString('marital') ?? globals.user.marital;
+    address = prefs.getString('address') ?? globals.user.address;
+    
+
+    email = email.split('@')[0];
+   
+    // Force refresh input
+    setState(() {
+       
+    });
+  }
+
+  @override
+  void initState() {
+    readLocal();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    getPatient();
-    globals.user.maritalStatus = maritalStatus;
-    globals.user.address =address;
-    globals.user.gender = gender;
-    globals.user.dob = dob;
-    globals.user.bloodGroup = bloodGroup;
-    globals.user.weight = weight;
-    globals.user.height = height;
+   
+    
+   
 
-
-    print('gender$gender');
+   // print('gender$gender');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _appBar(context),
@@ -80,22 +106,20 @@ class UserProfileState extends State<UserProfile> {
                           ),
                         ),
                       ),
-                      _text(globals.user.name, Color(0xFF08134D),
-                          FontWeight.w700, 29, 0),
-                      _text(globals.user.email, Color(0xFF08134D),
-                          FontWeight.w700, 15, 5),
+                      _text(name, Color(0xFF08134D), FontWeight.w700, 29, 0),
+                      _text(email, Color(0xFF08134D), FontWeight.w700, 15, 5),
                       _text('9937590845', Color(0xFF08134D), FontWeight.w700,
                           15, 0),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 20),
                       ),
-                      _information('Gender', 'globals.user.gender'),
-                      _information('Date of Birth', 'globals.user.dob'),
-                      _information('Blood Group',' globals.user.bloodGroup'),
-                      _information('Height', '(globals.user.height).toString()' + ' cm'),
-                      _information('Weight', '(globals.user.height).toString() '+ ' kg'),
-                      _information('Marital Status','globals.user.maritalStatus' ),
-                      _information('Address', 'globals.user.address'),
+                      _information('Gender', gender),
+                      _information('Date of Birth', dob),
+                      _information('Blood Group', blood),
+                      _information('Height', (height).toString() + ' cm'),
+                      _information('Weight', (weight).toString() + ' kg'),
+                      _information('Marital Status', marital),
+                      _information('Address', address),
                     ],
                   )
                 : Column(),
@@ -106,6 +130,8 @@ class UserProfileState extends State<UserProfile> {
   }
 
   Widget _information(String category, String value) {
+    
+  //  getPatient();
     return Container(
       child: Row(
         children: [
@@ -119,6 +145,8 @@ class UserProfileState extends State<UserProfile> {
 
   Widget _text(String text, Color color, FontWeight fontWeight, double fontSize,
       double padding) {
+       
+    //getPatient();
     return Padding(
       padding: EdgeInsets.all(padding),
       child: Text(
@@ -130,6 +158,8 @@ class UserProfileState extends State<UserProfile> {
   }
 
   Widget _appBar(BuildContext context) {
+   
+   // getPatient();
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,

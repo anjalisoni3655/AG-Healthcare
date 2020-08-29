@@ -13,6 +13,7 @@ import 'package:healthapp/stores/login_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:healthapp/screens/edit_profile.dart';
+import 'package:share/share.dart';
 
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({Key key}) : super(key: key);
@@ -51,14 +52,16 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
     name = prefs.getString('name') ?? globals.user.name;
     email = prefs.getString('email') ?? globals.user.email;
-    photo = prefs.getString('photoUrl') ?? globals.user.photo;
+    photo = prefs.getString('photo') ?? globals.user.photo;
 
     email = email.split('@')[0];
     print('name');
     print('email');
     print('photoUrl');
     // Force refresh input
-    setState(() {});
+    setState(() {
+       
+    });
   }
 
   @override
@@ -179,7 +182,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   Icons.group,
                   color: Color(0xFF408AEB),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Share.share('Visit my website https://medicaregalaxy.vercel.app/',subject: 'Install this app Now!');
+                },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),

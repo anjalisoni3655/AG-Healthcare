@@ -9,7 +9,6 @@ import 'package:toast/toast.dart';
 import 'package:healthapp/paymentSuccess.dart';
 import 'package:healthapp/paymentFailed.dart';
 
-
 List<Color> _textColor = [
   Color(0xFF8F8F8F),
   Color(0xFF8F8F8F),
@@ -107,14 +106,25 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   }
 
   void openCheckout() {
+    String date = selectedDate.toString();
+    date = date.substring(0, 10);
     var options = {
       "key": "rzp_test_7ygVzTh2b1Y9df",
       "amount": (globals.user.cost) * 100,
-      "name": "Sample App",
-      "description": "Payment for the some random product",
+      "name": "Dr Amit Goel Clinic",
+
+      //                         visitTime: visitTime,
+      //                         visitType: visitType,
+      //                         visitDuration: visitDuration,
+
+      // 'timeout': 60, // in seconds
+      "description":
+          "$visitType visit on $date from $visitDuration($visitTime)",
       "prefill": {"contact": "", "email": ""},
+      "currency": "INR",
+      "payment_capture": 1,
       "external": {
-        "wallets": ["paytm"]
+        "wallets": ["paytm", "phonepe", "gpay"]
       }
     };
 
@@ -138,13 +148,12 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           response: response,
         ),
       ),
-          (Route<dynamic> route) => false,
+      (Route<dynamic> route) => false,
     );
     razorpay.clear();
   }
 
   void handlerErrorFailure(PaymentFailureResponse response) {
-
     print("Payment error");
     Toast.show("Payment error", context);
     Navigator.pushAndRemoveUntil(
@@ -154,7 +163,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           response: response,
         ),
       ),
-          (Route<dynamic> route) => false,
+      (Route<dynamic> route) => false,
     );
     razorpay.clear();
   }
@@ -168,7 +177,6 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   @override
   Widget build(BuildContext context) {
     // PaymentSuccessResponse response;
-
 
     print(globals.user.cost);
     String name, expYears, fields, costs;
@@ -199,7 +207,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child:
-                            _getText('Select type', 15, Color(0xFF8F8F8F)),
+                                _getText('Select type', 15, Color(0xFF8F8F8F)),
                           ),
                           Row(
                             children: [
@@ -262,7 +270,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10),
                                     child:
-                                    _getText('Time', 15, Color(0xFF8F8F8F)),
+                                        _getText('Time', 15, Color(0xFF8F8F8F)),
                                   ),
                                   _switchMorningEvening(),
                                   Padding(
@@ -405,8 +413,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               child: Image(
                 image: (index == 0)
                     ? AssetImage(
-                  'assets/icons/sun.png',
-                )
+                        'assets/icons/sun.png',
+                      )
                     : AssetImage('assets/icons/moon.png'),
                 width: 20,
                 height: 20,
@@ -470,7 +478,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             (selectedDate == null)
                 ? _getText('yyyy-mm-dd', 15, Color(0xFF8F8F8F))
                 : _getText('${selectedDate.toLocal()}'.split(' ')[0], 15,
-                Color(0xFF408AEB)),
+                    Color(0xFF408AEB)),
             Spacer(),
             Icon(Icons.calendar_today,
                 color: (selectedDate == null)
@@ -521,7 +529,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     return Text(
       text,
       style:
-      TextStyle(fontSize: size, color: color, fontWeight: FontWeight.w600),
+          TextStyle(fontSize: size, color: color, fontWeight: FontWeight.w600),
     );
   }
 }

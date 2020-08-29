@@ -8,6 +8,7 @@ import 'package:healthapp/components/const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
 
 class Profile extends StatelessWidget {
   static const id = "profile";
@@ -36,6 +37,13 @@ class SettingsScreen extends StatefulWidget {
 class SettingsScreenState extends State<SettingsScreen> {
   TextEditingController controllerName;
   TextEditingController controllerEmail;
+  TextEditingController controllergender;
+  TextEditingController controllerdob;
+  TextEditingController controllerblood;
+  TextEditingController controllerheight;
+  TextEditingController controllerweight;
+  TextEditingController controllermarital;
+  TextEditingController controlleraddress;
 
   SharedPreferences prefs;
 
@@ -45,20 +53,30 @@ class SettingsScreenState extends State<SettingsScreen> {
   String email = '';
 
   String gender = '';
-  String address = '';
+
   int age;
   int phone;
   String dob = '';
   String blood = '';
-  int height;
-  int weight;
+  String height;
+  String weight;
   String marital = '';
+  String address = '';
 
   bool isLoading = false;
   File avatarImageFile;
 
-  final FocusNode focusNodeNickname = FocusNode();
-  final FocusNode focusNodeAboutMe = FocusNode();
+  final FocusNode focusNodeName = FocusNode();
+  final FocusNode focusNodeEmail = FocusNode();
+  final FocusNode focusNodeGender = FocusNode();
+
+  final FocusNode focusNodeDob = FocusNode();
+
+  final FocusNode focusNodeBlood = FocusNode();
+  final FocusNode focusNodeHeight = FocusNode();
+  final FocusNode focusNodeWeight = FocusNode();
+  final FocusNode focusNodeMarital = FocusNode();
+  final FocusNode focusNodeAddress = FocusNode();
 
   @override
   void initState() {
@@ -71,10 +89,26 @@ class SettingsScreenState extends State<SettingsScreen> {
     id = prefs.getString('id') ?? '';
     name = prefs.getString('name') ?? '';
     email = prefs.getString('email') ?? '';
-    photoUrl = prefs.getString('photoUrl') ?? '';
+    photoUrl = prefs.getString('photo') ?? '';
+    gender = prefs.getString('gender') ?? '';
+    dob = prefs.getString('dob') ?? '';
+    blood = prefs.getString('blood') ?? '';
+    height = prefs.getString('height') ?? '';
+
+    weight = prefs.getString('weight') ?? '';
+    marital = prefs.getString('marital') ?? '';
+    address = prefs.getString('address') ?? '';
 
     controllerName = TextEditingController(text: name);
     controllerEmail = TextEditingController(text: email);
+
+    controllergender = TextEditingController(text: gender);
+    controllerdob = TextEditingController(text: dob);
+    controllerblood = TextEditingController(text: blood);
+    controllerheight = TextEditingController(text: height);
+    controllerweight = TextEditingController(text: weight);
+    controllermarital = TextEditingController(text: marital);
+    controlleraddress = TextEditingController(text: address);
 
     // Force refresh input
     setState(() {});
@@ -107,12 +141,26 @@ class SettingsScreenState extends State<SettingsScreen> {
         storageTaskSnapshot = value;
         storageTaskSnapshot.ref.getDownloadURL().then((downloadUrl) {
           photoUrl = downloadUrl;
-          Firestore.instance.collection('user').document(id).updateData({
-            'name': name,
-            'email': email,
-            'photoUrl': photoUrl
+          final _id = Firestore.instance.collection('user_details').document().documentID;
+          Firestore.instance
+              .collection('user_details')
+              .document(globals.user.id)
+              .updateData({
+            //TODO: chnage this photo with the one that user will uplaod
+            'photo': photoUrl,
+             'name': name,
+      'email': email,
+      //TODO: chnage this photo with the one that user will uplaod
+      //'photo': globals.user.photo,
+      'gender': gender,
+      'dob': dob,
+      'blood': blood,
+      'height': height,
+      'weight': weight,
+      'marital': marital,
+      'address': address,
           }).then((data) async {
-            await prefs.setString('photoUrl', photoUrl);
+            await prefs.setString('photo', photoUrl);
             setState(() {
               isLoading = false;
             });
@@ -144,21 +192,43 @@ class SettingsScreenState extends State<SettingsScreen> {
   }
 
   void handleUpdateData() {
-    focusNodeNickname.unfocus();
-    focusNodeAboutMe.unfocus();
+    focusNodeName.unfocus();
+    focusNodeEmail.unfocus();
+    focusNodeGender.unfocus();
+    focusNodeDob.unfocus();
+    focusNodeBlood.unfocus();
+    focusNodeHeight.unfocus();
+    focusNodeWeight.unfocus();
+    focusNodeMarital.unfocus();
+    focusNodeAddress.unfocus();
+    // focusNodeEmail.unfocus();
 
     setState(() {
       isLoading = true;
     });
-
-    Firestore.instance
-        .collection('user')
-        .document(id)
-        .updateData({'name': name, 'email': email, 'photoUrl': photoUrl}).then(
-            (data) async {
+ final id = Firestore.instance.collection('user_details').document().documentID;
+    Firestore.instance.collection('user_details').document(globals.user.id).updateData({
+      'name': name,
+      'email': email,
+      //TODO: chnage this photo with the one that user will uplaod
+      //'photo': globals.user.photo,
+      'gender': gender,
+      'dob': dob,
+      'blood': blood,
+      'height': height,
+      'weight': weight,
+      'marital': marital,
+      'address': address,
+    }).then((data) async {
       await prefs.setString('name', name);
       await prefs.setString('email', email);
-      await prefs.setString('photoUrl', photoUrl);
+      await prefs.setString('address', address);
+      await prefs.setString('marital', marital);
+      await prefs.setString('height', height);
+      await prefs.setString('weight', weight);
+      await prefs.setString('dob', dob);
+      await prefs.setString('blood', blood);
+      await prefs.setString('gender', gender);
 
       setState(() {
         isLoading = false;
@@ -251,7 +321,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                   // Username
                   Container(
                     child: Text(
-                      'name',
+                      'Name',
                       style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.bold,
@@ -265,7 +335,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                           .copyWith(primaryColor: primaryColor),
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: 'your name',
+                          hintText: ' Your name',
                           contentPadding: EdgeInsets.all(5.0),
                           hintStyle: TextStyle(color: greyColor),
                         ),
@@ -273,7 +343,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         onChanged: (value) {
                           name = value;
                         },
-                        focusNode: focusNodeNickname,
+                        focusNode: focusNodeName,
                       ),
                     ),
                     margin: EdgeInsets.only(left: 30.0, right: 30.0),
@@ -282,7 +352,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                   // About me
                   Container(
                     child: Text(
-                      'email',
+                      'Email',
                       style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.bold,
@@ -296,7 +366,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                           .copyWith(primaryColor: primaryColor),
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: 'enter your email...',
+                          hintText: 'Your email',
                           contentPadding: EdgeInsets.all(5.0),
                           hintStyle: TextStyle(color: greyColor),
                         ),
@@ -304,7 +374,243 @@ class SettingsScreenState extends State<SettingsScreen> {
                         onChanged: (value) {
                           email = value;
                         },
-                        focusNode: focusNodeAboutMe,
+                        focusNode: focusNodeEmail,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  ),
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              Column(
+                children: <Widget>[
+                  // Username
+                  Container(
+                    child: Text(
+                      'Gender',
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
+                    ),
+                    margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
+                  ),
+                  Container(
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(primaryColor: primaryColor),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Your gender',
+                          contentPadding: EdgeInsets.all(5.0),
+                          hintStyle: TextStyle(color: greyColor),
+                        ),
+                        controller: controllergender,
+                        onChanged: (value) {
+                          name = value;
+                        },
+                        focusNode: focusNodeGender,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  ),
+
+                  // About me
+                  Container(
+                    child: Text(
+                      'BloodGroup',
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
+                    ),
+                    margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
+                  ),
+                  Container(
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(primaryColor: primaryColor),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Your bloodgroup',
+                          contentPadding: EdgeInsets.all(5.0),
+                          hintStyle: TextStyle(color: greyColor),
+                        ),
+                        controller: controllerblood,
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        focusNode: focusNodeBlood,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  ),
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+
+              Column(
+                children: <Widget>[
+                  // Username
+                  Container(
+                    child: Text(
+                      'Date of Birth',
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
+                    ),
+                    margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
+                  ),
+                  Container(
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(primaryColor: primaryColor),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Your date of birth',
+                          contentPadding: EdgeInsets.all(5.0),
+                          hintStyle: TextStyle(color: greyColor),
+                        ),
+                        controller: controllerdob,
+                        onChanged: (value) {
+                          name = value;
+                        },
+                        focusNode: focusNodeDob,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  ),
+
+                  // About me
+                  Container(
+                    child: Text(
+                      'Height',
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
+                    ),
+                    margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
+                  ),
+                  Container(
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(primaryColor: primaryColor),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Your height..',
+                          contentPadding: EdgeInsets.all(5.0),
+                          hintStyle: TextStyle(color: greyColor),
+                        ),
+                        controller: controllerheight,
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        focusNode: focusNodeHeight,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  ),
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+
+              Column(
+                children: <Widget>[
+                  // Username
+                  Container(
+                    child: Text(
+                      'Weight',
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
+                    ),
+                    margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
+                  ),
+                  Container(
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(primaryColor: primaryColor),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Weight',
+                          contentPadding: EdgeInsets.all(5.0),
+                          hintStyle: TextStyle(color: greyColor),
+                        ),
+                        controller: controllerweight,
+                        onChanged: (value) {
+                          name = value;
+                        },
+                        focusNode: focusNodeWeight,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  ),
+
+                  // About me
+                  Container(
+                    child: Text(
+                      'Address',
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
+                    ),
+                    margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
+                  ),
+                  Container(
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(primaryColor: primaryColor),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Your address',
+                          contentPadding: EdgeInsets.all(5.0),
+                          hintStyle: TextStyle(color: greyColor),
+                        ),
+                        controller: controlleraddress,
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        focusNode: focusNodeAddress,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  ),
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+
+              Column(
+                children: <Widget>[
+                  // Username
+                  Container(
+                    child: Text(
+                      'Marital Status',
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
+                    ),
+                    margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
+                  ),
+                  Container(
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(primaryColor: primaryColor),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Your marital status',
+                          contentPadding: EdgeInsets.all(5.0),
+                          hintStyle: TextStyle(color: greyColor),
+                        ),
+                        controller: controllermarital,
+                        onChanged: (value) {
+                          name = value;
+                        },
+                        focusNode: focusNodeMarital,
                       ),
                     ),
                     margin: EdgeInsets.only(left: 30.0, right: 30.0),

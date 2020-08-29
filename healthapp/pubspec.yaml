@@ -59,6 +59,7 @@ dependencies:
   flutter_phone_direct_caller: ^1.0.1
   googleapis: ^0.55.0
   googleapis_auth:
+  share: ^0.6.5
 
 dev_dependencies:
   flutter_test:

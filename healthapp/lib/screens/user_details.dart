@@ -5,16 +5,21 @@ import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:healthapp/screens/mobile_auth_screens/mobile_login_page.dart';
+import 'package:healthapp/screens/user_profile.dart';
 import 'package:healthapp/widgets/app_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+SharedPreferences prefs;
 
 String name;
 String email;
+String photo;
 String gender;
 String address;
-int age;
+
 int phone;
 String dob;
-String blood='O+';
+String blood = 'O+';
 int height;
 int weight;
 String marital;
@@ -267,7 +272,7 @@ class _UserFormState extends State<UserForm> {
               onChanged: (String newValue) {
                 setState(() {
                   dropdownValue = newValue;
-                  blood=dropdownValue;
+                  blood = dropdownValue;
                 });
               },
               items: <String>['O+', 'O-', 'AB+', 'AB-', 'A+', 'A-', 'B+', 'B-']
@@ -602,7 +607,7 @@ class _UserFormState extends State<UserForm> {
                           print(height);
                           print(weight);
                           print(marital);
-
+                          prefs = await SharedPreferences.getInstance();
                           final doc = await Firestore.instance
                               .collection('user_details')
                               .where('email', isEqualTo: email)
@@ -619,6 +624,17 @@ class _UserFormState extends State<UserForm> {
                               weight: weight,
                               marital: marital,
                             );
+                            await prefs.setString('name', name);
+                            await prefs.setString('email',email);
+                            await prefs.setString('photo', "https://photos.google.com/search/_cAF1QipN~uCjsUcvgbdB4vHF3B~u4KBN3Xzi2Ve8yc_Anjali%20Soni/photo/AF1QipPJlJBW_cI7OoYgCZn1msZnuKdhp5t-lOBXhdfJ");
+                            await prefs.setString('dob', dob);
+                            await prefs.setString('gender', gender);
+                            await prefs.setString('phone', "6203402847");
+                            await prefs.setString('blood', blood);
+                            await prefs.setString('height', height.toString());
+                            await prefs.setString('weight', weight.toString());
+                            await prefs.setString('marital', marital);
+                            await prefs.setString('address', address);
                           }
                           Navigator.push(
                               context,
