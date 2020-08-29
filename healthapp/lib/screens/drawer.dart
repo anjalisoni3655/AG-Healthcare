@@ -208,7 +208,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ListTile(
                 dense: true,
                 title: Text(
-                  'Support',
+                  'Contact Us',
                   style: TextStyle(
                       color: Color(0xFF8F8F8F),
                       fontWeight: FontWeight.w600,
@@ -220,10 +220,27 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 onTap: () {},
               ),
+               ListTile(
+                dense: true,
+                title: Text(
+                  'About us',
+                  style: TextStyle(
+                      color: Color(0xFF8F8F8F),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                ),
+                leading: Icon(
+                  Icons.work,
+                  color: Color(0xFF408AEB),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, AppointmentPage.id);
+                },
+              ),
               ListTile(
                 dense: true,
                 title: Text(
-                  'Terms of Use',
+                  'Terms & Conditions',
                   style: TextStyle(
                       color: Color(0xFF8F8F8F),
                       fontWeight: FontWeight.w600,
@@ -235,8 +252,42 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 onTap: () {},
               ),
+               ListTile(
+                dense: true,
+                title: Text(
+                  'Refund/Cancellation Policy',
+                  style: TextStyle(
+                      color: Color(0xFF8F8F8F),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                ),
+                leading: Icon(
+                  Icons.cancel,
+                  color: Color(0xFF408AEB),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, AppointmentPage.id);
+                },
+              ),
+               ListTile(
+                dense: true,
+                title: Text(
+                  'Privacy Policy',
+                  style: TextStyle(
+                      color: Color(0xFF8F8F8F),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                ),
+                leading: Icon(
+                  Icons.privacy_tip,
+                  color: Color(0xFF408AEB),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, AppointmentPage.id);
+                },
+              ),
               Padding(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 30),
                 child: ListTile(
                   title: Text(
                     'Logout',

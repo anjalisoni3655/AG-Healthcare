@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+//import 'package:googleapis/bigquery/v2.dart';
 import 'package:healthapp/widgets/app_bar.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
@@ -108,6 +109,14 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   void openCheckout() {
     String date = selectedDate.toString();
     date = date.substring(0, 10);
+    globals.user.date=date;
+     globals.user.visitDuration=visitDuration;
+    
+     globals.user.visitTime=visitTime;
+    
+     globals.user.visitType=visitType;
+    
+
     var options = {
       "key": "rzp_test_7ygVzTh2b1Y9df",
       "amount": (globals.user.cost) * 100,

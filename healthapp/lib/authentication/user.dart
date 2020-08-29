@@ -14,6 +14,10 @@ class User {
   String gender, dob, blood, marital, address;
   String height, weight;
   String id;
+  String visitTime;
+  String visitType;
+  String visitDuration;
+  String date;
 }
 
 User user = User();

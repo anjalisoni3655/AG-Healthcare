@@ -30,7 +30,7 @@ class SuccessPage extends StatelessWidget {
       fontSize: 15,
       fontWeight: FontWeight.bold,
       height: 1.5);
-
+  String dateCurrent = DateTime.now().toString();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,7 +139,7 @@ class SuccessPage extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              DateTime.now().toString(),
+                              dateCurrent.substring(0, 16),
                               style: _textStyle2,
                             ),
                           ],
@@ -202,7 +202,7 @@ class SuccessPage extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              '24 July, 2020',
+                              globals.user.date,
                               style: _textStyle2,
                             ),
                           ],
@@ -215,7 +215,10 @@ class SuccessPage extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              '6:30 PM',
+                              globals.user.visitDuration +
+                                  '(' +
+                                  globals.user.visitTime +
+                                  ')',
                               style: _textStyle2,
                             ),
                           ],
@@ -223,12 +226,12 @@ class SuccessPage extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'Place',
+                              'Type of visit',
                               style: _textStyle1,
                             ),
                             Spacer(),
                             Text(
-                              'Room No. 045,Sanaka\nHospital, Durgapur',
+                              globals.user.visitType,
                               style: _textStyle2,
                             ),
                           ],
@@ -287,31 +290,3 @@ class SuccessPage extends StatelessWidget {
     );
   }
 }
-
-/*
-Center(
-child: Container(
-child: Text(
-"Your payment is successful and the response is\n OrderId: ${response.orderId}\nPaymentId: ${response.paymentId}\nSignature: ${response.signature}",
-textAlign: TextAlign.center,
-style: TextStyle(
-fontSize: 22,
-color: Colors.black,
-),
-),
-),
-),
-onTap: () async {
-final _id = Firestore.instance.collection('booking_details').document().documentID;
-await Firestore.instance
-    .collection("booking_details")
-.document(globals.user.email)
-.updateData({
-"paymentId": response.paymentId,
-}).then((_) {
-print("success!");
-});
-
-Navigator.pushNamed(context, HomeScreen.id);
-},
- */
