@@ -11,6 +11,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences prefs;
 
+List<Color> _textColor = [
+  Color(0xFF8F8F8F),
+  Color(0xFF8F8F8F),
+  Color(0xFF8F8F8F),
+];
+List<Color> _bodyColor = [
+  Color(0xFFFFFFFF),
+  Color(0xFFFFFFFF),
+  Color(0xFFFFFFFF),
+];
+List<String> _category = ['Male', 'Female', 'Other'];
+DateTime selectedDate = DateTime.now();
+String dropdownValue = 'O+';
+
 String name;
 String email;
 String photo;
@@ -18,7 +32,7 @@ String gender;
 String address;
 
 int phone;
-String dob;
+String dob='${selectedDate.toLocal()}'.split(' ')[0];
 String blood = 'O+';
 int height;
 int weight;
@@ -105,19 +119,7 @@ String validateGender(String value) {
   }
 }
 
-List<Color> _textColor = [
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-];
-List<Color> _bodyColor = [
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-];
-List<String> _category = ['Male', 'Female', 'Other'];
-DateTime selectedDate = DateTime.now();
-String dropdownValue = 'O+';
+
 
 // Widget for getting , validating and storing User Address
 class UserForm extends StatefulWidget {
@@ -136,7 +138,7 @@ class _UserFormState extends State<UserForm> {
   TextStyle textStyle1 = TextStyle(
       color: Color(0xFF8F8F8F), fontSize: 15, fontWeight: FontWeight.w600);
   TextStyle textStyle2 = TextStyle(
-      color: Color(0xFF408AEB), fontSize: 15, fontWeight: FontWeight.w600);
+      color: Color(0xFF606060), fontSize: 15, fontWeight: FontWeight.w600);
   InputDecoration inputDecoration = InputDecoration(
     filled: true,
     fillColor: Colors.white,
@@ -266,7 +268,7 @@ class _UserFormState extends State<UserForm> {
               isExpanded: true,
               underline: SizedBox(),
               style: TextStyle(
-                  color: Color(0xFF408AEB),
+                  color: Color(0xFF606060),
                   fontSize: 18,
                   fontWeight: FontWeight.w500),
               onChanged: (String newValue) {
@@ -612,7 +614,7 @@ class _UserFormState extends State<UserForm> {
                               .collection('user_details')
                               .where('email', isEqualTo: email)
                               .getDocuments();
-                          if (doc.documents.length == 0) {
+                          if (true) {
                             await globals.uploadUserDetails(
                               name: name,
                               email: email,

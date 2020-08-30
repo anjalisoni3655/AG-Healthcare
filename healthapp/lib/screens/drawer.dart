@@ -53,15 +53,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     name = prefs.getString('name') ?? globals.user.name;
     email = prefs.getString('email') ?? globals.user.email;
     photo = prefs.getString('photo') ?? globals.user.photo;
-
     email = email.split('@')[0];
-    print(name);
-    print(globals.user.email);
-    print(photo);
     // Force refresh input
-    setState(() {
-       
-    });
+    setState(() {});
   }
 
   @override
@@ -183,7 +177,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   color: Color(0xFF408AEB),
                 ),
                 onTap: () {
-                  Share.share('Visit my website https://medicaregalaxy.vercel.app/',subject: 'Install this app Now!');
+                  Share.share(
+                      'Visit my website https://medicaregalaxy.vercel.app/',
+                      subject: 'Install this app Now!');
                 },
               ),
               Padding(
@@ -220,7 +216,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 onTap: () {},
               ),
-               ListTile(
+              ListTile(
                 dense: true,
                 title: Text(
                   'About us',
@@ -252,7 +248,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 onTap: () {},
               ),
-               ListTile(
+              ListTile(
                 dense: true,
                 title: Text(
                   'Refund/Cancellation Policy',
@@ -269,7 +265,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   Navigator.pushNamed(context, AppointmentPage.id);
                 },
               ),
-               ListTile(
+              ListTile(
                 dense: true,
                 title: Text(
                   'Privacy Policy',
@@ -279,7 +275,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       fontSize: 18),
                 ),
                 leading: Icon(
-                  Icons.privacy_tip,
+                  Icons.library_books,
                   color: Color(0xFF408AEB),
                 ),
                 onTap: () {
