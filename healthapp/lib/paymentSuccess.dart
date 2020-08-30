@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:googleapis/chat/v1.dart';
 import 'package:healthapp/screens/home/home_page.dart';
 import 'package:healthapp/screens/home_screen.dart';
-
+import 'package:healthapp/utils/settings.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
@@ -77,7 +77,7 @@ class SuccessPage extends StatelessWidget {
                         ),
                         Spacer(),
                         Text(
-                          (globals.user.cost).toString(),
+                          'Rs '+(globals.user.cost).toString(),
                           style: _textStyle3,
                         ),
                       ],
@@ -152,7 +152,7 @@ class SuccessPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          'Appoinment Details',
+                          'Appointment Details',
                           style: _textStyle3,
                         ),
                         Spacer(),
@@ -202,7 +202,7 @@ class SuccessPage extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              globals.user.date,
+                              dateTimeConverter(globals.user.date),
                               style: _textStyle2,
                             ),
                           ],
@@ -216,7 +216,7 @@ class SuccessPage extends StatelessWidget {
                             Spacer(),
                             Text(
                               globals.user.visitDuration +
-                                  '(' +
+                                  ' (' +
                                   globals.user.visitTime +
                                   ')',
                               style: _textStyle2,

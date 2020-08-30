@@ -13,6 +13,7 @@ import 'package:healthapp/screens/user_profile.dart';
 import 'package:provider/provider.dart';
 import 'package:healthapp/screens/splash_page.dart';
 import 'package:healthapp/stores/login_store.dart';
+import 'package:healthapp/screens/upload_photo.dart';
 
 void main() => runApp(MyApp());
 
@@ -52,6 +53,7 @@ class _MyAppState extends State<MyApp> {
           DoctorDetails.id: (context) => DoctorDetails(),
           AppointmentDetails.id: (context) => AppointmentDetails(),
           UserProfile.id: (context) => UserProfile(),
+          UploadPhoto.id: (context) => UploadPhoto(),
         },
       ),
     );

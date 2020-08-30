@@ -1,30 +1,86 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
+import 'package:healthapp/utils/settings.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/components/const.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:healthapp/screens/user_profile.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 
+List<Color> _textColor = [
+  Color(0xFF8F8F8F),
+  Color(0xFF8F8F8F),
+  Color(0xFF8F8F8F),
+];
+List<Color> _bodyColor = [
+  Color(0xFFFFFFFF),
+  Color(0xFFFFFFFF),
+  Color(0xFFFFFFFF),
+];
+List<String> _category = ['Male', 'Female', 'Other'];
+DateTime selectedDate;
+String dropdownValue;
+
 class Profile extends StatelessWidget {
   static const id = "profile";
+
   //User user;
 //Profile({this.user});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Edit Profile',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
+      appBar: _appBar(context),
       body: SettingsScreen(),
+    );
+  }
+
+  Widget _appBar(BuildContext context) {
+    // getPatient();
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      centerTitle: true,
+      title: Text(
+        'Edit Profile',
+        style: GoogleFonts.nunito(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+          color: Color(0xFF262626),
+        ),
+      ),
+      leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.blue[700],
+          )),
+      actions: [
+        Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(right: 20),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, UserProfile.id);
+            },
+            child: Text(
+              'SAVE',
+              style: GoogleFonts.nunito(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF408AEB)),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -110,6 +166,29 @@ class SettingsScreenState extends State<SettingsScreen> {
     controllermarital = TextEditingController(text: marital);
     controlleraddress = TextEditingController(text: address);
 
+    int ind;
+    if (gender == 'Male')
+      ind = 0;
+    else if (gender == 'Female')
+      ind = 1;
+    else
+      ind = 2;
+
+    _textColor[ind] = Color(0xFF408AEB);
+    _bodyColor[ind] = Color(0xFFDFE9F7);
+    int i = 0, j = 1;
+    if (ind == 0) {
+      i = 1;
+      j = 2;
+    } else if (ind == 1) {
+      i = 0;
+      j = 2;
+    }
+    _bodyColor[i] = Color(0xFFFFFFFF);
+    _bodyColor[j] = Color(0xFFFFFFFF);
+    _textColor[i] = Color(0xFF8F8F8F);
+    _textColor[j] = Color(0xFF8F8F8F);
+
     // Force refresh input
     setState(() {});
   }
@@ -141,30 +220,33 @@ class SettingsScreenState extends State<SettingsScreen> {
         storageTaskSnapshot = value;
         storageTaskSnapshot.ref.getDownloadURL().then((downloadUrl) {
           photo = downloadUrl;
-          final _id = Firestore.instance.collection('user_details').document().documentID;
+          final _id = Firestore.instance
+              .collection('user_details')
+              .document()
+              .documentID;
           Firestore.instance
               .collection('user_details')
               .document(globals.user.id)
               .updateData({
             //TODO: chnage this photo with the one that user will uplaod
             'photo': photo,
-             'name': name,
-      'email': email,
-      //TODO: chnage this photo with the one that user will uplaod
-      //'photo': globals.user.photo,
-      'gender': gender,
-      'dob': dob,
-      'blood': blood,
-      'height': height,
-      'weight': weight,
-      'marital': marital,
-      'address': address,
+            'name': name,
+            'email': email,
+            //TODO: chnage this photo with the one that user will uplaod
+            //'photo': globals.user.photo,
+            'gender': gender,
+            'dob': dob,
+            'blood': blood,
+            'height': height,
+            'weight': weight,
+            'marital': marital,
+            'address': address,
           }).then((data) async {
             await prefs.setString('photo', photo);
             setState(() {
               isLoading = false;
             });
-            Fluttertoast.showToast(msg: "Upload success");
+            Fluttertoast.showToast(msg: "Uploaded Successfully");
           }).catchError((err) {
             setState(() {
               isLoading = false;
@@ -206,8 +288,12 @@ class SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       isLoading = true;
     });
- final id = Firestore.instance.collection('user_details').document().documentID;
-    Firestore.instance.collection('user_details').document(globals.user.id).updateData({
+    final id =
+        Firestore.instance.collection('user_details').document().documentID;
+    Firestore.instance
+        .collection('user_details')
+        .document(globals.user.id)
+        .updateData({
       'name': name,
       'email': email,
       //TODO: chnage this photo with the one that user will uplaod
@@ -234,7 +320,7 @@ class SettingsScreenState extends State<SettingsScreen> {
         isLoading = false;
       });
 
-      Fluttertoast.showToast(msg: "Update success");
+      Fluttertoast.showToast(msg: "Successfully updated");
       print(email);
     }).catchError((err) {
       setState(() {
@@ -243,6 +329,123 @@ class SettingsScreenState extends State<SettingsScreen> {
 
       Fluttertoast.showToast(msg: err.toString());
     });
+  }
+
+  InputDecoration inputDecoration = InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+    enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+    disabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+  );
+
+  TextStyle textStyle1 = TextStyle(
+      color: Color(0xFF8F8F8F), fontSize: 15, fontWeight: FontWeight.w600);
+  TextStyle textStyle2 = TextStyle(
+      color: Color(0xFF606060), fontSize: 15, fontWeight: FontWeight.w600);
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(int.parse(dob.split('-')[0]),
+          int.parse(dob.split('-')[1]), int.parse(dob.split('-')[2])),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2050),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            textTheme: GoogleFonts.nunitoTextTheme(),
+            colorScheme: ColorScheme.light(
+              primary: Color(0xFF408AEB),
+            ),
+          ),
+          child: child,
+        );
+      },
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        dob = '${selectedDate.toLocal()}'.split(' ')[0];
+      });
+  }
+
+  Widget _getDateTime(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        _selectDate(context);
+        print(dob);
+      },
+      child: Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(7),
+          color: Colors.white,
+        ),
+        child: Row(
+          children: [
+            (selectedDate == null)
+                ? _getText(dateTimeConverter(dob), 15, Color(0xFF606060))
+                : _getText(
+                    dateTimeConverter(
+                        '${selectedDate.toLocal()}'.split(' ')[0]),
+                    15,
+                    Color(0xFF606060)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getText(String text, double size, Color color) {
+    return Text(
+      text,
+      style:
+          TextStyle(fontSize: size, color: color, fontWeight: FontWeight.w600),
+    );
+  }
+
+  Widget _customButton(String text, double tSize, int index, double padding) {
+    return Expanded(
+      child: RaisedButton(
+        elevation: 0,
+        padding: EdgeInsets.all(padding),
+        color: _bodyColor[index],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: _getText(text, tSize, _textColor[index]),
+        onPressed: () {
+          gender = _category[index];
+          print(gender);
+          setState(() {
+            if (_bodyColor[index] == Color(0xFFFFFFFF)) {
+              _bodyColor[index] = Color(0xFFDFE9F7);
+              _textColor[index] = Color(0xFF408AEB);
+              int i = 0, j = 1;
+              if (index == 0) {
+                i = 1;
+                j = 2;
+              } else if (index == 1) {
+                i = 0;
+                j = 2;
+              }
+              _bodyColor[i] = Color(0xFFFFFFFF);
+              _bodyColor[j] = Color(0xFFFFFFFF);
+              _textColor[i] = Color(0xFF8F8F8F);
+              _textColor[j] = Color(0xFF8F8F8F);
+            } else {
+              _bodyColor[index] = Color(0xFFFFFFFF);
+              _textColor[index] = Color(0xFF8F8F8F);
+            }
+          });
+        },
+      ),
+    );
   }
 
   @override
@@ -258,7 +461,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                   child: Stack(
                     children: <Widget>[
                       (avatarImageFile == null)
-                          ? (photo!= ''
+                          ? (photo != ''
                               ? Material(
                                   child: CachedNetworkImage(
                                     placeholder: (context, url) => Container(
@@ -273,40 +476,41 @@ class SettingsScreenState extends State<SettingsScreen> {
                                       padding: EdgeInsets.all(20.0),
                                     ),
                                     imageUrl: photo,
-                                    width: 90.0,
-                                    height: 90.0,
+                                    width: 130.0,
+                                    height: 130.0,
                                     fit: BoxFit.cover,
                                   ),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(45.0)),
+                                      BorderRadius.all(Radius.circular(100.0)),
                                   clipBehavior: Clip.hardEdge,
                                 )
                               : Icon(
                                   Icons.account_circle,
-                                  size: 90.0,
+                                  size: 130.0,
                                   color: greyColor,
                                 ))
                           : Material(
-                              child: Image.file(
-                                avatarImageFile,
-                                width: 90.0,
-                                height: 90.0,
-                                fit: BoxFit.cover,
-                              ),
+                              child: Image.file(avatarImageFile,
+                                  width: 130.0,
+                                  height: 130.0,
+                                  fit: BoxFit.cover),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(45.0)),
+                                  BorderRadius.all(Radius.circular(100.0)),
                               clipBehavior: Clip.hardEdge,
                             ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.camera_alt,
-                          color: primaryColor.withOpacity(0.5),
+                      Positioned(
+                        top: 80,
+                        left: 80,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Color(0xFFDFE9F7)),
+                          child: IconButton(
+                            icon: Icon(Icons.edit, color: Color(0xFF408AEB)),
+                            onPressed: getImage,
+                            iconSize: 20.0,
+                          ),
                         ),
-                        onPressed: getImage,
-                        padding: EdgeInsets.all(30.0),
-                        splashColor: Colors.transparent,
-                        highlightColor: greyColor,
-                        iconSize: 30.0,
                       ),
                     ],
                   ),
@@ -317,200 +521,177 @@ class SettingsScreenState extends State<SettingsScreen> {
 
               // Input
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   // Username
-                  Container(
-                    child: Text(
-                      'Name',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor),
-                    ),
-                    margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text('Your full name', style: textStyle1),
                   ),
-                  Container(
-                    child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(primaryColor: primaryColor),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: ' Your name',
-                          contentPadding: EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
-                        ),
-                        controller: controllerName,
-                        onChanged: (value) {
-                          name = value;
-                        },
-                        focusNode: focusNodeName,
-                      ),
-                    ),
-                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  TextField(
+                    decoration: inputDecoration,
+                    cursorColor: Color(0xFF8F8F8F),
+                    cursorRadius: Radius.circular(10),
+                    cursorWidth: 0.5,
+                    style: textStyle2,
+                    controller: controllerName,
+                    onChanged: (value) {
+                      name = value;
+                    },
+                    focusNode: focusNodeName,
                   ),
 
                   // About me
-                  Container(
-                    child: Text(
-                      'Email',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor),
-                    ),
-                    margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text('Email Address', style: textStyle1),
                   ),
-                  Container(
-                    child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(primaryColor: primaryColor),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Your email',
-                          contentPadding: EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
-                        ),
-                        controller: controllerEmail,
-                        onChanged: (value) {
-                          email = value;
-                        },
-                        focusNode: focusNodeEmail,
-                      ),
-                    ),
-                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  TextField(
+                    decoration: inputDecoration,
+                    cursorColor: Color(0xFF8F8F8F),
+                    cursorRadius: Radius.circular(10),
+                    cursorWidth: 0.5,
+                    style: textStyle2,
+                    controller: controllerEmail,
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    focusNode: focusNodeEmail,
                   ),
                 ],
-                crossAxisAlignment: CrossAxisAlignment.start,
               ),
               Column(
                 children: <Widget>[
-                  // Username
                   Container(
-                    child: Text(
-                      'Gender',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor),
-                    ),
-                    margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
-                  ),
-                  Container(
-                    child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(primaryColor: primaryColor),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Your gender',
-                          contentPadding: EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text('Gender', style: textStyle1),
                         ),
-                        controller: controllergender,
-                        onChanged: (value) {
-                        gender= value;
-                        },
-                        focusNode: focusNodeGender,
-                      ),
+                        Row(
+                          children: [
+                            _customButton('Male', 18, 0, 20),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5),
+                            ),
+                            _customButton('Female', 18, 1, 20),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5),
+                            ),
+                            _customButton('Other', 18, 2, 20),
+                          ],
+                        )
+                      ],
                     ),
-                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
                   ),
 
-                  // About me
                   Container(
-                    child: Text(
-                      'BloodGroup',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor),
-                    ),
-                    margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
-                  ),
-                  Container(
-                    child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(primaryColor: primaryColor),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Your bloodgroup',
-                          contentPadding: EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text('Blood Group', style: textStyle1),
                         ),
-                        controller: controllerblood,
-                        onChanged: (value) {
-                          blood = value;
-                        },
-                        focusNode: focusNodeBlood,
-                      ),
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(7)),
+                          child: DropdownButton<String>(
+                            value: blood,
+                            icon: Icon(Icons.arrow_drop_down),
+                            iconSize: 24,
+                            isExpanded: true,
+                            underline: SizedBox(),
+                            style: GoogleFonts.nunito(
+                                color: Color(0xFF606060),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownValue = newValue;
+                                blood = dropdownValue;
+                              });
+                            },
+                            items: <String>[
+                              'O+',
+                              'O-',
+                              'AB+',
+                              'AB-',
+                              'A+',
+                              'A-',
+                              'B+',
+                              'B-'
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
                     ),
-                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
-                  ),
+                  )
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,
               ),
 
               Column(
                 children: <Widget>[
-                  // Username
                   Container(
-                    child: Text(
-                      'Date of Birth',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor),
-                    ),
-                    margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
-                  ),
-                  Container(
-                    child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(primaryColor: primaryColor),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Your date of birth',
-                          contentPadding: EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text('Date of Birth', style: textStyle1),
                         ),
-                        controller: controllerdob,
-                        onChanged: (value) {
-                          dob= value;
-                        },
-                        focusNode: focusNodeDob,
-                      ),
+                        _getDateTime(context),
+                      ],
                     ),
-                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
                   ),
 
                   // About me
-                  Container(
-                    child: Text(
-                      'Height',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor),
-                    ),
-                    margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text('Height', style: textStyle1),
                   ),
-                  Container(
-                    child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(primaryColor: primaryColor),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Your height..',
-                          contentPadding: EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
-                        ),
-                        controller: controllerheight,
-                        onChanged: (value) {
-                          height= value;
-                        },
-                        focusNode: focusNodeHeight,
-                      ),
+                  TextField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(7)),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(7)),
+                      disabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(7)),
+                      hintText: 'cm',
+                      hintStyle: TextStyle(
+                          color: Color(0x6F8F8F8F),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
                     ),
-                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                    cursorColor: Color(0xFF8F8F8F),
+                    cursorRadius: Radius.circular(10),
+                    cursorWidth: 0.5,
+                    style: textStyle2,
+                    controller: controllerheight,
+                    onChanged: (value) {
+                      height = value;
+                    },
+                    focusNode: focusNodeHeight,
                   ),
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -519,65 +700,56 @@ class SettingsScreenState extends State<SettingsScreen> {
               Column(
                 children: <Widget>[
                   // Username
-                  Container(
-                    child: Text(
-                      'Weight',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor),
-                    ),
-                    margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text('Weight', style: textStyle1),
                   ),
-                  Container(
-                    child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(primaryColor: primaryColor),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Weight',
-                          contentPadding: EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
-                        ),
-                        controller: controllerweight,
-                        onChanged: (value) {
-                          weight = value;
-                        },
-                        focusNode: focusNodeWeight,
-                      ),
+                  TextField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(7)),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(7)),
+                      disabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(7)),
+                      hintText: 'kg',
+                      hintStyle: TextStyle(
+                          color: Color(0x6F8F8F8F),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
                     ),
-                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                    cursorColor: Color(0xFF8F8F8F),
+                    cursorRadius: Radius.circular(10),
+                    cursorWidth: 0.5,
+                    style: textStyle2,
+                    controller: controllerweight,
+                    onChanged: (value) {
+                      weight = value;
+                    },
+                    focusNode: focusNodeWeight,
                   ),
 
                   // About me
-                  Container(
-                    child: Text(
-                      'Address',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor),
-                    ),
-                    margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text('Address', style: textStyle1),
                   ),
-                  Container(
-                    child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(primaryColor: primaryColor),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Your address',
-                          contentPadding: EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
-                        ),
-                        controller: controlleraddress,
-                        onChanged: (value) {
-                          address= value;
-                        },
-                        focusNode: focusNodeAddress,
-                      ),
-                    ),
-                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  TextField(
+                    decoration: inputDecoration,
+                    cursorColor: Color(0xFF8F8F8F),
+                    cursorRadius: Radius.circular(10),
+                    cursorWidth: 0.5,
+                    style: textStyle2,
+                    controller: controlleraddress,
+                    onChanged: (value) {
+                      address = value;
+                    },
+                    focusNode: focusNodeAddress,
                   ),
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -586,34 +758,21 @@ class SettingsScreenState extends State<SettingsScreen> {
               Column(
                 children: <Widget>[
                   // Username
-                  Container(
-                    child: Text(
-                      'Marital Status',
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor),
-                    ),
-                    margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text('Marital Status', style: textStyle1),
                   ),
-                  Container(
-                    child: Theme(
-                      data: Theme.of(context)
-                          .copyWith(primaryColor: primaryColor),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Your marital status',
-                          contentPadding: EdgeInsets.all(5.0),
-                          hintStyle: TextStyle(color: greyColor),
-                        ),
-                        controller: controllermarital,
-                        onChanged: (value) {
-                          marital= value;
-                        },
-                        focusNode: focusNodeMarital,
-                      ),
-                    ),
-                    margin: EdgeInsets.only(left: 30.0, right: 30.0),
+                  TextField(
+                    decoration: inputDecoration,
+                    cursorColor: Color(0xFF8F8F8F),
+                    cursorRadius: Radius.circular(10),
+                    cursorWidth: 0.5,
+                    style: textStyle2,
+                    controller: controllermarital,
+                    onChanged: (value) {
+                      marital = value;
+                    },
+                    focusNode: focusNodeMarital,
                   ),
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -621,19 +780,28 @@ class SettingsScreenState extends State<SettingsScreen> {
 
               // Button
               Container(
-                child: FlatButton(
-                  onPressed: handleUpdateData,
-                  child: Text(
-                    'Update',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  color: primaryColor,
-                  highlightColor: Color(0xff8d93a0),
-                  splashColor: Colors.transparent,
-                  textColor: Colors.white,
-                  padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                padding: EdgeInsets.only(bottom: 100, top: 30),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: RaisedButton(
+                        onPressed: handleUpdateData,
+                        elevation: 10,
+                        child: Text(
+                          'Update',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        color: Color(0xFF408AEB),
+                        padding: EdgeInsets.all(20),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7)),
+                      ),
+                    ),
+                  ],
                 ),
-                margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
               ),
             ],
           ),

@@ -6,8 +6,10 @@ import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:healthapp/screens/mobile_auth_screens/mobile_login_page.dart';
 import 'package:healthapp/screens/user_profile.dart';
+import 'package:healthapp/utils/settings.dart';
 import 'package:healthapp/widgets/app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:healthapp/screens/upload_photo.dart';
 
 SharedPreferences prefs;
 
@@ -501,7 +503,7 @@ class _UserFormState extends State<UserForm> {
           children: [
             (selectedDate == null)
                 ? _getText('yyyy-mm-dd', 15, Color(0xFF8F8F8F))
-                : _getText('${selectedDate.toLocal()}'.split(' ')[0], 15,
+                : _getText(dateTimeConverter('${selectedDate.toLocal()}'.split(' ')[0]), 15,
                     Color(0xFF408AEB)),
             Spacer(),
             Icon(Icons.calendar_today,
@@ -636,10 +638,11 @@ class _UserFormState extends State<UserForm> {
                             await prefs.setString('marital', marital);
                             await prefs.setString('address', address);
                           }
+                          // Navigator.pushNamed(context, UploadPhoto.id);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomeScreen(
+                                  builder: (context) => UploadPhoto(
                                       currentUserId: widget.currentUserId)));
                         },
                         shape: RoundedRectangleBorder(

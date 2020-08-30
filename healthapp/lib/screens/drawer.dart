@@ -90,9 +90,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           child: ClipOval(
                             child: Image.network(
                               (photo != null) ? photo : globals.user.photo,
+                              height: 130,
+                              width: 130,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          radius: 30,
+                          radius: 40,
                           backgroundColor: Colors.transparent,
                         ),
                       ),

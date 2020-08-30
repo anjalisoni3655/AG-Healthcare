@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:healthapp/screens/home_screen.dart';
+import 'package:healthapp/utils/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:healthapp/screens/edit_profile.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
+
+import 'home/home_page.dart';
 
 String type;
 String gender, dob, blood, marital, address, name, email;
@@ -18,28 +23,6 @@ class UserProfile extends StatefulWidget {
 SharedPreferences prefs;
 
 class UserProfileState extends State<UserProfile> {
-  /*Future<void> getPatient() async {
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    Firestore.instance
-        .collection("user_details")
-        .document(firebaseUser.email)
-        .get()
-        .then((value) {
-      print(value.data);
-      gender = value.data['gender'];
-      dob = value.data['dob'];
-      blood = value.data['blood'];
-      height = value.data['height'];
-      weight = value.data['weight'];
-      marital = value.data['marital'];
-      address = value.data['address'];
-      name = value.data['name'];
-      email = value.data['email'];
-
-      //  print(value.data["address"]["city"]);
-      print(value.data["address"]);
-    });
-  }*/
 
   void readLocal() async {
     prefs = await SharedPreferences.getInstance();
@@ -87,6 +70,7 @@ class UserProfileState extends State<UserProfile> {
                       image: NetworkImage(photo),
                       width: 100,
                       height: 100,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -97,7 +81,7 @@ class UserProfileState extends State<UserProfile> {
                   padding: EdgeInsets.symmetric(vertical: 20),
                 ),
                 _information('Gender', gender),
-                _information('Date of Birth', dob),
+                _information('Date of Birth', dateTimeConverter(dob)),
                 _information('Blood Group', blood),
                 _information('Height', (height).toString() + ' cm'),
                 _information('Weight', (weight).toString() + ' kg'),
@@ -146,7 +130,7 @@ class UserProfileState extends State<UserProfile> {
       centerTitle: true,
       title: Text(
         'My Profile',
-        style: TextStyle(
+        style: GoogleFonts.nunito(
           fontWeight: FontWeight.bold,
           fontSize: 18,
           color: Color(0xFF262626),
@@ -154,7 +138,7 @@ class UserProfileState extends State<UserProfile> {
       ),
       leading: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, HomeScreen.id);
           },
           child: Icon(
             Icons.arrow_back_ios,
