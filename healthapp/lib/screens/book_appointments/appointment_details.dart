@@ -105,17 +105,16 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     super.dispose();
     razorpay.clear();
   }
-
+ Map<String, String> notes = new Map();
   void openCheckout() {
     String date = selectedDate.toString();
     date = date.substring(0, 10);
-    globals.user.date=date;
-     globals.user.visitDuration=visitDuration;
-    
-     globals.user.visitTime=visitTime;
-    
-     globals.user.visitType=visitType;
-    
+    globals.user.date = date;
+    globals.user.visitDuration = visitDuration;
+
+    globals.user.visitTime = visitTime;
+
+    globals.user.visitType = visitType;
 
     var options = {
       "key": "rzp_test_7ygVzTh2b1Y9df",
@@ -127,9 +126,31 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       //                         visitDuration: visitDuration,
 
       // 'timeout': 60, // in seconds
-      "description":
-          "$visitType visit on $date from $visitDuration($visitTime)",
-      "prefill": {"contact": "", "email": ""},
+
+     "notes": {
+         "Age":"20",
+        "Name":"Anjali Soni",
+       "Gender":"Female",
+       "Reason to visit":"Cough and Cold",
+       "First time/Follow up":"First Time",
+       "Date of Birth" :"5th June,2020",
+       "Blood Group":"AB+",
+       "Height":"45cm",
+       "Weight":"54Kg",
+       "Marital Status":"Single",
+       "Home Address":"Jharkhand",
+       
+
+
+     },
+     //"theme": "#FFFFFF",
+      "description": "$visitType, $date, $visitDuration($visitTime)",
+        "image": "https://dramitendo.com/wp-content/uploads/2020/07/Dr-Amit-Goel.png",
+      "prefill": {
+        "contact": "",
+       "email": "",
+      
+       },
       "currency": "INR",
       "payment_capture": 1,
       "external": {
@@ -145,7 +166,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   }
 
   void handlerPaymentSuccess(PaymentSuccessResponse response) {
-    //  print(response.paymentId);
+    print('paymentid');
+    print(response.paymentId);
     globals.user.paymentId = response.paymentId;
     print("Payment success");
     Toast.show("Payment success", context);
@@ -316,6 +338,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               borderRadius: BorderRadius.circular(12)),
                           onPressed: () async {
                             await globals.uploadBookingDetails(
+                              email: globals.user.email,
                               doctorName: name,
                               years: expYears,
                               field: fields,
@@ -324,7 +347,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               visitTime: visitTime,
                               visitType: visitType,
                               visitDuration: visitDuration,
-                              paymentId: globals.user.paymentId,
+                              // paymentId: globals.user.paymentId,
                             );
                             print('done');
                             globals.getAllPatientDetail();

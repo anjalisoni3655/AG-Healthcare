@@ -43,6 +43,8 @@ Future<Null> handleSignIn(BuildContext context) async {
           .getDocuments();
       final List<DocumentSnapshot> documents = result.documents;
       if (documents.length == 0) {
+         globals.user.name = currentUser.displayName;
+          globals.user.email = currentUser.email;
         // Update data to server if new user
         Firestore.instance
             .collection('user')
