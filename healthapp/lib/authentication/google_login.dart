@@ -32,7 +32,7 @@ Future<Null> handleSignIn(BuildContext context) async {
         (await firebaseAuth.signInWithCredential(credential)).user;
 
     if (firebaseUser != null) {
-      // globals.user.email = firebaseUser.email;
+      globals.user.email = firebaseUser.email;
       //  globals.user.photo = firebaseUser.photoUrl;
       // print('email');
       // print(globals.user.email);
