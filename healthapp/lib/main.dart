@@ -5,6 +5,7 @@ import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/book_appointments/appointment_details.dart';
 import 'package:healthapp/screens/book_appointments/doctor_details.dart';
 import 'package:healthapp/screens/book_appointments/doctors_list.dart';
+import 'package:healthapp/screens/chat_screen.dart';
 import 'package:healthapp/screens/login_screen.dart';
 import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/screens/user_details.dart';
@@ -54,6 +55,7 @@ class _MyAppState extends State<MyApp> {
           AppointmentDetails.id: (context) => AppointmentDetails(),
           UserProfile.id: (context) => UserProfile(),
           UploadPhoto.id: (context) => UploadPhoto(),
+          ChatScreen.id: (context) => ChatScreen(),
         },
       ),
     );

@@ -10,6 +10,7 @@ import 'package:healthapp/widgets/loading.dart';
 class UpcomingPage extends StatefulWidget {
   @override
   static const id = "upcoming_page";
+
   _UpcomingPageState createState() => _UpcomingPageState();
 }
 
@@ -22,9 +23,8 @@ class _UpcomingPageState extends State<UpcomingPage> {
           height: 90,
           color: Color(0xFFF8F8F8),
           child: StreamBuilder(
-            stream: Firestore.instance
-                .collection('booking_details')
-                .snapshots(),
+            stream:
+                Firestore.instance.collection('booking_details').snapshots(),
             builder: (context, snapshot) {
               print(snapshot);
               if (!snapshot.hasData) {
@@ -35,43 +35,60 @@ class _UpcomingPageState extends State<UpcomingPage> {
                   ),
                 );
               } else {
-                return ListView.builder(
-                  itemBuilder: (context, index) =>
-                      buildItem(context, snapshot.data.documents[index]),
-                  itemCount: snapshot.data.documents.length,
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) =>
+                            buildItem(context, snapshot.data.documents[index]),
+                        itemCount: snapshot.data.documents.length,
+                      ),
+                    ),
+                  ],
                 );
               }
             },
           ),
         ),
-
         // Loading
-        Positioned(child: isLoading ? const Loading() : Container())
+        Positioned(child: isLoading ? const Loading() : Container()),
       ],
     );
   }
 
   Widget buildItem(BuildContext context, DocumentSnapshot document) {
     if (document.data['id'] != globals.user.id) {
-      if(document.data.length==0)
-        return Container(alignment: Alignment.center,child: Text('You have no upcoming appointments!',),);
+      if (document.data.length == 0)
+        return Container(
+          alignment: Alignment.center,
+          child: Text(
+            'You have no upcoming appointments!',
+          ),
+        );
       else
-        return Container(height: 0,);
+        return Container(
+          height: 0,
+        );
     } else {
       print(document.data['id']);
       String time = document.data['visitDuration'];
-      time=time.split('-')[0];
+      time = time.split('-')[0];
       if (document['visitTime'] == 'Morning')
         time += ' AM';
       else
         time += ' PM';
       Timestamp visitDate = document.data['selectedDate'];
-      String date = dateTimeConverter(visitDate.toDate().toString().split(' ')[0]);
+      String date =
+          dateTimeConverter(visitDate.toDate().toString().split(' ')[0]);
       date = date.split(',')[0];
       return Padding(
         padding: const EdgeInsets.only(bottom: 10),
-        child: _appointmentsTab('assets/icons/doc1.png', document.data['doctorName'],
-            document.data['visitType'], time, date),
+        child: _appointmentsTab(
+            'assets/icons/doc1.png',
+            document.data['doctorName'],
+            document.data['visitType'],
+            time,
+            date),
       );
     }
   }

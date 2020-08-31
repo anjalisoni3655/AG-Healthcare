@@ -34,6 +34,8 @@ const List<String> time = ['6:30 PM', '6:45PM', '', ''];
 const String message = 'Last message: Thank you do ...';
 
 class ChatScreen extends StatefulWidget {
+  @override
+  static const id = "chat_screen";
   final String currentUserId;
 
   ChatScreen({Key key, @required this.currentUserId}) : super(key: key);
@@ -146,55 +148,57 @@ class ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Color(0xFFF8F8F8),
-      child: WillPopScope(
-        child: Stack(
-          children: <Widget>[
-            // List
-            Container(
-              child: StreamBuilder(
-                stream: Firestore.instance.collection('user').snapshots(),
-                builder: (context, snapshot) {
-                  print(snapshot);
+    return SafeArea(
+      child: Material(
+        color: Color(0xFFF8F8F8),
+        child: WillPopScope(
+          child: Stack(
+            children: <Widget>[
+              // List
+              Container(
+                child: StreamBuilder(
+                  stream: Firestore.instance.collection('user').snapshots(),
+                  builder: (context, snapshot) {
+                    print(snapshot);
 
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
-                      ),
-                    );
-                  } else {
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          child: UpcomingPage(),
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
                         ),
-                        Expanded(
-                          child: ListView.builder(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            itemBuilder: (context, index) =>
-                                buildItem(context, snapshot.data.documents[index]),
-                            itemCount: snapshot.data.documents.length,
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            child: UpcomingPage(),
                           ),
-                        ),
-                      ],
-                    );
-                  }
-                },
+                          Expanded(
+                            child: ListView.builder(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              itemBuilder: (context, index) =>
+                                  buildItem(context, snapshot.data.documents[index]),
+                              itemCount: snapshot.data.documents.length,
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  },
+                ),
+
               ),
 
-            ),
-
-            // Loading
-            Positioned(
-              child: isLoading ? const Loading() : Container(),
-            )
-          ],
+              // Loading
+              Positioned(
+                child: isLoading ? const Loading() : Container(),
+              )
+            ],
+          ),
+          //  onWillPop:,
         ),
-        //  onWillPop:,
       ),
     );
   }
