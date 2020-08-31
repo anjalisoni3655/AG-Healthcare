@@ -103,11 +103,11 @@ void getAllBookings() {
   });
 }
 
-void getPatient() async {
+void getPatientBooking() async {
   var firebaseUser = await FirebaseAuth.instance.currentUser();
   Firestore.instance
-      .collection("user_details")
-      .document(firebaseUser.email)
+      .collection("booking_details")
+      .document("anjalisony32@gmail.com")
       .get()
       .then((value) {
     print(value.data);
@@ -139,3 +139,23 @@ void getPatientofGivenBookingId(String paymentId) {
     });
   });
 }
+//     void getPatientBooking()async {
+//       var firebaseUser = await FirebaseAuth.instance.currentUser();
+//       Firestore.instance
+//           .collection("booking_details")
+//           .document(firebaseUser.email)
+//           .get()
+//           .then((value) {
+//         print(value.data);
+//         doctor = value.data['doctorName'];
+//         timeOfVisit = value.data['visitDuration'];
+//       //  AMorPM = value.data['visitTime'];
+//         dateOfVisit = value.data['selectedDate'];
+//         typeOfVisit = value.data['visitTime'];
+//          if(typeOfVisit=="Morning")timeOfVisit+='AM';
+//                   else timeOfVisit+='AM';
+
+//          print("patient");
+// print(value.data["doctorName"]);
+//       });
+//     }

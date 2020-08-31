@@ -35,6 +35,7 @@ class Profile extends StatelessWidget {
 //Profile({this.user});
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       appBar: _appBar(context),
       body: SettingsScreen(),
@@ -42,7 +43,6 @@ class Profile extends StatelessWidget {
   }
 
   Widget _appBar(BuildContext context) {
-    // getPatient();
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
@@ -587,7 +587,6 @@ class SettingsScreenState extends State<SettingsScreen> {
                       ],
                     ),
                   ),
-
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 5),
                     child: Column(
