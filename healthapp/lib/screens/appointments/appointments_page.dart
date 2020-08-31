@@ -17,7 +17,6 @@ const List<String> date = ['01 Jun', '04 Jun', '', ''];
 const List<String> time = ['6:30 PM', '6:45PM', '', ''];
 const String message = 'Last message: Thank you do ...';
 
-
 class AppointmentPage extends StatefulWidget {
   @override
   static const id = "appointments_page";
@@ -28,12 +27,11 @@ class AppointmentPage extends StatefulWidget {
 class _AppointmentPageState extends State<AppointmentPage> {
   @override
   Widget build(BuildContext context) {
-     print('all the bookings');
+    print('all the bookings');
     // globals
     //     .getPatientBooking(); //{visitDuration: 9:00-9:15, doctorName: Dr Sonali Gupta, visitTime: Morning, cost: Rs 300, field: Gynecologist, paymentId: pay_FX3SE1hIqLnNTy, selectedDate: Timestamp(seconds=1597170600, nanoseconds=0), email: anjalisony32@gmail.com, years: 3Y Exp, visitType: Online}
-     print('patients booking');
-      globals.getAllBookings();
-
+    print('patients booking');
+    globals.getAllBookings();
 
     return Material(
       color: Color(0xFFF8F8F8),
@@ -46,9 +44,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             child: Column(
               children: [
                 for (var i = 0; i < 4; i++)
-                
                   _appointmentsTab('assets/icons/' + doc_images[i] + '.png',
-                 
                       doc_names[i], type[i], visitType[i], time[i], date[i]),
               ],
             ),

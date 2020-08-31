@@ -41,7 +41,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     ),
                     Container(
                       margin: EdgeInsets.only(
-                          left: 20, right: 20, top: 150, bottom: 100),
+                          left: 20, right: 20, top: 200, bottom: 100),
                       child: Column(
                         children: [
                           _textTitle(
@@ -91,7 +91,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
             margin: EdgeInsets.only(
                 left: 20,
                 right: 20,
-                top: MediaQuery.of(context).size.height * 0.75),
+                top: MediaQuery.of(context).size.height * 0.78),
             child: RaisedButton(
               elevation: 10,
               onPressed: () {
@@ -148,9 +148,9 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                       _textTitle('Dr. Amit Goel', Color(0xFF08134D), 29,
                           FontWeight.w700),
                       _coloredBox(Color(0xFFCBFCDD), Color(0xFF30AB6A),
-                          'Available Tue, Thu and Sun'),
+                          'Available : Mon - Sat'),
                       _coloredBox(
-                          Color(0xFFE0E4F7), Color(0xFF2748F7), 'Child Sp.'),
+                          Color(0xFFE0E4F7), Color(0xFF2748F7), 'Endocrinologist'),
                     ],
                   ),
                   Padding(
@@ -163,7 +163,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                   )
                 ],
               ),
-              _textTitle('BDS, MDS - Oral Medicine and Radiology',
+              _textTitle('DM – Endocrinology, MD – General Medicine',
                   Color(0xFF08134D), 14, FontWeight.w600),
               Row(
                 children: [
@@ -182,7 +182,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                   _descText('(12 reviews)', Color(0xFF8F8F8F)),
                 ],
               ),
-              _descText('Speaks English | Hindi | Bengali', Color(0xFF8F8F8F)),
+              _descText('Speaks Telugu | Hindi | English | Kannada | Bengali | Marathi.', Color(0xFF8F8F8F)),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -191,14 +191,17 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     color: Color(0xFF408AEB),
                     size: 20,
                   ),
-                  _descText('Room No. 045, Sanaka Hospital,\nDurgapur',
-                      Color(0xFF8F8F8F)),
+                  Flexible(
+                    child: _descText('Plot no. 9B, Vikrampuri Colony, '
+                        'Secunderabad, Telangana',
+                        Color(0xFF8F8F8F)),
+                  ),
                 ],
               ),
               Divider(color: Color(0xFF8F8F8F)),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50),
-                child: _textTitle('Charge        Rs 1200', Color(0xFF08134D),
+                child: _textTitle('Charge        Rs 400', Color(0xFF08134D),
                     18, FontWeight.w700),
               ),
             ],
