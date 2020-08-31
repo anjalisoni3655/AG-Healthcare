@@ -87,6 +87,7 @@ Future<Null> handleSignIn(BuildContext context) async {
     }
   } catch (e) {
     print('Exception Caught!');
+    print(e);
   }
 
   void signOutGoogle() async {
