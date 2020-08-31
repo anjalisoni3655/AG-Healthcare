@@ -44,9 +44,9 @@ class _SplashPageState extends State<SplashPage> {
 
      //TODO: also add the reason of visting
 
-       // print('EMAIL:${globals.user.email}');
-       // print(globals.user.photo);
-      //  print(globals.user.name);
+        print('EMAIL:${globals.user.email}');
+       print(globals.user.photo);
+       print(globals.user.name);
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (_) =>

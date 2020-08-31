@@ -43,8 +43,8 @@ Future<Null> handleSignIn(BuildContext context) async {
           .getDocuments();
       final List<DocumentSnapshot> documents = result.documents;
       if (documents.length == 0) {
-         globals.user.name = currentUser.displayName;
-          globals.user.email = currentUser.email;
+       // globals.user.name = currentUser.displayName;
+       // globals.user.email = currentUser.email;
         // Update data to server if new user
         Firestore.instance
             .collection('user')
@@ -61,7 +61,8 @@ Future<Null> handleSignIn(BuildContext context) async {
         // Write data to local
         currentUser = firebaseUser;
         globals.user.id = currentUser.uid;
-
+  globals.user.name = currentUser.displayName;
+        globals.user.email = currentUser.email;
         await prefs.setString('id', currentUser.uid);
         await prefs.setString('name', currentUser.displayName);
         await prefs.setString('photo', currentUser.photoUrl);
@@ -86,6 +87,7 @@ Future<Null> handleSignIn(BuildContext context) async {
       print("Sign in failed, Try Again");
     }
   } catch (e) {
+    print(e.toString());
     print('Exception Caught!');
   }
 

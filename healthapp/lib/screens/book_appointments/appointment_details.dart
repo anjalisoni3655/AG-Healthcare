@@ -9,6 +9,7 @@ import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:toast/toast.dart';
 import 'package:healthapp/paymentSuccess.dart';
 import 'package:healthapp/paymentFailed.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 List<Color> _textColor = [
   Color(0xFF8F8F8F),
@@ -84,12 +85,42 @@ class AppointmentDetails extends StatefulWidget {
 
   _AppointmentDetailsState createState() => _AppointmentDetailsState();
 }
+String type;
+String gender, dob, blood, marital, address, name, email;
+String height, weight, photo;
+
+
+
+SharedPreferences prefs;
+
+
+  
 
 class _AppointmentDetailsState extends State<AppointmentDetails> {
   Razorpay razorpay;
+void readLocal() async {
+    prefs = await SharedPreferences.getInstance();
+    name = prefs.getString('name') ?? globals.user.name;
+    email = prefs.getString('email') ?? globals.user.email;
+    photo = prefs.getString('photo') ?? globals.user.photo;
+    gender = prefs.getString('gender') ?? globals.user.gender;
+    dob = prefs.getString('dob') ?? globals.user.dob;
+    blood = prefs.getString('blood') ?? globals.user.blood;
+    height = prefs.getString('height') ?? globals.user.height;
+    weight = prefs.getString('dob') ?? globals.user.weight;
+    marital = prefs.getString('marital') ?? globals.user.marital;
+    address = prefs.getString('address') ?? globals.user.address;
+
+    email = email.split('@')[0];
+
+    // Force refresh input
+    setState(() {});
+  }
+
 
   @override
   void initState() {
+    readLocal();
     super.initState();
 
     razorpay = new Razorpay();
@@ -126,25 +157,29 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       //                         visitDuration: visitDuration,
 
       // 'timeout': 60, // in seconds
-
+//TODO:send these details
      "notes": {
-         "Age":"20",
-        "Name":"Anjali Soni",
-       "Gender":"Female",
+       //  "Age":"20",
+        "Name":name,
+       "Gender":gender,
+       //TODO: add a field why is he visiting when he is booking the payment
        "Reason to visit":"Cough and Cold",
+       //TODO: add this variable
+       
        "First time/Follow up":"First Time",
-       "Date of Birth" :"5th June,2020",
-       "Blood Group":"AB+",
-       "Height":"45cm",
-       "Weight":"54Kg",
-       "Marital Status":"Single",
-       "Home Address":"Jharkhand",
+
+       "Date of Birth" :dob,
+       "Blood Group":blood,
+       "Height":height,
+       "Weight":weight,
+       "Marital Status":marital,
+       "Home Address":address,
        
 
 
      },
      //"theme": "#FFFFFF",
-      "description": "$visitType, $date, $visitDuration($visitTime)",
+      "description":"$visitType, $date, $visitDuration($visitTime)",
         "image": "https://dramitendo.com/wp-content/uploads/2020/07/Dr-Amit-Goel.png",
       "prefill": {
         "contact": "",
@@ -338,6 +373,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               borderRadius: BorderRadius.circular(12)),
                           onPressed: () async {
                             await globals.uploadBookingDetails(
+
                               email: globals.user.email,
                               doctorName: name,
                               years: expYears,
@@ -347,6 +383,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               visitTime: visitTime,
                               visitType: visitType,
                               visitDuration: visitDuration,
+                              
                               // paymentId: globals.user.paymentId,
                             );
                             print('done');
