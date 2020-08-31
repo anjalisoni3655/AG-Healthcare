@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:healthapp/screens/appointments/appointments_page.dart';
+import 'package:healthapp/screens/appointments/upcoming_page.dart';
 import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/drawer.dart';
 import 'package:healthapp/screens/home/home_page.dart';

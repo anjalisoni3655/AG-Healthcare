@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:healthapp/screens/appointments/upcoming_page.dart';
 import 'package:healthapp/screens/book_appointments/doctors_list.dart';
 import 'package:healthapp/screens/home/accordion.dart';
 import 'package:healthapp/screens/home/articles.dart';
@@ -26,6 +27,8 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               _topPoster(),
               _bookAppointmentButton(),
+              _textTitle('Upcoming'),
+              UpcomingPage(),
               _textTitle('Medical services we offer'),
               MyAccordionWidget(),
               _textTitle('COVID Information Videos'),

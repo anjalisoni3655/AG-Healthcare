@@ -67,14 +67,20 @@ Future<String> uploadBookingDetails({
   String visitDuration,
   String paymentId,
   String email,
+  String id,
+  String name,
+  String photo,
 }) async {
   print('email:${globals.user.email}');
   final _firestore = Firestore.instance;
   final _id = _firestore
       .collection('booking_details')
-      .document(globals.user.email)
+      .document(globals.user.id)
       .documentID;
-  await Firestore.instance.collection('booking_details').document(_id).setData({
+  await Firestore.instance
+      .collection('booking_details')
+      .document(globals.user.id)
+      .setData({
     'doctorName': doctorName,
     'years': years,
     'field': field,
@@ -84,7 +90,10 @@ Future<String> uploadBookingDetails({
     'visitType': visitType,
     'visitDuration': visitDuration,
     'paymentId': paymentId,
-    'email': globals.user.email,
+    'email': email,
+    'id': id,
+    'photo': photo,
+    'name': name,
   }, merge: true).then((_) {
     print("payment id added");
   });
@@ -104,15 +113,12 @@ void getAllBookings() {
 }
 
 void getPatientBooking() async {
-  var firebaseUser = await FirebaseAuth.instance.currentUser();
   Firestore.instance
       .collection("booking_details")
-      .document("anjalisony32@gmail.com")
+      .document(globals.user.id)
       .get()
       .then((value) {
-    print(value.data);
-    //  print(value.data["address"]["city"]);
-//print(value.data["name"]);
+        print( value.data);
   });
 }
 
@@ -139,23 +145,3 @@ void getPatientofGivenBookingId(String paymentId) {
     });
   });
 }
-//     void getPatientBooking()async {
-//       var firebaseUser = await FirebaseAuth.instance.currentUser();
-//       Firestore.instance
-//           .collection("booking_details")
-//           .document(firebaseUser.email)
-//           .get()
-//           .then((value) {
-//         print(value.data);
-//         doctor = value.data['doctorName'];
-//         timeOfVisit = value.data['visitDuration'];
-//       //  AMorPM = value.data['visitTime'];
-//         dateOfVisit = value.data['selectedDate'];
-//         typeOfVisit = value.data['visitTime'];
-//          if(typeOfVisit=="Morning")timeOfVisit+='AM';
-//                   else timeOfVisit+='AM';
-
-//          print("patient");
-// print(value.data["doctorName"]);
-//       });
-//     }

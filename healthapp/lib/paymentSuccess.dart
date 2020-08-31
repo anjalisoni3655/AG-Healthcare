@@ -257,7 +257,7 @@ class SuccessPage extends StatelessWidget {
                                   .documentID;
                               await Firestore.instance
                                   .collection("booking_details")
-                                  .document(globals.user.email)
+                                  .document(globals.user.id)
                                   .updateData({
                                 "paymentId": response.paymentId,
                               }).then((_) {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:healthapp/screens/appointments/appointments_page.dart';
+import 'package:healthapp/screens/appointments/upcoming_page.dart';
 import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/user_profile.dart';
 import 'login_screen.dart';
@@ -146,7 +146,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   color: Color(0xFF408AEB),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, AppointmentPage.id);
+                  Navigator.pushNamed(context, UpcomingPage.id);
                 },
               ),
               ListTile(
@@ -233,7 +233,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   color: Color(0xFF408AEB),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, AppointmentPage.id);
                 },
               ),
               ListTile(
@@ -265,7 +264,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   color: Color(0xFF408AEB),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, AppointmentPage.id);
                 },
               ),
               ListTile(
@@ -282,7 +280,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   color: Color(0xFF408AEB),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, AppointmentPage.id);
                 },
               ),
               Padding(

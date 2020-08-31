@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:healthapp/screens/appointments/appointments_page.dart';
+import 'package:healthapp/screens/appointments/upcoming_page.dart';
 import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/book_appointments/appointment_details.dart';
 import 'package:healthapp/screens/book_appointments/doctor_details.dart';
@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
           UserForm.id: (context) => UserForm(),
           HomeScreen.id: (context) => HomeScreen(),
           Profile.id: (context) => Profile(),
-          AppointmentPage.id: (context) => AppointmentPage(),
+          UpcomingPage.id: (context) => UpcomingPage(),
           BlogsPage.id: (context) => BlogsPage(),
           DoctorsList.id: (context) => DoctorsList(),
           DoctorDetails.id: (context) => DoctorDetails(),

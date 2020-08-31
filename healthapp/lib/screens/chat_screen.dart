@@ -18,6 +18,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:healthapp/main.dart';
 import 'package:intl/intl.dart';
 
+import 'appointments/upcoming_page.dart';
+
 const List<String> doc_images = ['doc1', 'doc2', 'doc3', 'doc4'];
 const List<String> doc_names = [
   'Dr.Amit Goel',
@@ -164,15 +166,26 @@ class ChatScreenState extends State<ChatScreen> {
                       ),
                     );
                   } else {
-                    return ListView.builder(
-                      padding: EdgeInsets.all(20.0),
-                      itemBuilder: (context, index) =>
-                          buildItem(context, snapshot.data.documents[index]),
-                      itemCount: snapshot.data.documents.length,
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          child: UpcomingPage(),
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            itemBuilder: (context, index) =>
+                                buildItem(context, snapshot.data.documents[index]),
+                            itemCount: snapshot.data.documents.length,
+                          ),
+                        ),
+                      ],
                     );
                   }
                 },
               ),
+
             ),
 
             // Loading

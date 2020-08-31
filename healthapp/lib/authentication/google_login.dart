@@ -42,40 +42,52 @@ Future<Null> handleSignIn(BuildContext context) async {
           .where('id', isEqualTo: firebaseUser.uid)
           .getDocuments();
       final List<DocumentSnapshot> documents = result.documents;
-      if (documents.length == 0) {
-        // globals.user.name = currentUser.displayName;
-        // globals.user.email = currentUser.email;
-        // Update data to server if new user
-        Firestore.instance
-            .collection('user')
-            .document(firebaseUser.uid)
-            .setData({
-          'name': firebaseUser.displayName,
-          'photoUrl': firebaseUser.photoUrl,
-          'id': firebaseUser.uid,
-          'createdAt': DateTime.now().millisecondsSinceEpoch.toString(),
-          'chattingWith': null,
-          'email': firebaseUser.email,
-        });
+      //  if (documents.length == 0) {
+      // globals.user.name = currentUser.displayName;
+      // globals.user.email = currentUser.email;
+      // Update data to server if new user
+      Firestore.instance
+          .collection('user')
+          .document(firebaseUser.uid)
+          .setData({
+        'name': firebaseUser.displayName,
+        'photoUrl': firebaseUser.photoUrl,
+        'id': firebaseUser.uid,
+        'createdAt': DateTime.now().millisecondsSinceEpoch.toString(),
+        'chattingWith': null,
+        'email': firebaseUser.email,
+      });
 
-        // Write data to local
-        currentUser = firebaseUser;
-        globals.user.id = currentUser.uid;
-        globals.user.name = currentUser.displayName;
-        globals.user.email = currentUser.email;
-        await prefs.setString('id', currentUser.uid);
-        await prefs.setString('name', currentUser.displayName);
-        await prefs.setString('photo', currentUser.photoUrl);
-        await prefs.setString('email', currentUser.email);
-      } else {
-        // Write data to local
-        globals.user.id = documents[0]['id'];
-        await prefs.setString('id', documents[0]['id']);
-        await prefs.setString('name', documents[0]['name']);
-        await prefs.setString('email', documents[0]['email']);
-        await prefs.setString('photo', documents[0]['photoUrl']);
-        // await prefs.setString('aboutMe', documents[0]['aboutMe']);
-      }
+      // Write data to local
+      currentUser = firebaseUser;
+      globals.user.photo = firebaseUser.photoUrl;
+      globals.user.id = firebaseUser.uid;
+      globals.user.name = firebaseUser.displayName;
+      globals.user.email = firebaseUser.email;
+      print('NAME ${globals.user.name}');
+      print('EMAIL ${globals.user.email}');
+      print('photo ${globals.user.photo}');
+      print('id ${globals.user.id}');
+      await prefs.setString('id', currentUser.uid);
+      await prefs.setString('name', currentUser.displayName);
+      await prefs.setString('photo', currentUser.photoUrl);
+      await prefs.setString('email', currentUser.email);
+      // } else {
+      // Write data to local
+
+      // // globals.user.id = documents[0]['id'];
+      // globals.user.name = documents[0]['name'];
+      // globals.user.email = documents[0]['email'];
+      // globals.user.photo = documents[0]['photoUrl'];
+      // globals.user.id = documents[0]['id'];
+      // print(globals.user.email);
+      // print(documents[0]['email']);
+      // await prefs.setString('id', documents[0]['id']);
+      // await prefs.setString('name', documents[0]['name']);
+      // await prefs.setString('email', documents[0]['email']);
+      // await prefs.setString('photo', documents[0]['photoUrl']);
+      // await prefs.setString('aboutMe', documents[0]['aboutMe']);
+      //  }
       print("Successfully Signed in");
 
       Navigator.push(
@@ -89,7 +101,6 @@ Future<Null> handleSignIn(BuildContext context) async {
   } catch (e) {
     print(e.toString());
     print('Exception Caught!');
-    print(e);
   }
 
   void signOutGoogle() async {
