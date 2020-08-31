@@ -42,6 +42,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
                         itemBuilder: (context, index) =>
                             buildItem(context, snapshot.data.documents[index]),
                         itemCount: snapshot.data.documents.length,
+                        physics: new NeverScrollableScrollPhysics(),
                       ),
                     ),
                   ],
