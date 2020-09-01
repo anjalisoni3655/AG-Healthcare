@@ -18,7 +18,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
   int selectedIndex = 0;
 
   List<Text> headingOptions = [
@@ -47,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-   // globals.getPatient();
+  
     List<Widget> widgetOptions = [
       HomePage(),
       ChatScreen(currentUserId: widget.currentUserId),
@@ -83,12 +82,14 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.chat_bubble),
               title: Text(
+                
                 'Blogs',
               ),
             ),
           ],
           currentIndex: selectedIndex,
           onTap: (int i) {
+             globals.getPatientofGivenBookingId();
             setState(() {
               selectedIndex = i;
             });
