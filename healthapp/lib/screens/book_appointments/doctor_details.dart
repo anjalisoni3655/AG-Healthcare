@@ -5,6 +5,76 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:healthapp/screens/book_appointments/appointment_details.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+String validateAge(String rate) {
+  Pattern pattern = r'[.,|_]';
+  RegExp regex = RegExp(pattern);
+  if (rate.isEmpty) {
+    return 'This field cannot be empty';
+  } else {
+    if (regex.hasMatch(rate)) {
+      return 'Please enter a valid rating';
+    } else {
+      int num = int.parse(rate);
+      if (num > 0 && num < 6) {
+        return null;
+      } else
+        return 'Please enter a valid rating';
+    }
+  }
+}
+
+String photourl,
+    about,
+    address,
+    doctorName,
+    languages,
+    cost,
+    designation,
+    available,
+    courses,
+    review;
+int rate = 4;
+void getDoctorDetails() async {
+  Firestore.instance
+      .collection("doctor")
+      .document("5lXYnBBrxXvgU0dpZGId")
+      .get()
+      .then((value) {
+    courses = value.data['courses'] ?? "COURSES";
+    photourl = value.data['photourl'] ??
+        "https://dramitendo.com/wp-content/uploads/2020/07/Dr-Amit-Goel.png";
+    about = value.data['about'] ?? "ABOUT";
+    doctorName = value.data['name'] ?? "NAME";
+    address = value.data['address'] ?? "ADDRESS";
+    available = value.data['available'] ?? "AVAILABLE";
+    designation = value.data['designation'] ?? "DESIGNATION";
+    languages = value.data['languages'] ?? "LANGYAGES";
+    cost = value.data['cost'] ?? "COST";
+  });
+}
+
+List<String> photos = [];
+List<int> ratings = [];
+List<String> names = [];
+List<String> comments = [];
+int len = 0;
+bool called = false;
+void getReviews() async {
+  //TODO: add these snapshots in the review section
+  Firestore.instance.collection("review").getDocuments().then((querySnapshot) {
+    querySnapshot.documents.forEach((result) {
+      print(result.data);
+      photos.add(result.data['photo']);
+      names.add(result.data['name']);
+      ratings.add(result.data['rate']);
+      comments.add(result.data['comment']);
+      // len++;
+    });
+  });
+}
+
 class DoctorDetails extends StatefulWidget {
   @override
   static const id = "doctor_details";
@@ -13,8 +83,47 @@ class DoctorDetails extends StatefulWidget {
 }
 
 class _DoctorDetailsState extends State<DoctorDetails> {
-  @override
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  TextStyle textStyle2 = TextStyle(
+      color: Color(0xFF606060), fontSize: 15, fontWeight: FontWeight.w600);
+  InputDecoration inputDecoration = InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+    enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+    disabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+  );
+
   Widget build(BuildContext context) {
+    getDoctorDetails();
+    if (called == false) {
+      setState(() {
+        getReviews();
+      });
+
+      called = true;
+    }
+    /*  print(doctorName);
+    print(available);
+    print(designation);
+    print(languages);
+    print(about);
+    print(address);
+    print(cost);
+    print(photourl);
+    print(courses); */
+    print(photos);
+    print(ratings);
+    print(names);
+    print(comments);
+
     String name, expYears, fields, costs;
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     if (arguments != null) {
@@ -54,30 +163,89 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                               Color(0xFF8F8F8F)),
                           _textTitle('Reviews', Color(0xFF08134D), 15,
                               FontWeight.w700),
-                          _reviewContainer(
-                              'Rajiv Hussain',
-                              'This doctor is so awesome. '
-                                  'I go to him for every checkup and I recommend him. '
-                                  'One of the best available.',
-                              'assets/images/reviewer.png',
-                              4,
-                              5),
-                          _reviewContainer(
-                              'Rajiv Hussain',
-                              'This doctor is so awesome. '
-                                  'I go to him for every checkup and I recommend him. '
-                                  'One of the best available.',
-                              'assets/images/reviewer.png',
-                              4,
-                              5),
-                          _reviewContainer(
-                              'Rajiv Hussain',
-                              'This doctor is so awesome. '
-                                  'I go to him for every checkup and I recommend him. '
-                                  'One of the best available.',
-                              'assets/images/reviewer.png',
-                              4,
-                              5),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  padding: EdgeInsets.symmetric(vertical: 5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Text('How was your experience'),
+                                      ),
+                                      TextFormField(
+                                          decoration: inputDecoration,
+                                          cursorColor: Color(0xFF8F8F8F),
+                                          cursorRadius: Radius.circular(10),
+                                          cursorWidth: 0.5,
+                                          style: textStyle2,
+                                          //  validator: validateName,
+                                          onSaved: (String value) {
+                                            review = value;
+                                          }),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Text('Give your rating(1-5)'),
+                                      ),
+                                      TextFormField(
+                                          decoration: inputDecoration,
+                                          cursorColor: Color(0xFF8F8F8F),
+                                          cursorRadius: Radius.circular(10),
+                                          cursorWidth: 0.5,
+                                          style: textStyle2,
+                                          keyboardType: TextInputType.number,
+                                          validator: validateAge,
+                                          onSaved: (String value) {
+                                            rate = int.tryParse(value);
+                                          }),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(10),
+                                ),
+                              ],
+                            ),
+                          ),
+                          RaisedButton(
+                            elevation: 5,
+                            onPressed: () async {
+                              // if (!_formKey.currentState.validate()) {
+                              //   return;
+                              // }
+                              _formKey.currentState.save();
+                              print("Submit your review");
+                              print(review);
+                              print(rate);
+                              await globals.uploadReviews(
+                                  rate: rate, comment: review);
+                            },
+                            color: Color(0xFF408AEB),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(7)),
+                            child: Container(
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              height: 50,
+                              child: Text(
+                                'Submit your review',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          for (var i = 0; i < names.length; i++)
+                            _reviewContainer(names[i], comments[i], photos[i],
+                                ratings[i].toDouble(), 5),
                         ],
                       ),
                     ),
@@ -149,8 +317,8 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                           FontWeight.w700),
                       _coloredBox(Color(0xFFCBFCDD), Color(0xFF30AB6A),
                           'Available : Mon - Sat'),
-                      _coloredBox(
-                          Color(0xFFE0E4F7), Color(0xFF2748F7), 'Endocrinologist'),
+                      _coloredBox(Color(0xFFE0E4F7), Color(0xFF2748F7),
+                          'Endocrinologist'),
                     ],
                   ),
                   Padding(
@@ -182,7 +350,9 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                   _descText('(12 reviews)', Color(0xFF8F8F8F)),
                 ],
               ),
-              _descText('Speaks Telugu | Hindi | English | Kannada | Bengali | Marathi.', Color(0xFF8F8F8F)),
+              _descText(
+                  'Speaks Telugu | Hindi | English | Kannada | Bengali | Marathi.',
+                  Color(0xFF8F8F8F)),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -192,17 +362,15 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     size: 20,
                   ),
                   Flexible(
-                    child: _descText('Plot no. 9B, Vikrampuri Colony, '
-                        'Secunderabad, Telangana',
-                        Color(0xFF8F8F8F)),
+                    child: _descText('address', Color(0xFF8F8F8F)),
                   ),
                 ],
               ),
               Divider(color: Color(0xFF8F8F8F)),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50),
-                child: _textTitle('Charge        Rs 400', Color(0xFF08134D),
-                    18, FontWeight.w700),
+                child: _textTitle('Charge        Rs 400', Color(0xFF08134D), 18,
+                    FontWeight.w700),
               ),
             ],
           ),
@@ -238,9 +406,9 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               leading: ClipRRect(
                   borderRadius: BorderRadius.circular(7),
                   child: Image(
-                    image: AssetImage(imgUrl),
-                    height: 40,
-                    width: 40,
+                    image: NetworkImage(imgUrl),
+                    height: 40.0,
+                    width: 40.0,
                   )),
               title: _textTitle(name, Color(0xFF08134D), 15, FontWeight.w600),
               subtitle: RatingBar(

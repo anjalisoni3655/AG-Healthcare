@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:healthapp/screens/chat_screen.dart';
 import 'dart:async';
 import 'package:healthapp/screens/user_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -46,10 +47,7 @@ Future<Null> handleSignIn(BuildContext context) async {
       // globals.user.name = currentUser.displayName;
       // globals.user.email = currentUser.email;
       // Update data to server if new user
-      Firestore.instance
-          .collection('user')
-          .document(firebaseUser.uid)
-          .setData({
+      Firestore.instance.collection('user').document(firebaseUser.uid).setData({
         'name': firebaseUser.displayName,
         'photoUrl': firebaseUser.photoUrl,
         'id': firebaseUser.uid,
@@ -90,10 +88,21 @@ Future<Null> handleSignIn(BuildContext context) async {
       //  }
       print("Successfully Signed in");
 
-      Navigator.push(
+      if (globals.user.email == "anjalisoni3655@gmail.com") {
+         Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChatScreen(currentUserId: firebaseUser.uid)));
+      }
+      
+      else{
+ Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => UserForm(currentUserId: firebaseUser.uid)));
+      }
+      
+     
     } else {
       Fluttertoast.showToast(msg: "Sign in failed, Try Again");
       print("Sign in failed, Try Again");

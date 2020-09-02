@@ -4,6 +4,7 @@ import 'package:healthapp/authentication/google_login.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:healthapp/screens/user_profile.dart';
 import 'package:healthapp/utils/settings.dart';
 import 'package:healthapp/widgets/loading.dart';
 
@@ -17,7 +18,9 @@ class UpcomingPage extends StatefulWidget {
 class _UpcomingPageState extends State<UpcomingPage> {
   @override
   Widget build(BuildContext context) {
+    
     return Stack(
+      
       children: <Widget>[
         Container(
           height: 90,
@@ -105,6 +108,9 @@ class _UpcomingPageState extends State<UpcomingPage> {
         child: ListTile(
             leading: _imageIcon(imgUrl),
             title: _doctorName(name),
+            onTap: () {
+              Navigator.pushNamed(context, UserProfile.id);
+            },
             subtitle: _upcomingSubtitle(visitType, time),
             trailing: _upcomingDate(
                 date.split(" ")[0], date.split(" ")[1].substring(0, 3))),

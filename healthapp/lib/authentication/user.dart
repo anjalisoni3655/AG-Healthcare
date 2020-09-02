@@ -56,6 +56,25 @@ Future<String> uploadUserDetails({
   return _id;
 }
 
+Future<String> uploadReviews({
+  int rate,
+  String comment,
+}) async {
+  // print('email:${globals.user.email}');
+  final _firestore = Firestore.instance;
+  final _id = _firestore.collection('review').document().documentID;
+  // print('userdetailsId:$_id');
+  await Firestore.instance.collection('review').document().setData(
+    {
+      'name': globals.user.name,
+      'photo': globals.user.photo,
+      'rate': rate,
+      'comment': comment,
+    },
+  );
+  return _id;
+}
+
 Future<String> uploadBookingDetails({
   String doctorName,
   String years,
@@ -202,7 +221,7 @@ void getPrescriptionByDoctor() {
           .getDocuments()
           .then((querySnapshot) {
         querySnapshot.documents.forEach((result) {
-          print(result.data);
+          print(result.data['content']);
         });
       });
     });

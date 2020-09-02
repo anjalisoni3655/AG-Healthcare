@@ -6,6 +6,7 @@ import 'package:healthapp/utils/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:healthapp/screens/edit_profile.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
+import 'package:healthapp/screens/chat_screen.dart';
 
 import 'home/home_page.dart';
 
@@ -53,6 +54,7 @@ class UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      
       appBar: _appBar(context),
       body: Material(
         color: Colors.white,
@@ -138,7 +140,18 @@ class UserProfileState extends State<UserProfile> {
       ),
       leading: GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, HomeScreen.id);
+            if(globals.user.email=="anjalisoni3655@gmail.com"){
+  Navigator.of(context).pushAndRemoveUntil(
+             MaterialPageRoute(
+                  builder: (_) =>
+                      ChatScreen(currentUserId: prefs.getString('id'))),
+              (Route<dynamic> route) => false);
+            }
+            else{
+ Navigator.pushNamed(context, HomeScreen.id);
+            }
+           
+           
           },
           child: Icon(
             Icons.arrow_back_ios,
@@ -152,6 +165,7 @@ class UserProfileState extends State<UserProfile> {
               color: Color(0xFFDFE9F7), borderRadius: BorderRadius.circular(7)),
           child: GestureDetector(
             onTap: () {
+              //if doctor clicks on then show the precriptions else edit profile
               Navigator.pushNamed(context, Profile.id);
               print('EditProfile to go to');
             },

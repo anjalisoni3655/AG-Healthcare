@@ -7,6 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:healthapp/screens/user_profile.dart';
 import 'package:healthapp/widgets/full_photo.dart';
 import 'package:healthapp/widgets/loading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,9 +16,13 @@ import 'package:healthapp/components/const.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'call.dart';
+import 'package:healthapp/screens/chat_screen.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
+
+//String currentUserId;
 
 final themeColor = Color(0xfff5a623);
 TextStyle textStyle1 = TextStyle(
@@ -35,11 +40,10 @@ Future<void> onJoin(BuildContext context) async {
     MaterialPageRoute(
       builder: (context) => CallPage(
         // if(globals.user.email=='dramitgoelhyd@gmail.com'){
- channelName: 'abcd',
- //TODO:  make channel name unique for two doctor and patient  
- //channelName: 
-       
-       
+        channelName: 'abcd',
+        //TODO:  make channel name unique for two doctor and patient
+        //channelName:
+
         role: ClientRole.Broadcaster,
       ),
     ),
@@ -50,6 +54,8 @@ Future<void> _handleCameraAndMic() async {
   await Permission.camera.request();
   await Permission.microphone.request();
 }
+
+String currentUserId;
 
 class Chat extends StatelessWidget {
   static const id = "chat";
@@ -120,7 +126,15 @@ class Chat extends StatelessWidget {
             ),
             leading: GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  if (globals.user.email == "anjalisoni3655@gmail.com") {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (_) => ChatScreen(
+                                currentUserId: prefs.getString('id'))),
+                        (Route<dynamic> route) => false);
+                  } else {
+                    Navigator.pop(context);
+                  }
                 },
                 child: Icon(
                   Icons.arrow_back_ios,
@@ -145,7 +159,7 @@ class Chat extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 10, bottom: 10, right: 20),
+                margin: EdgeInsets.only(top: 10, bottom: 10, right: 15),
                 padding: EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
                     color: Color(0xFFDFE9F7),
@@ -161,11 +175,28 @@ class Chat extends StatelessWidget {
                   ),
                 ),
               ),
+              Container(
+                margin: EdgeInsets.only(top: 10, bottom: 10, right: 15),
+                padding: EdgeInsets.symmetric(horizontal: 1),
+                decoration: BoxDecoration(
+                    color: Color(0xFFDFE9F7),
+                    borderRadius: BorderRadius.circular(7)),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, UserProfile.id);
+                  },
+                  child: Icon(
+                    Icons.supervised_user_circle_sharp,
+                    size: 24,
+                    color: Color(0xFF007CC2),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
-      body: ChatScreen(
+      body: ChatPage(
         peerId: peerId,
         peerAvatar: peerAvatar,
       ),
@@ -173,20 +204,19 @@ class Chat extends StatelessWidget {
   }
 }
 
-class ChatScreen extends StatefulWidget {
+class ChatPage extends StatefulWidget {
   final String peerId;
   final String peerAvatar;
 
-  ChatScreen({Key key, @required this.peerId, @required this.peerAvatar})
+  ChatPage({Key key, @required this.peerId, @required this.peerAvatar})
       : super(key: key);
 
   @override
-  State createState() =>
-      ChatScreenState(peerId: peerId, peerAvatar: peerAvatar);
+  State createState() => ChatPageState(peerId: peerId, peerAvatar: peerAvatar);
 }
 
-class ChatScreenState extends State<ChatScreen> {
-  ChatScreenState({Key key, @required this.peerId, @required this.peerAvatar});
+class ChatPageState extends State<ChatPage> {
+  ChatPageState({Key key, @required this.peerId, @required this.peerAvatar});
 
   String peerId;
   String peerAvatar;
