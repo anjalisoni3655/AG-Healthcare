@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:healthapp/screens/appointments/doctor_desc.dart';
+import 'package:healthapp/screens/book_appointments/appointment_details.dart';
 import 'package:healthapp/utils/settings.dart';
 import 'package:healthapp/widgets/loading.dart';
 
@@ -18,36 +20,35 @@ class _UpcomingPageState extends State<UpcomingPage> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Container(
-          height: 90,
-          color: Color(0xFFF8F8F8),
-          child: StreamBuilder(
-            stream:
-                Firestore.instance.collection('booking_details').snapshots(),
-            builder: (context, snapshot) {
-              print(snapshot);
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
-                  ),
-                );
-              } else {
-                return Column(
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, index) =>
-                            buildItem(context, snapshot.data.documents[index]),
-                        itemCount: snapshot.data.documents.length,
-                        physics: new NeverScrollableScrollPhysics(),
-                      ),
+        InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, DoctorDesc.id);
+          },
+          child: Ink(
+            height: 90,
+            color: Color(0xFFF8F8F8),
+            child: StreamBuilder(
+              stream:
+              Firestore.instance.collection('booking_details').snapshots(),
+              builder: (context, snapshot) {
+                print(snapshot);
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
                     ),
-                  ],
-                );
-              }
-            },
+                  );
+                } else {
+                  return ListView.builder(
+                    itemBuilder: (context, index) =>
+                        buildItem(context, snapshot.data.documents[index]),
+                    itemCount: snapshot.data.documents.length,
+                    physics: new NeverScrollableScrollPhysics(),
+                  );
+                }
+              },
+            ),
           ),
         ),
         // Loading
@@ -58,7 +59,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
 
   Widget buildItem(BuildContext context, DocumentSnapshot document) {
     if (document.data['id'] != globals.user.id) {
-      if (document.data.length == 0)
+      if (document.data.length != 0)
         return Container(
           alignment: Alignment.center,
           child: Text(
@@ -67,7 +68,10 @@ class _UpcomingPageState extends State<UpcomingPage> {
         );
       else
         return Container(
-          height: 0,
+          alignment: Alignment.center,
+          child: Text(
+            'You have no upcoming appointments!',
+          ),
         );
     } else {
       print(document.data['id']);
@@ -79,7 +83,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
         time += ' PM';
       Timestamp visitDate = document.data['selectedDate'];
       String date =
-          dateTimeConverter(visitDate.toDate().toString().split(' ')[0]);
+      dateTimeConverter(visitDate.toDate().toString().split(' ')[0]);
       date = date.split(',')[0];
       return Padding(
         padding: const EdgeInsets.only(bottom: 10),
@@ -93,8 +97,8 @@ class _UpcomingPageState extends State<UpcomingPage> {
     }
   }
 
-  Widget _appointmentsTab(
-      String imgUrl, String name, String visitType, String time, String date) {
+  Widget _appointmentsTab(String imgUrl, String name, String visitType,
+      String time, String date) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
