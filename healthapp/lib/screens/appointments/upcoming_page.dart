@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:healthapp/utils/settings.dart';
 import 'package:healthapp/widgets/loading.dart';
 
