@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:healthapp/authentication/user.dart'as globals;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -148,6 +149,7 @@ class ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+   
     return SafeArea(
       child: Material(
         color: Color(0xFFF8F8F8),
@@ -172,14 +174,15 @@ class ChatScreenState extends State<ChatScreen> {
                       return Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
                             child: UpcomingPage(),
                           ),
                           Expanded(
                             child: ListView.builder(
                               padding: EdgeInsets.symmetric(horizontal: 20),
-                              itemBuilder: (context, index) =>
-                                  buildItem(context, snapshot.data.documents[index]),
+                              itemBuilder: (context, index) => buildItem(
+                                  context, snapshot.data.documents[index]),
                               itemCount: snapshot.data.documents.length,
                             ),
                           ),
@@ -188,7 +191,6 @@ class ChatScreenState extends State<ChatScreen> {
                     }
                   },
                 ),
-
               ),
 
               // Loading

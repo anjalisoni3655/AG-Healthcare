@@ -203,7 +203,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     globals.user.paymentId = response.paymentId;
     print("Payment success");
     Toast.show("Payment success", context);
-    globals.getPatientofGivenBookingId(response.paymentId);
+    //  globals.getPatientofGivenBookingId(response.paymentId);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(

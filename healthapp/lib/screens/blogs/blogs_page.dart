@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
 
 class BlogsPage extends StatefulWidget {
   @override
@@ -12,6 +13,9 @@ class BlogsPage extends StatefulWidget {
 class _BlogsPageState extends State<BlogsPage> {
   @override
   Widget build(BuildContext context) {
+      print('pres222');
+    globals.getPrescriptionByPatient();
+
     return Material(
       color: Color(0xFFF8F8F8),
       child: Container(

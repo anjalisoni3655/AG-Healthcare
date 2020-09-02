@@ -118,7 +118,31 @@ void getPatientBooking() async {
       .document(globals.user.id)
       .get()
       .then((value) {
-        print( value.data);
+    print(value.data);
+  });
+}
+
+void getDoctorDetails() async {
+  final _firestore = Firestore.instance;
+  final _id = _firestore.collection('doctor').document().documentID;
+  print('id${_id}');
+  Firestore.instance
+      .collection("doctor")
+      .document("5lXYnBBrxXvgU0dpZGId")
+      .get()
+      .then((value) {
+    print(value.data['courses']);
+  });
+}
+
+void getDoctorTimings() async {
+  Firestore.instance
+      .collection("doctor")
+      .document("dramitgoelhyd@gmail.com")
+      .get()
+      .then((value) {
+    //returns an array of timings
+    print(value.data['monday']);
   });
 }
 
@@ -134,14 +158,53 @@ void getAllPatientDetail() {
   });
 }
 
-void getPatientofGivenBookingId(String paymentId) {
-  Firestore.instance
-      .collection("booking_details")
-      .where("paymentId", isEqualTo: paymentId)
-      .getDocuments()
-      .then((value) {
+void getPatientofGivenBookingId() {
+  Firestore.instance.collection("messages").getDocuments().then((value) {
     value.documents.forEach((result) {
       print(result.data);
+    });
+  });
+}
+
+void getPrescriptionByPatient() {
+  Firestore.instance
+      .collection("messages")
+      .getDocuments()
+      .then((querySnapshot) {
+    querySnapshot.documents.forEach((result) {
+      Firestore.instance
+          .collection("messages")
+          .document(result.documentID)
+          .collection(result.documentID)
+          .getDocuments()
+          .then((querySnapshot) {
+        querySnapshot.documents.forEach((result) {
+          print('presCRIPTION');
+          print(result.data);
+        });
+      });
+    });
+  });
+}
+
+void getPrescriptionByDoctor() {
+  Firestore.instance
+      .collection("messages")
+      .getDocuments()
+      .then((querySnapshot) {
+    querySnapshot.documents.forEach((result) {
+      Firestore.instance
+          .collection("messages")
+          .document("2GVoVBWHxtWdyfTDjpXN3RYzc1j1-w3xYinWd7OhOPF0GbC6lumihYAD2")
+          .collection(
+              "2GVoVBWHxtWdyfTDjpXN3RYzc1j1-w3xYinWd7OhOPF0GbC6lumihYAD2")
+          .where('type', isEqualTo: 1)
+          .getDocuments()
+          .then((querySnapshot) {
+        querySnapshot.documents.forEach((result) {
+          print(result.data);
+        });
+      });
     });
   });
 }
