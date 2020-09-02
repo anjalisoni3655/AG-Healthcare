@@ -113,7 +113,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
             leading: _imageIcon(imgUrl),
             title: _doctorName(name),
             onTap: () {
-              Navigator.pushNamed(context, UserProfile.id);
+           //   Navigator.pushNamed(context, UserProfile.id);
             },
             subtitle: _upcomingSubtitle(visitType, time),
             trailing: _upcomingDate(
