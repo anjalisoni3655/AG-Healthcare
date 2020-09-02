@@ -1,6 +1,4 @@
 import 'dart:async';
-
-// ignore: avoid_web_libraries_in_flutter
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,8 +7,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:healthapp/screens/appointments/doctor_desc.dart';
-import 'package:healthapp/screens/user_profile.dart';
+import 'package:healthapp/screens/doctor_pages/user_desc.dart';
+import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/widgets/full_photo.dart';
 import 'package:healthapp/widgets/loading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,14 +16,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:healthapp/components/const.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'call.dart';
-import 'package:healthapp/screens/chat_screen.dart';
+import 'package:healthapp/screens/call.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import 'package:healthapp/authentication/user.dart' as globals;
-
-//String currentUserId;
 
 final themeColor = Color(0xfff5a623);
 TextStyle textStyle1 = TextStyle(
@@ -41,16 +35,14 @@ Future<void> onJoin(BuildContext context) async {
   await Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) =>
-          CallPage(
-            // if(globals.user.email=='dramitgoelhyd@gmail.com'){
-            channelName: 'abcd',
-            //TODO:  make channel name unique for two doctor and patient
-            //channelName:
+      builder: (context) => CallPage(
+        // if(globals.user.email=='dramitgoelhyd@gmail.com'){
+        channelName: 'abcd',
+        //TODO:  make channel name unique for two doctor and patient
+        //channelName:
 
-
-            role: ClientRole.Broadcaster,
-          ),
+        role: ClientRole.Broadcaster,
+      ),
     ),
   );
 }
@@ -60,14 +52,19 @@ Future<void> _handleCameraAndMic() async {
   await Permission.microphone.request();
 }
 
-String currentUserId;
-
-class Chat extends StatelessWidget {
-  static const id = "chat";
+class DocChat extends StatelessWidget {
+  static const id = "doc_chat";
   final String peerId;
   final String peerAvatar;
+  final String peerName;
+  final DocumentSnapshot bookingInfo;
 
-  Chat({Key key, @required this.peerId, @required this.peerAvatar})
+  DocChat(
+      {Key key,
+        @required this.peerId,
+        @required this.peerAvatar,
+        @required this.peerName,
+        @required this.bookingInfo})
       : super(key: key);
 
   Widget _ongoingOrCompletedSubtitle(String type) {
@@ -101,120 +98,124 @@ class Chat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(75),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: AppBar(
-            backgroundColor: Color(0xFFF8F8F8),
-            elevation: 0,
-            title: InkWell(
-              onTap: (){Navigator.pushNamed(context, DoctorDesc.id);},
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(7),
-                  color: Color(0xFFF8F8F8),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: ListTile(
-                  leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image(
-                        image: AssetImage('assets/icons/doc1.png'),
-                        width: 40,
-                      )),
-                  title: Text(
-                    'Dr. Amit',
-                    style: textStyle2,
-                  ),
-                  subtitle: _ongoingOrCompletedSubtitle('Ongoing'),
-                ),
-              ),
-            ),
-            leading: GestureDetector(
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: AppBar(
+              backgroundColor: Color(0xFFF8F8F8),
+              elevation: 0,
+              title: InkWell(
                 onTap: () {
-                  if (globals.user.email == "anjalisoni3655@gmail.com") {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (_) => ChatScreen(
-                                currentUserId: prefs.getString('id'))),
-                        (Route<dynamic> route) => false);
-                  } else {
-                    Navigator.pop(context);
-                  }
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserDesc(
+                            bookingInfo: bookingInfo,
+                          )));
                 },
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.blue[700],
-                )),
-            actions: <Widget>[
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                    color: Color(0xFFDFE9F7),
-                    borderRadius: BorderRadius.circular(7)),
-                child: GestureDetector(
-                  onTap: () {
-                    FlutterPhoneDirectCaller.callNumber(9100453919.toString());
-                  },
-                  child: Icon(
-                    Icons.call,
-                    size: 24,
-                    color: Color(0xFF007CC2),
+                splashColor: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7),
+                    color: Color(0xFFF8F8F8),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: ListTile(
+                    leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image(
+                          image: NetworkImage(peerAvatar),
+                          width: 40,
+                        )),
+                    title: Text(
+                      peerName.split(' ')[0],
+                      style: textStyle2,
+                    ),
+                    subtitle: _ongoingOrCompletedSubtitle('Ongoing'),
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 10, bottom: 10, right: 15),
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                    color: Color(0xFFDFE9F7),
-                    borderRadius: BorderRadius.circular(7)),
-                child: GestureDetector(
+              leading: GestureDetector(
                   onTap: () {
-                    onJoin(context);
+                    Navigator.pop(context);
                   },
                   child: Icon(
-                    Icons.videocam,
-                    size: 24,
-                    color: Color(0xFF007CC2),
+                    Icons.arrow_back_ios,
+                    color: Colors.blue[700],
+                  )),
+              actions: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFDFE9F7),
+                      borderRadius: BorderRadius.circular(7)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FlutterPhoneDirectCaller.callNumber(
+                          9100453919.toString());
+                    },
+                    child: Icon(
+                      Icons.call,
+                      size: 24,
+                      color: Color(0xFF007CC2),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 10, right: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFDFE9F7),
+                      borderRadius: BorderRadius.circular(7)),
+                  child: GestureDetector(
+                    onTap: () {
+                      onJoin(context);
+                    },
+                    child: Icon(
+                      Icons.videocam,
+                      size: 24,
+                      color: Color(0xFF007CC2),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      body: ChatPage(
-        peerId: peerId,
-        peerAvatar: peerAvatar,
+        body: DocChatScreen(
+          peerId: peerId,
+          peerAvatar: peerAvatar,
+        ),
       ),
     );
   }
 }
 
-class ChatPage extends StatefulWidget {
+class DocChatScreen extends StatefulWidget {
   final String peerId;
   final String peerAvatar;
 
-  ChatPage({Key key, @required this.peerId, @required this.peerAvatar})
+  DocChatScreen({Key key, @required this.peerId, @required this.peerAvatar})
       : super(key: key);
 
   @override
-  State createState() => ChatPageState(peerId: peerId, peerAvatar: peerAvatar);
+  State createState() =>
+      DocChatScreenState(peerId: peerId, peerAvatar: peerAvatar);
 }
 
-class ChatPageState extends State<ChatPage> {
-  ChatPageState({Key key, @required this.peerId, @required this.peerAvatar});
+class DocChatScreenState extends State<DocChatScreen> {
+  DocChatScreenState({Key key, @required this.peerId, @required this.peerAvatar});
 
   String peerId;
   String peerAvatar;
   String id;
 
   var listMessage;
-  String groupChatId;
+  String groupDocChatId;
   SharedPreferences prefs;
 
   File imageFile;
@@ -231,7 +232,7 @@ class ChatPageState extends State<ChatPage> {
     super.initState();
     focusNode.addListener(onFocusChange);
 
-    groupChatId = '';
+    groupDocChatId = '';
 
     isLoading = false;
 
@@ -251,9 +252,9 @@ class ChatPageState extends State<ChatPage> {
     prefs = await SharedPreferences.getInstance();
     id = prefs.getString('id') ?? '';
     if (id.hashCode <= peerId.hashCode) {
-      groupChatId = '$id-$peerId';
+      groupDocChatId = '$id-$peerId';
     } else {
-      groupChatId = '$peerId-$id';
+      groupDocChatId = '$peerId-$id';
     }
 
     Firestore.instance
@@ -276,10 +277,7 @@ class ChatPageState extends State<ChatPage> {
   }
 
   Future uploadFile() async {
-    String fileName = DateTime
-        .now()
-        .millisecondsSinceEpoch
-        .toString();
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
     StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
     StorageUploadTask uploadTask = reference.putFile(imageFile);
     StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
@@ -304,12 +302,9 @@ class ChatPageState extends State<ChatPage> {
 
       var documentReference = Firestore.instance
           .collection('messages')
-          .document(groupChatId)
-          .collection(groupChatId)
-          .document(DateTime
-          .now()
-          .millisecondsSinceEpoch
-          .toString());
+          .document(groupDocChatId)
+          .collection(groupDocChatId)
+          .document(DateTime.now().millisecondsSinceEpoch.toString());
 
       Firestore.instance.runTransaction((transaction) async {
         await transaction.set(
@@ -317,10 +312,7 @@ class ChatPageState extends State<ChatPage> {
           {
             'idFrom': id,
             'idTo': peerId,
-            'timestamp': DateTime
-                .now()
-                .millisecondsSinceEpoch
-                .toString(),
+            'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
             'content': content,
             'type': type
           },
@@ -360,35 +352,33 @@ class ChatPageState extends State<ChatPage> {
             child: FlatButton(
               child: Material(
                 child: CachedNetworkImage(
-                  placeholder: (context, url) =>
-                      Container(
-                        child: CircularProgressIndicator(
-                          valueColor:
-                          AlwaysStoppedAnimation<Color>(themeColor),
-                        ),
-                        width: 200.0,
-                        height: 200.0,
-                        padding: EdgeInsets.all(70.0),
-                        decoration: BoxDecoration(
-                          color: greyColor2,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8.0),
-                          ),
-                        ),
+                  placeholder: (context, url) => Container(
+                    child: CircularProgressIndicator(
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(themeColor),
+                    ),
+                    width: 200.0,
+                    height: 200.0,
+                    padding: EdgeInsets.all(70.0),
+                    decoration: BoxDecoration(
+                      color: greyColor2,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.0),
                       ),
-                  errorWidget: (context, url, error) =>
-                      Material(
-                        child: Image.asset(
-                          'assets/images/img_not_available.jpeg',
-                          width: 200.0,
-                          height: 200.0,
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8.0),
-                        ),
-                        clipBehavior: Clip.hardEdge,
-                      ),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Material(
+                    child: Image.asset(
+                      'assets/images/img_not_available.jpeg',
+                      width: 200.0,
+                      height: 200.0,
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8.0),
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                  ),
                   imageUrl: document['content'],
                   width: 200.0,
                   height: 200.0,
@@ -435,17 +425,16 @@ class ChatPageState extends State<ChatPage> {
                 isLastMessageLeft(index)
                     ? Material(
                   child: CachedNetworkImage(
-                    placeholder: (context, url) =>
-                        Container(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1.0,
-                            valueColor:
-                            AlwaysStoppedAnimation<Color>(themeColor),
-                          ),
-                          width: 35.0,
-                          height: 35.0,
-                          padding: EdgeInsets.all(10.0),
-                        ),
+                    placeholder: (context, url) => Container(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 1.0,
+                        valueColor:
+                        AlwaysStoppedAnimation<Color>(themeColor),
+                      ),
+                      width: 35.0,
+                      height: 35.0,
+                      padding: EdgeInsets.all(10.0),
+                    ),
                     imageUrl: peerAvatar,
                     width: 35.0,
                     height: 35.0,
@@ -475,22 +464,21 @@ class ChatPageState extends State<ChatPage> {
                   child: FlatButton(
                     child: Material(
                       child: CachedNetworkImage(
-                        placeholder: (context, url) =>
-                            Container(
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    themeColor),
-                              ),
-                              width: 200.0,
-                              height: 200.0,
-                              padding: EdgeInsets.all(70.0),
-                              decoration: BoxDecoration(
-                                color: greyColor2,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(8.0),
-                                ),
-                              ),
+                        placeholder: (context, url) => Container(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                themeColor),
+                          ),
+                          width: 200.0,
+                          height: 200.0,
+                          padding: EdgeInsets.all(70.0),
+                          decoration: BoxDecoration(
+                            color: greyColor2,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.0),
                             ),
+                          ),
+                        ),
                         errorWidget: (context, url, error) =>
                             Material(
                               child: Image.asset(
@@ -517,9 +505,8 @@ class ChatPageState extends State<ChatPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  FullPhoto(
-                                      url: document['content'])));
+                              builder: (context) => FullPhoto(
+                                  url: document['content'])));
                     },
                     padding: EdgeInsets.all(0),
                   ),
@@ -709,15 +696,15 @@ class ChatPageState extends State<ChatPage> {
 
   Widget buildListMessage() {
     return Flexible(
-      child: groupChatId == ''
+      child: groupDocChatId == ''
           ? Center(
           child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(themeColor)))
           : StreamBuilder(
         stream: Firestore.instance
             .collection('messages')
-            .document(groupChatId)
-            .collection(groupChatId)
+            .document(groupDocChatId)
+            .collection(groupDocChatId)
             .orderBy('timestamp', descending: true)
             .limit(20)
             .snapshots(),

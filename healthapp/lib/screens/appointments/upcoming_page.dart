@@ -20,9 +20,7 @@ class UpcomingPage extends StatefulWidget {
 class _UpcomingPageState extends State<UpcomingPage> {
   @override
   Widget build(BuildContext context) {
-    
     return Stack(
-      
       children: <Widget>[
         InkWell(
           onTap: () {
@@ -33,14 +31,14 @@ class _UpcomingPageState extends State<UpcomingPage> {
             color: Color(0xFFF8F8F8),
             child: StreamBuilder(
               stream:
-              Firestore.instance.collection('booking_details').snapshots(),
+                  Firestore.instance.collection('booking_details').snapshots(),
               builder: (context, snapshot) {
                 print(snapshot);
                 if (!snapshot.hasData) {
                   return Center(
                     child: CircularProgressIndicator(
                       valueColor:
-                      AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
+                          AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
                     ),
                   );
                 } else {
@@ -64,19 +62,9 @@ class _UpcomingPageState extends State<UpcomingPage> {
   Widget buildItem(BuildContext context, DocumentSnapshot document) {
     if (document.data['id'] != globals.user.id) {
       if (document.data.length != 0)
-        return Container(
-          alignment: Alignment.center,
-          child: Text(
-            'You have no upcoming appointments!',
-          ),
-        );
+        return Container();
       else
-        return Container(
-          alignment: Alignment.center,
-          child: Text(
-            'You have no upcoming appointments!',
-          ),
-        );
+        return Container();
     } else {
       print(document.data['id']);
       String time = document.data['visitDuration'];
@@ -87,7 +75,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
         time += ' PM';
       Timestamp visitDate = document.data['selectedDate'];
       String date =
-      dateTimeConverter(visitDate.toDate().toString().split(' ')[0]);
+          dateTimeConverter(visitDate.toDate().toString().split(' ')[0]);
       date = date.split(',')[0];
       return Padding(
         padding: const EdgeInsets.only(bottom: 10),
@@ -101,8 +89,8 @@ class _UpcomingPageState extends State<UpcomingPage> {
     }
   }
 
-  Widget _appointmentsTab(String imgUrl, String name, String visitType,
-      String time, String date) {
+  Widget _appointmentsTab(
+      String imgUrl, String name, String visitType, String time, String date) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
@@ -112,9 +100,6 @@ class _UpcomingPageState extends State<UpcomingPage> {
         child: ListTile(
             leading: _imageIcon(imgUrl),
             title: _doctorName(name),
-            onTap: () {
-              Navigator.pushNamed(context, UserProfile.id);
-            },
             subtitle: _upcomingSubtitle(visitType, time),
             trailing: _upcomingDate(
                 date.split(" ")[0], date.split(" ")[1].substring(0, 3))),

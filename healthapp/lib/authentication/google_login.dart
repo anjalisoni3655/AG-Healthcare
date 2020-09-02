@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/screens/chat_screen.dart';
+import 'package:healthapp/screens/doctor_pages/doc_chat_screen.dart';
 import 'dart:async';
 import 'package:healthapp/screens/user_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -88,11 +89,11 @@ Future<Null> handleSignIn(BuildContext context) async {
       //  }
       print("Successfully Signed in");
 
-      if (globals.user.email == "anjalisoni3655@gmail.com") {
+      if (globals.user.id == 'HxotQtogDhYYb9wW4EbyqV3Vd1x1') {
          Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ChatScreen(currentUserId: firebaseUser.uid)));
+              builder: (context) => DocChatScreen(currentUserId: firebaseUser.uid,)));
       }
       
       else{

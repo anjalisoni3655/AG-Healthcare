@@ -628,6 +628,7 @@ class _UserFormState extends State<UserForm> {
                               weight: weight,
                               marital: marital,
                             );
+                            await prefs.setString('email', email);
                             await prefs.setString('gender', gender);
                             await prefs.setString('dob', dob);
                             await prefs.setString('gender', gender);

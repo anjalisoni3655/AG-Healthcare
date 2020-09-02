@@ -26,7 +26,7 @@ List<Color> _bodyColor = [
 ];
 List<String> _category = ['Male', 'Female', 'Other'];
 DateTime selectedDate;
-String dropdownValue;
+String dropdownValue='O+';
 
 class Profile extends StatelessWidget {
   static const id = "profile";
