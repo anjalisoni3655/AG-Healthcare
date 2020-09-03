@@ -38,11 +38,11 @@ Widget _articleContainer(String url, String imgUrl, String title) {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(7),
+          borderRadius: BorderRadius.circular(10),
           child: Image(
             image: NetworkImage(imgUrl),
             height: 190,
-            width: 300,
+            width: 250,
           ),
         ),
         Padding(

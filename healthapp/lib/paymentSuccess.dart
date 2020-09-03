@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:googleapis/chat/v1.dart';
 import 'package:healthapp/screens/home/home_page.dart';
 import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/utils/settings.dart';
+import 'package:healthapp/widgets/app_bar.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
@@ -34,6 +36,25 @@ class SuccessPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
+      appBar: AppBar(
+    backgroundColor: Color(0xFFF8F8F8),
+    elevation: 0,
+    centerTitle: true,
+    title: Text(
+      'Payment Confirmation',
+      style: GoogleFonts.varelaRound(
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
+        color: Color(0xFF262626),
+      ),
+    ),
+    leading: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, HomeScreen.id);
+        },
+        child: Icon(Icons.arrow_back_ios, color: Colors.blue[700],)),
+  ),
       body: SafeArea(
         child: Material(
           color: Color(0xFFF8F8F8),

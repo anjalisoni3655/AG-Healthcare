@@ -140,16 +140,9 @@ class UserProfileState extends State<UserProfile> {
       ),
       leading: GestureDetector(
           onTap: () {
-            if(globals.user.email=="anjalisoni3655@gmail.com"){
-  Navigator.of(context).pushAndRemoveUntil(
-             MaterialPageRoute(
-                  builder: (_) =>
-                      ChatScreen(currentUserId: prefs.getString('id'))),
-              (Route<dynamic> route) => false);
-            }
-            else{
+           
  Navigator.pushNamed(context, HomeScreen.id);
-            }
+            
            
            
           },

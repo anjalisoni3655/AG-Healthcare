@@ -26,7 +26,7 @@ List<Color> _bodyColor = [
 ];
 List<String> _category = ['Male', 'Female', 'Other'];
 DateTime selectedDate;
-String dropdownValue='O+';
+String dropdownValue = 'O+';
 
 class Profile extends StatelessWidget {
   static const id = "profile";
@@ -35,7 +35,6 @@ class Profile extends StatelessWidget {
 //Profile({this.user});
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       appBar: _appBar(context),
       body: SettingsScreen(),
@@ -63,24 +62,24 @@ class Profile extends StatelessWidget {
             Icons.arrow_back_ios,
             color: Colors.blue[700],
           )),
-      actions: [
-        Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(right: 20),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, UserProfile.id);
-            },
-            child: Text(
-              'SAVE',
-              style: GoogleFonts.nunito(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w800,
-                  color: Color(0xFF408AEB)),
-            ),
-          ),
-        ),
-      ],
+      // actions: [
+      //   Container(
+      //     alignment: Alignment.center,
+      //     padding: EdgeInsets.only(right: 20),
+      //     child: GestureDetector(
+      //       onTap: () {
+      //         Navigator.pushNamed(context, UserProfile.id);
+      //       },
+      //       child: Text(
+      //         'SAVE',
+      //         style: GoogleFonts.nunito(
+      //             fontSize: 15,
+      //             fontWeight: FontWeight.w800,
+      //             color: Color(0xFF408AEB)),
+      //       ),
+      //     ),
+      //   ),
+      // ],
     );
   }
 }
@@ -321,6 +320,7 @@ class SettingsScreenState extends State<SettingsScreen> {
       });
 
       Fluttertoast.showToast(msg: "Successfully updated");
+      Navigator.pushNamed(context, UserProfile.id);
       print(email);
     }).catchError((err) {
       setState(() {
@@ -397,6 +397,12 @@ class SettingsScreenState extends State<SettingsScreen> {
                         '${selectedDate.toLocal()}'.split(' ')[0]),
                     15,
                     Color(0xFF606060)),
+            Spacer(),
+            Icon(Icons.calendar_today,
+                color: (selectedDate == null)
+                    ? Color(0xFF8F8F8F)
+                    : Color(0xFF408AEB),
+                size: 20),
           ],
         ),
       ),
@@ -686,6 +692,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                     cursorRadius: Radius.circular(10),
                     cursorWidth: 0.5,
                     style: textStyle2,
+                    keyboardType: TextInputType.number,
                     controller: controllerheight,
                     onChanged: (value) {
                       height = value;
@@ -723,6 +730,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                           fontWeight: FontWeight.w600),
                     ),
                     cursorColor: Color(0xFF8F8F8F),
+                    keyboardType: TextInputType.number,
                     cursorRadius: Radius.circular(10),
                     cursorWidth: 0.5,
                     style: textStyle2,
@@ -744,6 +752,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                     cursorRadius: Radius.circular(10),
                     cursorWidth: 0.5,
                     style: textStyle2,
+                    // keyboardType: TextInputType.number,
                     controller: controlleraddress,
                     onChanged: (value) {
                       address = value;
@@ -787,7 +796,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         onPressed: handleUpdateData,
                         elevation: 10,
                         child: Text(
-                          'Update',
+                          'Update & Save',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,

@@ -180,10 +180,10 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
-      highlightElevation: 20,
+      highlightElevation: 5,
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -193,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Text(
                 text,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 20,
                   color: Colors.blue[900],
                   fontWeight: FontWeight.w600,
                 ),

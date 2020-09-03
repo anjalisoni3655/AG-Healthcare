@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/screens/appointments/doctor_desc.dart';
+import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/screens/user_profile.dart';
 import 'package:healthapp/widgets/full_photo.dart';
 import 'package:healthapp/widgets/loading.dart';
@@ -134,15 +135,9 @@ class Chat extends StatelessWidget {
             ),
             leading: GestureDetector(
                 onTap: () {
-                  if (globals.user.email == "anjalisoni3655@gmail.com") {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (_) => ChatScreen(
-                                currentUserId: prefs.getString('id'))),
-                        (Route<dynamic> route) => false);
-                  } else {
-                    Navigator.pop(context);
-                  }
+                
+                    Navigator.pushNamed(context,HomeScreen.id);
+                  
                 },
                 child: Icon(
                   Icons.arrow_back_ios,

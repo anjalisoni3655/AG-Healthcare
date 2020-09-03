@@ -404,7 +404,7 @@ class SettingsScreenStatePhoto extends State<SettingsScreenPhoto> {
                               borderRadius: BorderRadius.circular(30),
                               color: Color(0xFFDFE9F7)),
                           child: IconButton(
-                            icon: Icon(Icons.camera_alt, color: Color(0xFF408AEB)),
+                            icon: Icon(Icons.photo, color: Color(0xFF408AEB)),
                             onPressed: getImage,
                           ),
                         ),
@@ -417,30 +417,30 @@ class SettingsScreenStatePhoto extends State<SettingsScreenPhoto> {
               ),
 
               // Button
-              Container(
-                padding: EdgeInsets.only(top: 100),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: RaisedButton(
-                        onPressed: handleUpdateData,
-                        elevation: 10,
-                        child: Text(
-                          'Update',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        color: Color(0xFF408AEB),
-                        padding: EdgeInsets.all(20),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   padding: EdgeInsets.only(top: 100),
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //         child: RaisedButton(
+              //           onPressed: handleUpdateData,
+              //           elevation: 10,
+              //           child: Text(
+              //             'Update',
+              //             style: TextStyle(
+              //                 color: Colors.white,
+              //                 fontSize: 18,
+              //                 fontWeight: FontWeight.bold),
+              //           ),
+              //           color: Color(0xFF408AEB),
+              //           padding: EdgeInsets.all(20),
+              //           shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(7)),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
           padding: EdgeInsets.only(left: 20.0, right: 20.0),
