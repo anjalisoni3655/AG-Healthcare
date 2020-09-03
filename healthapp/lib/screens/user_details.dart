@@ -33,7 +33,7 @@ String photo;
 String gender;
 String address;
 
-int phone;
+String phone;
 String dob = '${selectedDate.toLocal()}'.split(' ')[0];
 String blood = 'O+';
 int height;
@@ -436,7 +436,7 @@ class _UserFormState extends State<UserForm> {
               keyboardType: TextInputType.number,
               validator: validatePhone,
               onSaved: (String value) {
-                phone = int.tryParse(value);
+                phone = value;
               }),
         ],
       ),

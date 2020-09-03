@@ -2,13 +2,14 @@ library globals;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 
 class User {
   int cost;
   String email;
   String paymentId;
-  int phone;
+  String phone;
   String photo;
   String name;
   String gender, dob, blood, marital, address;
@@ -32,7 +33,7 @@ Future<String> uploadUserDetails({
   int height,
   int weight,
   String marital,
-  int phone,
+  String phone,
 }) async {
   print('email:${globals.user.email}');
   final _firestore = Firestore.instance;

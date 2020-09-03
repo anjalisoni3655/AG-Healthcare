@@ -153,7 +153,7 @@ class _UserDescState extends State<UserDesc> {
                                         ),
                                         Spacer(),
                                         Text(
-                                          phone ?? '1234567890',
+                                          phone?? '1234567890',
                                           style: TextStyle(
                                               height: 1.5,
                                               color: Color(0xFF08134D),
