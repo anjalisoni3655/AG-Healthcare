@@ -5,6 +5,30 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:healthapp/utils/settings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+void getPrescriptionByPatient() {
+  Firestore.instance
+      .collection("messages")
+      .getDocuments()
+      .then((querySnapshot) {
+    querySnapshot.documents.forEach((result) {
+      Firestore.instance
+          .collection("messages")
+          .document(result.documentID)
+          .collection(result.documentID)
+          .getDocuments()
+          .then((querySnapshot) {
+        querySnapshot.documents.forEach((result) {
+          print('presCRIPTION');
+          print(result.data);
+        });
+      });
+    });
+  });
+}
 
 class UserDesc extends StatefulWidget {
   @override
@@ -19,6 +43,9 @@ class UserDesc extends StatefulWidget {
 class _UserDescState extends State<UserDesc> {
   @override
   Widget build(BuildContext context) {
+    print('documents');
+    getPrescriptionByPatient();
+
     DocumentSnapshot bookingInfo = widget.bookingInfo;
     return Scaffold(
       appBar: _appBar(),
@@ -46,32 +73,34 @@ class _UserDescState extends State<UserDesc> {
                             ),
                           );
                         } else {
-                          print(snapshot.data.documents[3].data);
+                          //  print(snapshot.data.documents[3].data);
                           String name,
                               age,
+                              phone,
                               gender,
                               height,
                               weight,
                               blood,
                               marital;
                           for (int i = 0;
-                          i < snapshot.data.documents.length;
-                          i++) {
+                              i < snapshot.data.documents.length;
+                              i++) {
                             if (snapshot.data.documents[i].documentID ==
                                 bookingInfo.data['id']) {
                               name = snapshot.data.documents[i].data['name'];
                               age = snapshot.data.documents[i].data['dob'];
+                              phone = snapshot.data.documents[i].data['phone'];
                               gender =
-                              snapshot.data.documents[i].data['gender'];
+                                  snapshot.data.documents[i].data['gender'];
                               height = snapshot.data.documents[i].data['height']
                                   .toString();
                               weight = snapshot.data.documents[i].data['weight']
                                   .toString();
                               blood = snapshot.data.documents[i].data['blood'];
                               marital =
-                              snapshot.data.documents[i].data['marital'];
+                                  snapshot.data.documents[i].data['marital'];
                               int years = int.parse(
-                                  DateTime.now().toString().split('-')[0]) -
+                                      DateTime.now().toString().split('-')[0]) -
                                   int.parse(age.split('-')[0]);
                               age = years.toString();
                               break;
@@ -103,6 +132,28 @@ class _UserDescState extends State<UserDesc> {
                                         Spacer(),
                                         Text(
                                           name,
+                                          style: TextStyle(
+                                              height: 1.5,
+                                              color: Color(0xFF08134D),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'PatientMobileNo',
+                                          style: TextStyle(
+                                            height: 1.5,
+                                            color: Color(0xFF8F8F8F),
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        Text(
+                                          phone ?? '1234567890',
                                           style: TextStyle(
                                               height: 1.5,
                                               color: Color(0xFF08134D),
@@ -264,8 +315,8 @@ class _UserDescState extends State<UserDesc> {
       time += ' PM';
     Timestamp visitDate = bookingInfo.data['selectedDate'];
     String date =
-    dateTimeConverter(visitDate.toDate().toString().split(' ')[0]);
-    print(date);
+        dateTimeConverter(visitDate.toDate().toString().split(' ')[0]);
+    // print(date);
     return Container(
       margin: EdgeInsets.only(left: 20, right: 20, top: 50),
       child: Card(
@@ -288,12 +339,12 @@ class _UserDescState extends State<UserDesc> {
                       _textTitle(bookingInfo.data['name'], Color(0xFF08134D),
                           24, FontWeight.w700),
                       (bookingInfo['selectedDate']
-                          .toDate()
-                          .isBefore(DateTime.now()))
+                              .toDate()
+                              .isBefore(DateTime.now()))
                           ? _coloredBox(
-                          Colors.orange[100], Color(0xFFE87713), 'Ongoing')
+                              Colors.orange[100], Color(0xFFE87713), 'Ongoing')
                           : _coloredBox(
-                          Color(0xFFCBFCDD), Color(0xFF30AB6A), 'Upcoming'),
+                              Color(0xFFCBFCDD), Color(0xFF30AB6A), 'Upcoming'),
                     ],
                   ),
                   Spacer(),
@@ -397,7 +448,7 @@ class _UserDescState extends State<UserDesc> {
       child: Text(
         title,
         style:
-        TextStyle(fontWeight: fontWeight, fontSize: fontSize, color: color),
+            TextStyle(fontWeight: fontWeight, fontSize: fontSize, color: color),
       ),
     );
   }
@@ -418,6 +469,44 @@ class _UserDescState extends State<UserDesc> {
           color: Colors.white,
         ),
       ),
+      actions: <Widget>[
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          decoration: BoxDecoration(
+              color: Color(0xFFDFE9F7), borderRadius: BorderRadius.circular(7)),
+          child: GestureDetector(
+            onTap: () async {
+              //TODO : delete the respective document
+              var firebaseUser = await FirebaseAuth.instance.currentUser();
+              Firestore.instance
+                  .collection("booking_details")
+                  .document(firebaseUser.uid)
+                  .delete()
+                  .then((_) {
+                print("success!");
+                //TODO: MENTION the respective patients email here, so that the doctor can give a reason to the patient why ihe is cancelling
+                _launchURL('anjalisoni3655@gmail.com', 'appointment cancelled',
+                    'your appointment has been cancelled');
+              });
+            },
+            child: Icon(
+              Icons.delete,
+              size: 24,
+              color: Colors.red,
+            ),
+          ),
+        ),
+      ],
     );
+  }
+
+  _launchURL(String toMailId, String subject, String body) async {
+    var url = 'mailto:$toMailId?subject=$subject&body=$body';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

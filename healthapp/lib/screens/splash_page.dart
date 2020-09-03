@@ -48,19 +48,13 @@ class _SplashPageState extends State<SplashPage> {
         print('EMAIL:${globals.user.email}');
         print(globals.user.photo);
         print(globals.user.name);
-        if (globals.user.email != "anjalisoni3655@gmail.com") {
+       // if (globals.user.email != "anjalisoni3655@gmail.com") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (_) =>
                       HomeScreen(currentUserId: prefs.getString('id'))),
               (Route<dynamic> route) => false);
-        } else {
-           Navigator.of(context).pushAndRemoveUntil(
-             MaterialPageRoute(
-                  builder: (_) =>
-                      ChatScreen(currentUserId: prefs.getString('id'))),
-              (Route<dynamic> route) => false);
-        }
+       
       } else {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (_) => LoginPage()),

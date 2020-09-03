@@ -12,7 +12,7 @@ import 'home/home_page.dart';
 
 String type;
 String gender, dob, blood, marital, address, name, email;
-String height, weight, photo;
+String height, weight, photo, phone;
 
 class UserProfile extends StatefulWidget {
   @override
@@ -24,7 +24,6 @@ class UserProfile extends StatefulWidget {
 SharedPreferences prefs;
 
 class UserProfileState extends State<UserProfile> {
-
   void readLocal() async {
     prefs = await SharedPreferences.getInstance();
     name = prefs.getString('name') ?? globals.user.name;
@@ -37,6 +36,7 @@ class UserProfileState extends State<UserProfile> {
     weight = prefs.getString('dob') ?? globals.user.weight;
     marital = prefs.getString('marital') ?? globals.user.marital;
     address = prefs.getString('address') ?? globals.user.address;
+    phone = prefs.getString('phone') ?? '6370546775';
 
     email = email.split('@')[0];
 
@@ -54,7 +54,6 @@ class UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      
       appBar: _appBar(context),
       body: Material(
         color: Colors.white,
@@ -78,7 +77,7 @@ class UserProfileState extends State<UserProfile> {
                 ),
                 _text(name, Color(0xFF08134D), FontWeight.w700, 29, 0),
                 _text(email, Color(0xFF08134D), FontWeight.w700, 15, 5),
-                _text('9937590845', Color(0xFF08134D), FontWeight.w700, 15, 0),
+                _text(phone, Color(0xFF08134D), FontWeight.w700, 15, 0),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
                 ),
@@ -140,11 +139,7 @@ class UserProfileState extends State<UserProfile> {
       ),
       leading: GestureDetector(
           onTap: () {
-           
- Navigator.pushNamed(context, HomeScreen.id);
-            
-           
-           
+            Navigator.pushNamed(context, HomeScreen.id);
           },
           child: Icon(
             Icons.arrow_back_ios,

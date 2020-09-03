@@ -272,15 +272,16 @@ class SuccessPage extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
                             onPressed: () async {
-                              final _id = Firestore.instance
-                                  .collection('booking_details')
-                                  .document()
-                                  .documentID;
+                              // final _id = Firestore.instance
+                              //     .collection('booking_details')
+                              //     .document()
+                              //     .documentID;
                               await Firestore.instance
                                   .collection("booking_details")
                                   .document(globals.user.id)
                                   .updateData({
                                 "paymentId": response.paymentId,
+                                "phone": globals.user.phone,
                               }).then((_) {
                                 print("success!");
                               });

@@ -34,11 +34,29 @@ String gender;
 String address;
 
 int phone;
-String dob='${selectedDate.toLocal()}'.split(' ')[0];
+String dob = '${selectedDate.toLocal()}'.split(' ')[0];
 String blood = 'O+';
 int height;
 int weight;
 String marital;
+
+String validatePincode(String pincode) {
+  Pattern pattern = r'[.,|_]';
+  RegExp regex = RegExp(pattern);
+  if (pincode.isEmpty) {
+    return 'This field cannot be empty';
+  } else {
+    if (regex.hasMatch(pincode)) {
+      return 'Please enter a valid mobile number';
+    } else {
+      int pin = int.parse(pincode);
+      if (pin > 1000000000 && pin < 9999999999) {
+        return null;
+      } else
+        return 'Please enter a valid mobile number';
+    }
+  }
+}
 
 String validateAge(String age) {
   Pattern pattern = r'[.,|_]';
@@ -120,8 +138,6 @@ String validateGender(String value) {
     return 'Please enter a valid gender';
   }
 }
-
-
 
 // Widget for getting , validating and storing User Address
 class UserForm extends StatefulWidget {
@@ -401,6 +417,32 @@ class _UserFormState extends State<UserForm> {
     );
   }
 
+  Widget _buildPhone() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Mobile number', style: textStyle1),
+          ),
+          TextFormField(
+              decoration: inputDecoration,
+              cursorColor: Color(0xFF8F8F8F),
+              cursorRadius: Radius.circular(10),
+              cursorWidth: 0.5,
+              style: textStyle2,
+              keyboardType: TextInputType.number,
+              validator: validatePhone,
+              onSaved: (String value) {
+                phone = int.tryParse(value);
+              }),
+        ],
+      ),
+    );
+  }
+
   Widget _buildMarital() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
@@ -503,7 +545,10 @@ class _UserFormState extends State<UserForm> {
           children: [
             (selectedDate == null)
                 ? _getText('yyyy-mm-dd', 15, Color(0xFF8F8F8F))
-                : _getText(dateTimeConverter('${selectedDate.toLocal()}'.split(' ')[0]), 15,
+                : _getText(
+                    dateTimeConverter(
+                        '${selectedDate.toLocal()}'.split(' ')[0]),
+                    15,
                     Color(0xFF408AEB)),
             Spacer(),
             Icon(Icons.calendar_today,
@@ -567,6 +612,7 @@ class _UserFormState extends State<UserForm> {
                         children: <Widget>[
                           _buildName(),
                           _buildEmail(),
+                          _buildPhone(),
                           _buildGender(),
                           _buildDOB(context),
                           _buildBlood(),
@@ -604,6 +650,7 @@ class _UserFormState extends State<UserForm> {
 
                           print(name);
                           print(email);
+                          print(phone);
                           print(gender);
                           print(address);
                           print(dob);
@@ -611,11 +658,12 @@ class _UserFormState extends State<UserForm> {
                           print(height);
                           print(weight);
                           print(marital);
+
                           prefs = await SharedPreferences.getInstance();
-                          final doc = await Firestore.instance
-                              .collection('user_details')
-                              .where('email', isEqualTo: email)
-                              .getDocuments();
+                          // final doc = await Firestore.instance
+                          //     .collection('user_details')
+                          //     .where('email', isEqualTo: email)
+                          //     .getDocuments();
                           if (true) {
                             await globals.uploadUserDetails(
                               name: name,
@@ -627,7 +675,9 @@ class _UserFormState extends State<UserForm> {
                               height: height,
                               weight: weight,
                               marital: marital,
+                              phone: phone,
                             );
+                            globals.user.phone = phone;
                             await prefs.setString('email', email);
                             await prefs.setString('gender', gender);
                             await prefs.setString('dob', dob);
@@ -638,6 +688,7 @@ class _UserFormState extends State<UserForm> {
                             await prefs.setString('weight', weight.toString());
                             await prefs.setString('marital', marital);
                             await prefs.setString('address', address);
+                            await prefs.setString('phone', phone.toString());
                           }
                           // Navigator.pushNamed(context, UploadPhoto.id);
                           Navigator.push(

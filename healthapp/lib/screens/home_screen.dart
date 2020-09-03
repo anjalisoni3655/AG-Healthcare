@@ -25,21 +25,21 @@ class _HomeScreenState extends State<HomeScreen> {
       'Home',
       style: GoogleFonts.varelaRound(
         fontWeight: FontWeight.w700,
-        color: Color(0xFFFFFFFF),
+        color: Colors.black,
       ),
     ),
     Text(
       'My Bookings',
       style: GoogleFonts.varelaRound(
         fontWeight: FontWeight.w700,
-        color: Color(0xFFFFFFFF),
+        color:  Colors.black,
       ),
     ),
     Text(
       'All Blogs',
       style: GoogleFonts.varelaRound(
         fontWeight: FontWeight.w700,
-        color: Color(0xFFFFFFFF),
+        color: Colors.black,
       ),
     ),
   ];
@@ -58,8 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
           preferredSize:
               Size.fromHeight(MediaQuery.of(context).size.height * 0.08),
           child: AppBar(
+            iconTheme: new IconThemeData(color: Colors.blue),
             title: headingOptions[selectedIndex],
-            backgroundColor: Colors.blue[700],
+            backgroundColor: Colors.white,
           ),
         ),
         drawer: DrawerWidget(),

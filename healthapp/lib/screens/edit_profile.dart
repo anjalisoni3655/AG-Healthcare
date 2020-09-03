@@ -99,6 +99,7 @@ class SettingsScreenState extends State<SettingsScreen> {
   TextEditingController controllerweight;
   TextEditingController controllermarital;
   TextEditingController controlleraddress;
+  TextEditingController controllerphone;
 
   SharedPreferences prefs;
 
@@ -110,11 +111,12 @@ class SettingsScreenState extends State<SettingsScreen> {
   String gender = '';
 
   int age;
-  int phone;
+  //int phone;
   String dob = '';
   String blood = '';
   String height;
   String weight;
+  String phone;
   String marital = '';
   String address = '';
 
@@ -126,6 +128,7 @@ class SettingsScreenState extends State<SettingsScreen> {
   final FocusNode focusNodeGender = FocusNode();
 
   final FocusNode focusNodeDob = FocusNode();
+  final FocusNode focusNodePhone = FocusNode();
 
   final FocusNode focusNodeBlood = FocusNode();
   final FocusNode focusNodeHeight = FocusNode();
@@ -149,13 +152,14 @@ class SettingsScreenState extends State<SettingsScreen> {
     dob = prefs.getString('dob') ?? '';
     blood = prefs.getString('blood') ?? '';
     height = prefs.getString('height') ?? '';
-
+    phone = prefs.getString('phone') ?? '';
     weight = prefs.getString('weight') ?? '';
     marital = prefs.getString('marital') ?? '';
     address = prefs.getString('address') ?? '';
 
     controllerName = TextEditingController(text: name);
     controllerEmail = TextEditingController(text: email);
+    controllerphone = TextEditingController(text: phone);
 
     controllergender = TextEditingController(text: gender);
     controllerdob = TextEditingController(text: dob);
@@ -227,12 +231,9 @@ class SettingsScreenState extends State<SettingsScreen> {
               .collection('user_details')
               .document(globals.user.id)
               .updateData({
-            //TODO: chnage this photo with the one that user will uplaod
             'photo': photo,
             'name': name,
             'email': email,
-            //TODO: chnage this photo with the one that user will uplaod
-            //'photo': globals.user.photo,
             'gender': gender,
             'dob': dob,
             'blood': blood,
@@ -240,6 +241,7 @@ class SettingsScreenState extends State<SettingsScreen> {
             'weight': weight,
             'marital': marital,
             'address': address,
+            'phone': phone,
           }).then((data) async {
             await prefs.setString('photo', photo);
             setState(() {
@@ -282,7 +284,7 @@ class SettingsScreenState extends State<SettingsScreen> {
     focusNodeWeight.unfocus();
     focusNodeMarital.unfocus();
     focusNodeAddress.unfocus();
-    // focusNodeEmail.unfocus();
+     focusNodePhone.unfocus();
 
     setState(() {
       isLoading = true;
@@ -304,6 +306,7 @@ class SettingsScreenState extends State<SettingsScreen> {
       'weight': weight,
       'marital': marital,
       'address': address,
+      'phone':phone,
     }).then((data) async {
       await prefs.setString('name', name);
       await prefs.setString('email', email);
@@ -314,6 +317,7 @@ class SettingsScreenState extends State<SettingsScreen> {
       await prefs.setString('dob', dob);
       await prefs.setString('blood', blood);
       await prefs.setString('gender', gender);
+       await prefs.setString('phone', phone);
 
       setState(() {
         isLoading = false;
@@ -563,6 +567,22 @@ class SettingsScreenState extends State<SettingsScreen> {
                       email = value;
                     },
                     focusNode: focusNodeEmail,
+                  ),
+                   Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text('Mobile Number', style: textStyle1),
+                  ),
+                  TextField(
+                    decoration: inputDecoration,
+                    cursorColor: Color(0xFF8F8F8F),
+                    cursorRadius: Radius.circular(10),
+                    cursorWidth: 0.5,
+                    style: textStyle2,
+                    controller: controllerphone,
+                    onChanged: (value) {
+                      phone = value;
+                    },
+                    focusNode: focusNodePhone,
                   ),
                 ],
               ),
