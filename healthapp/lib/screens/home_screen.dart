@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:healthapp/authentication/google_login.dart';
-import 'package:healthapp/screens/chat_screen.dart';
-import 'package:healthapp/screens/doctor_list.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:healthapp/screens/appointments/upcoming_page.dart';
+import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/drawer.dart';
-import 'package:healthapp/screens/index.dart';
+import 'package:healthapp/screens/home/home_page.dart';
+import 'package:healthapp/screens/chat_screen.dart';
+import 'package:healthapp/authentication/user.dart' as globals;
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -12,65 +16,103 @@ class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, @required this.currentUserId}) : super(key: key);
 
   @override
-  State createState() => HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen> {
-  // final String currentUserId;
-//  HomeScreenState({Key key, @required this.currentUserId});
-
-  // TODO show blogs in the homescreen in the form of cards
+class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   List<Text> headingOptions = [
-    Text('Appointments'),
-    Text('Chats'),
-    Text('Video Call'),
+    Text(
+      'Home',
+      style: GoogleFonts.nunito(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF262626),
+      ),
+    ),
+    Text(
+      'My Bookings',
+      style: GoogleFonts.nunito(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF262626),
+      ),
+    ),
+    Text(
+      'All Blogs',
+      style: GoogleFonts.nunito(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF262626),
+      ),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     List<Widget> widgetOptions = [
-      //TODO appointments + payments along with+ cancel and reschedule button
-
-      //TODO: chats with doctor
-      Doctor(),
-      //TODO : video calling with doctor
-      //push to chat screen
+      HomePage(),
       ChatScreen(currentUserId: widget.currentUserId),
-
-      IndexPage(),
+      BlogsPage(),
     ];
-
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize:
-              Size.fromHeight(MediaQuery.of(context).size.height * 0.05),
+              Size.fromHeight(MediaQuery.of(context).size.height * 0.08),
           child: AppBar(
+            iconTheme: new IconThemeData(color: Color(0xFF408AEB)),
             title: headingOptions[selectedIndex],
-            backgroundColor: Colors.blue,
+            backgroundColor: Color(0xFFF8F8F8),
+            elevation: 0,
+            leading: Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
+            ),
           ),
         ),
         drawer: DrawerWidget(),
         body: widgetOptions[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: Color(0xFF408AEB),
+          backgroundColor: Colors.white,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.accessibility),
-              title: Text('Appointments'),
+              icon: Icon(
+                Icons.home,
+                size: 25,
+              ),
+              title: Text(
+                'Home',
+              ),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.change_history),
-              title: Text('Chats'),
+              icon: Icon(
+                Icons.work,
+                size: 25,
+              ),
+              title: Text(
+                'Appointments',
+              ),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.video_call),
-              title: Text('Video Call'),
+              icon: Icon(
+                Icons.chat_bubble,
+                size: 25,
+              ),
+              title: Text(
+                'Blogs',
+              ),
             ),
           ],
           currentIndex: selectedIndex,
           onTap: (int i) {
+            globals.getPatientofGivenBookingId();
             setState(() {
               selectedIndex = i;
             });
