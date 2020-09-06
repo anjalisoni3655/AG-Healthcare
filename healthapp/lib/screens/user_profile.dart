@@ -33,7 +33,7 @@ class UserProfileState extends State<UserProfile> {
     dob = prefs.getString('dob') ?? globals.user.dob;
     blood = prefs.getString('blood') ?? globals.user.blood;
     height = prefs.getString('height') ?? globals.user.height;
-    weight = prefs.getString('dob') ?? globals.user.weight;
+    weight = prefs.getString('weight') ?? globals.user.weight;
     marital = prefs.getString('marital') ?? globals.user.marital;
     address = prefs.getString('address') ?? globals.user.address;
     phone = prefs.getString('phone') ?? '6370546775';
