@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -91,7 +92,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         child: CircleAvatar(
                           child: ClipOval(
                             child: Image.network(
-                              (photo != null) ? photo : globals.user.photo,
+                              (photo != null) ? photo.substring(0,photo.length-5)+'s400-c' : globals.user.photo,
                               height: 130,
                               width: 130,
                               fit: BoxFit.cover,
@@ -209,7 +210,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ListTile(
                 dense: true,
                 title: Text(
-                  'Contact Us',
+                  'Support',
                   style: TextStyle(
                       color: Color(0xFF8F8F8F),
                       fontWeight: FontWeight.w600,
@@ -221,22 +222,22 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 ),
                 onTap: () {},
               ),
-              ListTile(
-                dense: true,
-                title: Text(
-                  'About us',
-                  style: TextStyle(
-                      color: Color(0xFF8F8F8F),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18),
-                ),
-                leading: Icon(
-                  Icons.work,
-                  color: Color(0xFF408AEB),
-                ),
-                onTap: () {
-                },
-              ),
+              // ListTile(
+              //   dense: true,
+              //   title: Text(
+              //     'About us',
+              //     style: TextStyle(
+              //         color: Color(0xFF8F8F8F),
+              //         fontWeight: FontWeight.w600,
+              //         fontSize: 18),
+              //   ),
+              //   leading: Icon(
+              //     Icons.work,
+              //     color: Color(0xFF408AEB),
+              //   ),
+              //   onTap: () {
+              //   },
+              // ),
               ListTile(
                 dense: true,
                 title: Text(
@@ -247,45 +248,45 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       fontSize: 18),
                 ),
                 leading: Icon(
-                  Icons.speaker_notes,
+                  Icons.library_books,
                   color: Color(0xFF408AEB),
                 ),
                 onTap: () {},
               ),
-              ListTile(
-                dense: true,
-                title: Text(
-                  'Refund/Cancellation Policy',
-                  style: TextStyle(
-                      color: Color(0xFF8F8F8F),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18),
-                ),
-                leading: Icon(
-                  Icons.cancel,
-                  color: Color(0xFF408AEB),
-                ),
-                onTap: () {
-                },
-              ),
-              ListTile(
-                dense: true,
-                title: Text(
-                  'Privacy Policy',
-                  style: TextStyle(
-                      color: Color(0xFF8F8F8F),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18),
-                ),
-                leading: Icon(
-                  Icons.library_books,
-                  color: Color(0xFF408AEB),
-                ),
-                onTap: () {
-                },
-              ),
+              // ListTile(
+              //   dense: true,
+              //   title: Text(
+              //     'Refund/Cancellation Policy',
+              //     style: TextStyle(
+              //         color: Color(0xFF8F8F8F),
+              //         fontWeight: FontWeight.w600,
+              //         fontSize: 18),
+              //   ),
+              //   leading: Icon(
+              //     Icons.cancel,
+              //     color: Color(0xFF408AEB),
+              //   ),
+              //   onTap: () {
+              //   },
+              // ),
+              // ListTile(
+              //   dense: true,
+              //   title: Text(
+              //     'Privacy Policy',
+              //     style: TextStyle(
+              //         color: Color(0xFF8F8F8F),
+              //         fontWeight: FontWeight.w600,
+              //         fontSize: 18),
+              //   ),
+              //   leading: Icon(
+              //     Icons.library_books,
+              //     color: Color(0xFF408AEB),
+              //   ),
+              //   onTap: () {
+              //   },
+              // ),
               Padding(
-                padding: EdgeInsets.only(top: 30),
+                padding: EdgeInsets.only(top: 90),
                 child: ListTile(
                   title: Text(
                     'Logout',
@@ -294,9 +295,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         fontWeight: FontWeight.w600,
                         fontSize: 18),
                   ),
-                  leading: FaIcon(
-                    FontAwesomeIcons.arrowCircleLeft,
-                    color: Color(0xFF408AEB),
+                  leading: Transform.rotate(
+                    angle: 180 * math.pi / 180,
+                    child: Icon(
+                      Icons.exit_to_app,
+                      color: Color(0xFF408AEB),
+                    ),
                   ),
                   onTap: () {
                     handleSignOut();

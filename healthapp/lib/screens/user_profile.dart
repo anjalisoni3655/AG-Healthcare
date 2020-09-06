@@ -33,7 +33,7 @@ class UserProfileState extends State<UserProfile> {
     dob = prefs.getString('dob') ?? globals.user.dob;
     blood = prefs.getString('blood') ?? globals.user.blood;
     height = prefs.getString('height') ?? globals.user.height;
-    weight = prefs.getString('dob') ?? globals.user.weight;
+    weight = prefs.getString('weight') ?? globals.user.weight;
     marital = prefs.getString('marital') ?? globals.user.marital;
     address = prefs.getString('address') ?? globals.user.address;
     phone = prefs.getString('phone') ?? '6370546775';
@@ -68,16 +68,20 @@ class UserProfileState extends State<UserProfile> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: Image(
-                      image: NetworkImage(photo),
+                      image: NetworkImage(
+                          photo.substring(0, photo.length - 5) + 's400-c'),
                       width: 100,
                       height: 100,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                _text(name, Color(0xFF08134D), FontWeight.w700, 29, 0),
-                _text(email, Color(0xFF08134D), FontWeight.w700, 15, 5),
-                _text(phone, Color(0xFF08134D), FontWeight.w700, 15, 0),
+                _text(name, Color(0xFF08134D), FontWeight.w700, 29, 0,
+                    TextAlign.center),
+                _text(email, Color(0xFF08134D), FontWeight.w700, 15, 5,
+                    TextAlign.center),
+                _text(phone, Color(0xFF08134D), FontWeight.w700, 15, 0,
+                    TextAlign.center),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
                 ),
@@ -101,16 +105,20 @@ class UserProfileState extends State<UserProfile> {
     return Container(
       child: Row(
         children: [
-          _text(category, Color(0xFF8F8F8F), FontWeight.w600, 15, 7),
+          Expanded(
+              child: _text(category, Color(0xFF8F8F8F), FontWeight.w600, 15, 7,
+                  TextAlign.left)),
           Spacer(),
-          _text(value, Color(0xFF606060), FontWeight.w600, 15, 7),
+          Expanded(
+              child: _text(value, Color(0xFF606060), FontWeight.w600, 15, 7,
+                  TextAlign.right)),
         ],
       ),
     );
   }
 
   Widget _text(String text, Color color, FontWeight fontWeight, double fontSize,
-      double padding) {
+      double padding, TextAlign textAlign) {
     //getPatient();
     print(name);
     return Padding(
@@ -119,6 +127,7 @@ class UserProfileState extends State<UserProfile> {
         text,
         style:
             TextStyle(color: color, fontSize: fontSize, fontWeight: fontWeight),
+        textAlign: textAlign,
       ),
     );
   }

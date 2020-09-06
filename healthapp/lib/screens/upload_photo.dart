@@ -404,7 +404,7 @@ class SettingsScreenStatePhoto extends State<SettingsScreenPhoto> {
                               borderRadius: BorderRadius.circular(30),
                               color: Color(0xFFDFE9F7)),
                           child: IconButton(
-                            icon: Icon(Icons.photo, color: Color(0xFF408AEB)),
+                            icon: Icon(Icons.camera_alt, color: Color(0xFF408AEB)),
                             onPressed: getImage,
                           ),
                         ),

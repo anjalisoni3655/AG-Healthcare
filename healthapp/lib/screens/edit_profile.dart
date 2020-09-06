@@ -111,6 +111,7 @@ class SettingsScreenState extends State<SettingsScreen> {
   String gender = '';
 
   int age;
+
   //int phone;
   String dob = '';
   String blood = '';
@@ -284,7 +285,7 @@ class SettingsScreenState extends State<SettingsScreen> {
     focusNodeWeight.unfocus();
     focusNodeMarital.unfocus();
     focusNodeAddress.unfocus();
-     focusNodePhone.unfocus();
+    focusNodePhone.unfocus();
 
     setState(() {
       isLoading = true;
@@ -306,7 +307,7 @@ class SettingsScreenState extends State<SettingsScreen> {
       'weight': weight,
       'marital': marital,
       'address': address,
-      'phone':phone,
+      'phone': phone,
     }).then((data) async {
       await prefs.setString('name', name);
       await prefs.setString('email', email);
@@ -317,7 +318,7 @@ class SettingsScreenState extends State<SettingsScreen> {
       await prefs.setString('dob', dob);
       await prefs.setString('blood', blood);
       await prefs.setString('gender', gender);
-       await prefs.setString('phone', phone);
+      await prefs.setString('phone', phone);
 
       setState(() {
         isLoading = false;
@@ -485,7 +486,9 @@ class SettingsScreenState extends State<SettingsScreen> {
                                       height: 90.0,
                                       padding: EdgeInsets.all(20.0),
                                     ),
-                                    imageUrl: photo,
+                                    imageUrl:
+                                        photo.substring(0, photo.length - 5) +
+                                            's400-c',
                                     width: 130.0,
                                     height: 130.0,
                                     fit: BoxFit.cover,
@@ -568,7 +571,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                     },
                     focusNode: focusNodeEmail,
                   ),
-                   Padding(
+                  Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Text('Mobile Number', style: textStyle1),
                   ),
@@ -629,7 +632,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(7)),
                           child: DropdownButton<String>(
-                            value: blood,
+                            value: dropdownValue,
                             icon: Icon(Icons.arrow_drop_down),
                             iconSize: 24,
                             isExpanded: true,
@@ -816,16 +819,17 @@ class SettingsScreenState extends State<SettingsScreen> {
                         onPressed: handleUpdateData,
                         elevation: 10,
                         child: Text(
-                          'Update & Save',
+                          'Update and Save',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
                         color: Color(0xFF408AEB),
                         padding: EdgeInsets.all(20),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7)),
+                          borderRadius: BorderRadius.circular(7),
+                        ),
                       ),
                     ),
                   ],
