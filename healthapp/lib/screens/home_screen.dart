@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:healthapp/screens/appointments/upcoming_page.dart';
 import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/drawer.dart';
 import 'package:healthapp/screens/home/home_page.dart';
@@ -79,13 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Color(0xFF408AEB),
           backgroundColor: Colors.white,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
           items: [
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
-                size: 25,
               ),
               title: Text(
                 'Home',
@@ -94,7 +89,6 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.work,
-                size: 25,
               ),
               title: Text(
                 'Appointments',
@@ -103,7 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.chat_bubble,
-                size: 25,
               ),
               title: Text(
                 'Blogs',
@@ -113,9 +106,11 @@ class _HomeScreenState extends State<HomeScreen> {
           currentIndex: selectedIndex,
           onTap: (int i) {
             globals.getPatientofGivenBookingId();
-            setState(() {
-              selectedIndex = i;
-            });
+            setState(
+              () {
+                selectedIndex = i;
+              },
+            );
           },
         ),
       ),

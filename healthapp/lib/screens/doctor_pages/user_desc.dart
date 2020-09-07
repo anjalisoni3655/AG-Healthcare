@@ -81,6 +81,7 @@ class _UserDescState extends State<UserDesc> {
                               height,
                               weight,
                               blood,
+                              reason_for_visit,
                               marital;
                           for (int i = 0;
                               i < snapshot.data.documents.length;
@@ -99,6 +100,7 @@ class _UserDescState extends State<UserDesc> {
                               blood = snapshot.data.documents[i].data['blood'];
                               marital =
                                   snapshot.data.documents[i].data['marital'];
+                              reason_for_visit=bookingInfo.data['reason_for_visit'];
                               int years = int.parse(
                                       DateTime.now().toString().split('-')[0]) -
                                   int.parse(age.split('-')[0]);
@@ -285,6 +287,31 @@ class _UserDescState extends State<UserDesc> {
                                               color: Color(0xFF08134D),
                                               fontSize: 15,
                                               fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Reason for visit',
+                                          style: TextStyle(
+                                              height: 1.5,
+                                              color: Color(0xFF8F8F8F),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Spacer(),
+                                        Flexible(
+                                          child: Text(
+                                            reason_for_visit,
+                                            style: TextStyle(
+                                                height: 1.5,
+                                                color: Color(0xFF08134D),
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                          flex: 2,
                                         ),
                                       ],
                                     ),

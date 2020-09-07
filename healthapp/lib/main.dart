@@ -36,33 +36,41 @@ class _MyAppState extends State<MyApp> {
           create: (_) => LoginStore(),
         )
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'AG Hospital',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          textTheme: GoogleFonts.nunitoTextTheme(
-            Theme.of(context).textTheme,
-          ),
-        ),
-        home: SplashPage(),
-        routes: {
-          LoginPage.id: (context) => LoginPage(),
-          UserForm.id: (context) => UserForm(),
-          HomeScreen.id: (context) => HomeScreen(),
-          Profile.id: (context) => Profile(),
-          UpcomingPage.id: (context) => UpcomingPage(),
-          BlogsPage.id: (context) => BlogsPage(),
-          DoctorsList.id: (context) => DoctorsList(),
-          DoctorDetails.id: (context) => DoctorDetails(),
-          AppointmentDetails.id: (context) => AppointmentDetails(),
-          UserProfile.id: (context) => UserProfile(),
-          UploadPhoto.id: (context) => UploadPhoto(),
-          ChatScreen.id: (context) => ChatScreen(),
-          DoctorDesc.id: (context) => DoctorDesc(),
-          UserDesc.id: (context) => UserDesc(),
-          DocChatScreen.id: (context) => DocChatScreen(),
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+            FocusManager.instance.primaryFocus.unfocus();
+          }
         },
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'AG Hospital',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            textTheme: GoogleFonts.nunitoTextTheme(
+              Theme.of(context).textTheme,
+            ),
+          ),
+          home: SplashPage(),
+          routes: {
+            LoginPage.id: (context) => LoginPage(),
+            UserForm.id: (context) => UserForm(),
+            HomeScreen.id: (context) => HomeScreen(),
+            Profile.id: (context) => Profile(),
+            UpcomingPage.id: (context) => UpcomingPage(),
+            BlogsPage.id: (context) => BlogsPage(),
+            DoctorsList.id: (context) => DoctorsList(),
+            DoctorDetails.id: (context) => DoctorDetails(),
+            AppointmentDetails.id: (context) => AppointmentDetails(),
+            UserProfile.id: (context) => UserProfile(),
+            UploadPhoto.id: (context) => UploadPhoto(),
+            ChatScreen.id: (context) => ChatScreen(),
+            DoctorDesc.id: (context) => DoctorDesc(),
+            UserDesc.id: (context) => UserDesc(),
+            DocChatScreen.id: (context) => DocChatScreen(),
+          },
+        ),
       ),
     );
   }

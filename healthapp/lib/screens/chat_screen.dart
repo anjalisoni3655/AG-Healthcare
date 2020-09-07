@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:googleapis/cloudasset/v1.dart';
 import 'package:healthapp/authentication/user.dart'as globals;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -260,7 +261,7 @@ class ChatScreenState extends State<ChatScreen> {
   Widget _imageIcon(String imgUrl) {
     return ClipRRect(
         borderRadius: BorderRadius.circular(100),
-        child: Image(image: NetworkImage(imgUrl)));
+        child: Image(image: AssetImage('assets/icons/doc1.png')));
   }
 
   Widget _doctorName(String name) {

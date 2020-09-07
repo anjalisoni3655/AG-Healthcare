@@ -33,28 +33,31 @@ class SuccessPage extends StatelessWidget {
       fontWeight: FontWeight.bold,
       height: 1.5);
   String dateCurrent = DateTime.now().toString();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
-    backgroundColor: Color(0xFFF8F8F8),
-    elevation: 0,
-    centerTitle: true,
-    title: Text(
-      'Payment Confirmation',
-      style: GoogleFonts.varelaRound(
-        fontWeight: FontWeight.bold,
-        fontSize: 18,
-        color: Color(0xFF262626),
+        backgroundColor: Color(0xFFF8F8F8),
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          'Payment Confirmation',
+          style: GoogleFonts.varelaRound(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: Color(0xFF262626),
+          ),
+        ),
+        leading: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, HomeScreen.id);
+            },
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.blue[700],
+            )),
       ),
-    ),
-    leading: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, HomeScreen.id);
-        },
-        child: Icon(Icons.arrow_back_ios, color: Colors.blue[700],)),
-  ),
       body: SafeArea(
         child: Material(
           color: Color(0xFFF8F8F8),
@@ -98,7 +101,7 @@ class SuccessPage extends StatelessWidget {
                         ),
                         Spacer(),
                         Text(
-                          'Rs '+(globals.user.cost).toString(),
+                          'Rs ' + (globals.user.cost).toString(),
                           style: _textStyle3,
                         ),
                       ],

@@ -93,6 +93,7 @@ Future<String> uploadBookingDetails({
   String name,
   String photo,
   String phone,
+  String reason_for_visit,
 }) async {
   print('email:${globals.user.email}');
   final _firestore = Firestore.instance;
@@ -104,6 +105,7 @@ Future<String> uploadBookingDetails({
       .collection('booking_details')
       .document(globals.user.id)
       .setData({
+    'reason_for_visit': reason_for_visit,
     'doctorName': doctorName,
     'years': years,
     'field': field,

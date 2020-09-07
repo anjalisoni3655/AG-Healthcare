@@ -90,6 +90,7 @@ class AppointmentDetails extends StatefulWidget {
 String type;
 String gender, dob, blood, marital, address, name, email;
 String height, weight, photo;
+String reason_for_visit;
 
 String id;
 SharedPreferences prefs;
@@ -163,11 +164,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
         "Name": name,
         "Gender": gender,
         //TODO: add a field why is he visiting when he is booking the payment
-        "Reason to visit": "Cough and Cold",
+        // "Reason to visit": "Cough and Cold", -> done this!
         //TODO: add this variable
 
         "First time/Follow up": "First Time",
-
+        "Reason for visit" : reason_for_visit,
         "Date of Birth": dob,
         "Blood Group": blood,
         "Height": height,
@@ -237,6 +238,49 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     razorpay.clear();
   }
 
+  TextStyle textStyle1 = TextStyle(
+      color: Color(0xFF8F8F8F), fontSize: 15, fontWeight: FontWeight.w600);
+  TextStyle textStyle2 = TextStyle(
+      color: Color(0xFF606060), fontSize: 15, fontWeight: FontWeight.w600);
+  InputDecoration inputDecoration = InputDecoration(
+    filled: true,
+    fillColor: Colors.white,
+    focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+    enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+    disabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(7)),
+  );
+
+  Widget _buildReasonOfVisit() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text('Reason for visit', style: textStyle1),
+          ),
+          TextFormField(
+              decoration: inputDecoration,
+              cursorColor: Color(0xFF8F8F8F),
+              cursorRadius: Radius.circular(10),
+              cursorWidth: 0.5,
+              style: textStyle2,
+              maxLines: null,
+              onChanged: (String value) {
+                reason_for_visit = value;
+              }),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // PaymentSuccessResponse response;
@@ -263,6 +307,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
+                    _buildReasonOfVisit(),
                     Container(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -370,6 +415,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               borderRadius: BorderRadius.circular(12)),
                           onPressed: () async {
                             await globals.uploadBookingDetails(
+                              reason_for_visit: reason_for_visit,
                               doctorName: name,
                               years: expYears,
                               field: fields,

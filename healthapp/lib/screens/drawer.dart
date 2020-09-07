@@ -241,7 +241,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ListTile(
                 dense: true,
                 title: Text(
-                  'Terms & Conditions',
+                  'Terms of Use',
                   style: TextStyle(
                       color: Color(0xFF8F8F8F),
                       fontWeight: FontWeight.w600,
