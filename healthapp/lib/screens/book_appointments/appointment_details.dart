@@ -91,6 +91,7 @@ String type;
 String gender, dob, blood, marital, address, name, email;
 String height, weight, photo;
 String reason_for_visit;
+String timesOfVisit = 'First time';
 
 String id;
 SharedPreferences prefs;
@@ -168,7 +169,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
         //TODO: add this variable
 
         "First time/Follow up": "First Time",
-        "Reason for visit" : reason_for_visit,
+        "Reason for visit": reason_for_visit,
+        "Times for Visit": timesOfVisit,
         "Date of Birth": dob,
         "Blood Group": blood,
         "Height": height,
@@ -416,6 +418,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           onPressed: () async {
                             await globals.uploadBookingDetails(
                               reason_for_visit: reason_for_visit,
+                              timesOfVisit: timesOfVisit,
                               doctorName: name,
                               years: expYears,
                               field: fields,
@@ -625,6 +628,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                 _bodyColor[2] = _bodyColor[3] = Color(0xFFFFFFFF);
                 _textColor[2] = _textColor[3] = Color(0xFF8F8F8F);
               }
+              else if (index == 3) timesOfVisit = 'Follow up';
             } else {
               selectedDate = null;
               anyColorSelected = false;

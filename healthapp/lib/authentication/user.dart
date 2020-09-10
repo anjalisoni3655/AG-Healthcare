@@ -53,7 +53,7 @@ Future<String> uploadUserDetails({
       'height': height,
       'weight': weight,
       'marital': marital,
-      'phone':phone,
+      'phone': phone,
     },
   );
   return _id;
@@ -94,6 +94,7 @@ Future<String> uploadBookingDetails({
   String photo,
   String phone,
   String reason_for_visit,
+  String timesOfVisit,
 }) async {
   print('email:${globals.user.email}');
   final _firestore = Firestore.instance;
@@ -106,6 +107,7 @@ Future<String> uploadBookingDetails({
       .document(globals.user.id)
       .setData({
     'reason_for_visit': reason_for_visit,
+    'timesOfVisit': timesOfVisit,
     'doctorName': doctorName,
     'years': years,
     'field': field,
@@ -119,7 +121,7 @@ Future<String> uploadBookingDetails({
     'id': id,
     'photo': photo,
     'name': name,
-    'phone':phone,
+    'phone': phone,
   }, merge: true).then((_) {
     print("payment id added");
   });

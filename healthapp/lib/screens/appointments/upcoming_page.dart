@@ -27,26 +27,41 @@ class _UpcomingPageState extends State<UpcomingPage> {
             Navigator.pushNamed(context, DoctorDesc.id);
           },
           child: Ink(
-            height: 90,
-            color: Color(0xFFF8F8F8),
             child: StreamBuilder(
               stream:
                   Firestore.instance.collection('booking_details').snapshots(),
               builder: (context, snapshot) {
                 print(snapshot);
                 if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
+                  return Ink(
+                    color: Color(0xFFF8F8F8),
+                    height: 90,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
+                      ),
                     ),
                   );
                 } else {
-                  return ListView.builder(
-                    itemBuilder: (context, index) =>
-                        buildItem(context, snapshot.data.documents[index]),
-                    itemCount: snapshot.data.documents.length,
-                    physics: new NeverScrollableScrollPhysics(),
+                  // this means whenever the data is not found it'll automatically make the container invisible
+                  bool check = false;
+                  for (int i = 0; i < snapshot.data.documents.length; i++) {
+                    DocumentSnapshot doc1 = snapshot.data.documents[i];
+                    Timestamp visitDate = doc1.data['selectedDate'];
+                    if (doc1.data['id'] == globals.user.id &&
+                        visitDate.toDate().isAfter(DateTime.now()))
+                      check = true;
+                  }
+                  return Ink(
+                    color: Color(0xFFF8F8F8),
+                    height: (check == true) ? 90 : 0,
+                    child: ListView.builder(
+                      itemBuilder: (context, index) =>
+                          buildItem(context, snapshot.data.documents[index]),
+                      itemCount: snapshot.data.documents.length,
+                      physics: new NeverScrollableScrollPhysics(),
+                    ),
                   );
                 }
               },
@@ -61,10 +76,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
 
   Widget buildItem(BuildContext context, DocumentSnapshot document) {
     if (document.data['id'] != globals.user.id) {
-      if (document.data.length != 0)
-        return Container();
-      else
-        return Container();
+      return Container();
     } else {
       print(document.data['id']);
       String time = document.data['visitDuration'];
@@ -77,15 +89,19 @@ class _UpcomingPageState extends State<UpcomingPage> {
       String date =
           dateTimeConverter(visitDate.toDate().toString().split(' ')[0]);
       date = date.split(',')[0];
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: _appointmentsTab(
-            'assets/icons/doc1.png',
-            document.data['doctorName'],
-            document.data['visitType'],
-            time,
-            date),
-      );
+      if (visitDate.toDate().isBefore(DateTime.now()))
+        return Container();
+      else {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: _appointmentsTab(
+              'assets/icons/doc1.png',
+              document.data['doctorName'],
+              document.data['visitType'],
+              time,
+              date),
+        );
+      }
     }
   }
 

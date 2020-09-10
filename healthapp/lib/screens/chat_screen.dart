@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:googleapis/cloudasset/v1.dart';
-import 'package:healthapp/authentication/user.dart'as globals;
+import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -150,7 +150,6 @@ class ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-   
     return SafeArea(
       child: Material(
         color: Color(0xFFF8F8F8),
@@ -179,14 +178,54 @@ class ChatScreenState extends State<ChatScreen> {
                                 horizontal: 20, vertical: 10),
                             child: UpcomingPage(),
                           ),
-                          Expanded(
-                            child: ListView.builder(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              itemBuilder: (context, index) => buildItem(
-                                  context, snapshot.data.documents[index]),
-                              itemCount: snapshot.data.documents.length,
-                            ),
-                          ),
+                          StreamBuilder(
+                              stream: Firestore.instance
+                                  .collection('booking_details')
+                                  .snapshots(),
+                              builder: (context, snapshotBooking) {
+                                print(snapshotBooking);
+                                if (!snapshotBooking.hasData) {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Color(0xfff5a623)),
+                                    ),
+                                  );
+                                } else {
+                                  bool check = false;
+                                  for (int i = 0;
+                                      i < snapshotBooking.data.documents.length;
+                                      i++) {
+                                    DocumentSnapshot doc1 =
+                                        snapshotBooking.data.documents[i];
+                                    Timestamp visitDate =
+                                        doc1.data['selectedDate'];
+                                    final difference = visitDate
+                                        .toDate()
+                                        .difference(DateTime.now())
+                                        .inDays;
+                                    print(difference);
+                                    if (doc1.data['id'] == globals.user.id &&
+                                        difference >= -3 &&
+                                        difference < 0) check = true;
+                                    if(difference==0 && visitDate.toDate().isBefore(DateTime.now())) check=true;
+                                  }
+                                  return Visibility(
+                                    visible: (check == true),
+                                    child: Expanded(
+                                      child: ListView.builder(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        itemBuilder: (context, index) =>
+                                            buildItem(context,
+                                                snapshot.data.documents[index]),
+                                        itemCount:
+                                            snapshot.data.documents.length,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }),
                         ],
                       );
                     }
@@ -197,7 +236,7 @@ class ChatScreenState extends State<ChatScreen> {
               // Loading
               Positioned(
                 child: isLoading ? const Loading() : Container(),
-              )
+              ),
             ],
           ),
           //  onWillPop:,
@@ -240,24 +279,6 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  Widget _appointmentsTab(String imgUrl, String name, String type,
-      String visitType, String time, String date) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(7), color: Colors.white),
-        padding: EdgeInsets.symmetric(vertical: 10),
-        child: ListTile(
-          leading: _imageIcon(imgUrl),
-          title: _doctorName(name),
-          subtitle: _upcomingSubtitle(visitType, time),
-          trailing: _upcomingDate(date.split(" ")[0], date.split(" ")[1]),
-        ),
-      ),
-    );
-  }
-
   Widget _imageIcon(String imgUrl) {
     return ClipRRect(
         borderRadius: BorderRadius.circular(100),
@@ -274,58 +295,6 @@ class ChatScreenState extends State<ChatScreen> {
             color: Color(0xFF08134D),
             fontSize: 18),
       ),
-    );
-  }
-
-  Widget _upcomingDate(String day, String month) {
-    return Container(
-      padding: EdgeInsets.only(left: 15, right: 15, top: 4),
-      decoration: BoxDecoration(
-          color: Colors.lightBlue[200], borderRadius: BorderRadius.circular(7)),
-      child: Column(
-        children: [
-          Text(
-            day,
-            style: TextStyle(
-              color: Color(0xFF262626),
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            month,
-            style: TextStyle(
-              color: Color(0xFF262626),
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _upcomingSubtitle(String type, String time) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Text(
-            type,
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF08134D),
-                fontSize: 15),
-          ),
-        ),
-        Text(
-          time,
-          style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF408AEB),
-              fontSize: 15),
-        ),
-      ],
     );
   }
 
