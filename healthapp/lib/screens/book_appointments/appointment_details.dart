@@ -168,7 +168,6 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
         // "Reason to visit": "Cough and Cold", -> done this!
         //TODO: add this variable
 
-        "First time/Follow up": "First Time",
         "Reason for visit": reason_for_visit,
         "Times for Visit": timesOfVisit,
         "Date of Birth": dob,
@@ -294,6 +293,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       name = arguments['name'];
       expYears = arguments['expYears'];
       fields = arguments['fields'];
+
       costs = arguments['costs'];
     }
     return Scaffold(
@@ -416,6 +416,15 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           onPressed: () async {
+                            //  int cnt = 1;
+                            if (timesOfVisit == 'Follow up') {
+                              // if (cnt <= 2) {
+                              costs = '1';
+                              globals.user.cost = 1;
+                              //  cnt++;
+                              // }
+                            }
+
                             await globals.uploadBookingDetails(
                               reason_for_visit: reason_for_visit,
                               timesOfVisit: timesOfVisit,
@@ -627,8 +636,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                 visitType = (index == 0) ? 'Online' : 'Clinic';
                 _bodyColor[2] = _bodyColor[3] = Color(0xFFFFFFFF);
                 _textColor[2] = _textColor[3] = Color(0xFF8F8F8F);
-              }
-              else if (index == 3) timesOfVisit = 'Follow up';
+              } else if (index == 3) timesOfVisit = 'Follow up';
             } else {
               selectedDate = null;
               anyColorSelected = false;
