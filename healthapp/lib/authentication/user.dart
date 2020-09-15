@@ -34,6 +34,7 @@ Future<String> uploadUserDetails({
   int weight,
   String marital,
   String phone,
+  String timesOfVisit,
 }) async {
   print('email:${globals.user.email}');
   final _firestore = Firestore.instance;
@@ -121,7 +122,7 @@ Future<String> uploadBookingDetails({
     'id': id,
     'photo': photo,
     'name': name,
-    'phone': phone,
+    
   }, merge: true).then((_) {
     print("payment id added");
   });

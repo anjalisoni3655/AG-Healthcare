@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:googleapis/healthcare/v1.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
+import 'package:healthapp/screens/book_appointments/appointment_details.dart';
 import 'package:healthapp/utils/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,6 +32,8 @@ void getPrescriptionByPatient() {
   });
 }
 
+String uid;
+
 class UserDesc extends StatefulWidget {
   @override
   static const id = "user_desc";
@@ -47,6 +51,7 @@ class _UserDescState extends State<UserDesc> {
     getPrescriptionByPatient();
 
     DocumentSnapshot bookingInfo = widget.bookingInfo;
+    id = bookingInfo.data['id'];
     return Scaffold(
       appBar: _appBar(),
       body: SingleChildScrollView(
@@ -83,6 +88,7 @@ class _UserDescState extends State<UserDesc> {
                               blood,
                               reason_for_visit,
                               marital;
+                          timesOfVisit;
                           for (int i = 0;
                               i < snapshot.data.documents.length;
                               i++) {
@@ -100,11 +106,14 @@ class _UserDescState extends State<UserDesc> {
                               blood = snapshot.data.documents[i].data['blood'];
                               marital =
                                   snapshot.data.documents[i].data['marital'];
-                              reason_for_visit=bookingInfo.data['reason_for_visit'];
+                              reason_for_visit =
+                                  bookingInfo.data['reason_for_visit'];
+                              timesOfVisit = bookingInfo.data['timesOfVisit'];
                               int years = int.parse(
                                       DateTime.now().toString().split('-')[0]) -
                                   int.parse(age.split('-')[0]);
                               age = years.toString();
+
                               break;
                             }
                           }
@@ -155,7 +164,7 @@ class _UserDescState extends State<UserDesc> {
                                         ),
                                         Spacer(),
                                         Text(
-                                          phone?? '1234567890',
+                                          phone ?? '1234567890',
                                           style: TextStyle(
                                               height: 1.5,
                                               color: Color(0xFF08134D),
@@ -304,6 +313,32 @@ class _UserDescState extends State<UserDesc> {
                                         Flexible(
                                           child: Text(
                                             reason_for_visit,
+                                            style: TextStyle(
+                                                height: 1.5,
+                                                color: Color(0xFF08134D),
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                          flex: 2,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Time Of Visit',
+                                          style: TextStyle(
+                                              height: 1.5,
+                                              color: Color(0xFF8F8F8F),
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Spacer(),
+                                        Flexible(
+                                          child: Text(
+                                            globals.user.visitTime ??
+                                                'First Time',
                                             style: TextStyle(
                                                 height: 1.5,
                                                 color: Color(0xFF08134D),
@@ -481,6 +516,7 @@ class _UserDescState extends State<UserDesc> {
   }
 
   Widget _appBar() {
+     DocumentSnapshot bookingInfo = widget.bookingInfo;
     return AppBar(
       flexibleSpace: Image(
         image: AssetImage('assets/images/docdet.png'),
@@ -505,10 +541,12 @@ class _UserDescState extends State<UserDesc> {
           child: GestureDetector(
             onTap: () async {
               //TODO : delete the respective document
+              print('detelet user ifd');
+              print(bookingInfo.data['id']);
               var firebaseUser = await FirebaseAuth.instance.currentUser();
               Firestore.instance
                   .collection("booking_details")
-                  .document(firebaseUser.uid)
+                  .document(bookingInfo.data['id'])
                   .delete()
                   .then((_) {
                 print("success!");

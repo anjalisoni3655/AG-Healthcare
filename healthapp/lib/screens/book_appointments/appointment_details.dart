@@ -145,7 +145,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     globals.user.date = date;
     globals.user.visitDuration = visitDuration;
 
-    globals.user.visitTime = visitTime;
+    globals.user.visitTime = timesOfVisit;
 
     globals.user.visitType = visitType;
 
@@ -441,6 +441,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               photo: globals.user.photo,
                               name: globals.user.name,
                             );
+
                             print('done');
                             globals.getAllPatientDetail();
                             openCheckout();
@@ -465,11 +466,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           for (int i = 1; i <= 6; i++)
             Row(
               children: [
-                _buttonTimeTable(i * 3 - 3, '9:00 - 9:15'),
+                _buttonTimeTable(i * 3 - 3, '6:00 - 6:15'),
                 Padding(padding: EdgeInsets.all(5)),
-                _buttonTimeTable(i * 3 - 2, '9:00 - 9:15'),
+                 _buttonTimeTable(i * 3 - 2, '6:15 - 6:30'),
                 Padding(padding: EdgeInsets.all(5)),
-                _buttonTimeTable(i * 3 - 1, '9:00 - 9:15'),
+                _buttonTimeTable(i * 3 - 1, '6:30 - 6:45'), 
               ],
             ),
         ],
