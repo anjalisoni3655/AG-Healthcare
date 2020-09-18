@@ -150,7 +150,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     globals.user.visitType = visitType;
 
     var options = {
-      "key": "rzp_test_7ygVzTh2b1Y9df",
+      "key": "rzp_live_lvbsLNDuBAIfyt",
       "amount": (globals.user.cost) * 100,
       "name": "Dr Amit Goel Clinic",
 

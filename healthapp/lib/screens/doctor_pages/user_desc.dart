@@ -551,7 +551,7 @@ class _UserDescState extends State<UserDesc> {
                   .then((_) {
                 print("success!");
                 //TODO: MENTION the respective patients email here, so that the doctor can give a reason to the patient why ihe is cancelling
-                _launchURL('anjalisoni3655@gmail.com', 'appointment cancelled',
+                _launchURL(bookingInfo.data['email'], 'appointment cancelled',
                     'your appointment has been cancelled');
               });
             },
