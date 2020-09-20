@@ -11,6 +11,7 @@ import 'package:toast/toast.dart';
 import 'package:healthapp/paymentSuccess.dart';
 import 'package:healthapp/paymentFailed.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 List<Color> _textColor = [
   Color(0xFF8F8F8F),
@@ -444,6 +445,27 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
 
                             print('done');
                             globals.getAllPatientDetail();
+                            List<dynamic> obj = [];
+
+                            await Firestore.instance
+                                .collection("timings")
+                                .document(selectedDate.toString())
+                                .get()
+                                .then((value) {
+                              // obj.add(value.data);
+                              // obj = value.data['slots'] ?? [];
+                              print("data${value.data}");
+                              if (value.data != null) {
+                                obj = value.data['slots'];
+                                print("obj$obj");
+                              }
+                            });
+                            obj.add(visitDuration);
+                            print("obj2$obj");
+                            await Firestore.instance
+                                .collection("timings")
+                                .document(selectedDate.toString())
+                                .setData({"slots": obj});
                             openCheckout();
                           },
                         ),
@@ -468,9 +490,9 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               children: [
                 _buttonTimeTable(i * 3 - 3, '6:00 - 6:15'),
                 Padding(padding: EdgeInsets.all(5)),
-                 _buttonTimeTable(i * 3 - 2, '6:15 - 6:30'),
+                _buttonTimeTable(i * 3 - 2, '6:15 - 6:30'),
                 Padding(padding: EdgeInsets.all(5)),
-                _buttonTimeTable(i * 3 - 1, '6:30 - 6:45'), 
+                _buttonTimeTable(i * 3 - 1, '6:30 - 6:45'),
               ],
             ),
         ],
