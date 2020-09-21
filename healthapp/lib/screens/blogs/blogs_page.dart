@@ -18,7 +18,6 @@ class _BlogsPageState extends State<BlogsPage> {
 
     return SafeArea(
       child: Material(
-        
         color: Color(0xFFF8F8F8),
         child: Container(
           color: Color(0xFFF8F8F8),
@@ -71,9 +70,8 @@ class _BlogsPageState extends State<BlogsPage> {
             padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
             child: Text(
               title,
-            //  textAlign: TextAlign.right,
+              //  textAlign: TextAlign.right,
               style: TextStyle(
-               
                 fontWeight: FontWeight.w700,
                 fontSize: 15,
                 color: Color(0xFF08134D),

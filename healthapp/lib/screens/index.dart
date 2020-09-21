@@ -31,7 +31,6 @@ class IndexState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: Center(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -64,7 +63,6 @@ class IndexState extends State<IndexPage> {
                       onChanged: (ClientRole value) {
                         setState(() {
                           _role = value;
-                          
                         });
                       },
                     ),

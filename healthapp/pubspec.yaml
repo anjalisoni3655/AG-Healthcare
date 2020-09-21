@@ -60,6 +60,7 @@ dependencies:
   googleapis: ^0.55.0
   googleapis_auth:
   share: ^0.6.5
+  mailer: ^3.2.1
 
 dev_dependencies:
   flutter_test:

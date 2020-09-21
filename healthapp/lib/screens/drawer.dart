@@ -69,7 +69,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     // getPatient();
-    
+
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       return Drawer(
         child: Container(
@@ -92,7 +92,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         child: CircleAvatar(
                           child: ClipOval(
                             child: Image.network(
-                              (photo != null) ? photo.substring(0,photo.length-5)+'s400-c' : globals.user.photo,
+                              (photo != null)
+                                  ? photo.substring(0, photo.length - 5) +
+                                      's400-c'
+                                  : globals.user.photo,
                               height: 130,
                               width: 130,
                               fit: BoxFit.cover,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Widget customAppBar(String text, var context){
+Widget customAppBar(String text, var context) {
   return AppBar(
     backgroundColor: Color(0xFFF8F8F8),
     elevation: 0,
@@ -18,6 +18,9 @@ Widget customAppBar(String text, var context){
         onTap: () {
           Navigator.pop(context);
         },
-        child: Icon(Icons.arrow_back_ios, color: Colors.blue[700],)),
+        child: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.blue[700],
+        )),
   );
 }

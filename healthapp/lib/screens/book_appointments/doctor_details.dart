@@ -161,72 +161,72 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                               'articles are one of the best in the world for research on prevention and early '
                               'detection of diabetic neuropathy.',
                               Color(0xFF8F8F8F)),
-                           _textTitle('Reviews', Color(0xFF08134D), 15,
+                          _textTitle('Reviews', Color(0xFF08134D), 15,
                               FontWeight.w700),
                           // TODO : REVIEW PART NEEDS TO BE MADE BETTER | ANJALI IS VERY ANGRY AFTER MAKIN' A MESS!
-                           Form(
-                             key: _formKey,
-                             child: Column(
-                               mainAxisAlignment: MainAxisAlignment.center,
-                               children: <Widget>[
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
                                 Container(
                                   padding: EdgeInsets.symmetric(vertical: 5),
                                   child: Column(
-                                  crossAxisAlignment:
+                                    crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                     children: [
+                                    children: [
                                       Padding(
-                                         padding: const EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             vertical: 10),
                                         child: Text('How was your experience'),
-                                       ),
-                                       TextFormField(
-                                          decoration: inputDecoration,
-                                           cursorColor: Color(0xFF8F8F8F),
-                                           cursorRadius: Radius.circular(10),
-                                         cursorWidth: 0.5,
-                                        style: textStyle2,
-                                          //  validator: validateName,
-                                           onSaved: (String value) {
-                                             review = value;
-                                           }),
-                                     Padding(
-                                       padding: const EdgeInsets.symmetric(
-                                             vertical: 10),
-                                        child: Text('Give your rating(1-5)'),
-                                       ),
-                                     TextFormField(
+                                      ),
+                                      TextFormField(
                                           decoration: inputDecoration,
                                           cursorColor: Color(0xFF8F8F8F),
-                                           cursorRadius: Radius.circular(10),
+                                          cursorRadius: Radius.circular(10),
                                           cursorWidth: 0.5,
-                                        style: textStyle2,
-                                           keyboardType: TextInputType.number,
-                                         validator: validateAge,
-                                         onSaved: (String value) {
+                                          style: textStyle2,
+                                          //  validator: validateName,
+                                          onSaved: (String value) {
+                                            review = value;
+                                          }),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Text('Give your rating(1-5)'),
+                                      ),
+                                      TextFormField(
+                                          decoration: inputDecoration,
+                                          cursorColor: Color(0xFF8F8F8F),
+                                          cursorRadius: Radius.circular(10),
+                                          cursorWidth: 0.5,
+                                          style: textStyle2,
+                                          keyboardType: TextInputType.number,
+                                          validator: validateAge,
+                                          onSaved: (String value) {
                                             rate = int.tryParse(value);
-                                           }),
-                                     ],
+                                          }),
+                                    ],
                                   ),
                                 ),
-                                 Padding(
-                                   padding: EdgeInsets.all(10),
-                                 ),
-                               ],
-                             ),
-                           ),
-                           RaisedButton(
-                             elevation: 5,
+                                Padding(
+                                  padding: EdgeInsets.all(10),
+                                ),
+                              ],
+                            ),
+                          ),
+                          RaisedButton(
+                            elevation: 5,
                             onPressed: () async {
                               // if (!_formKey.currentState.validate()) {
-                               //   return;
+                              //   return;
                               // }
                               _formKey.currentState.save();
                               print("Submit your review");
-                           print(review);
-                               print(rate);
-                               await globals.uploadReviews(
-                                 rate: rate, comment: review);
+                              print(review);
+                              print(rate);
+                              await globals.uploadReviews(
+                                  rate: rate, comment: review);
                             },
                             color: Color(0xFF408AEB),
                             shape: RoundedRectangleBorder(
@@ -234,19 +234,19 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                             child: Container(
                               width: double.infinity,
                               alignment: Alignment.center,
-                               height: 50,
-                               child: Text(
+                              height: 50,
+                              child: Text(
                                 'Submit your review',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                   fontSize: 16),
+                                    fontSize: 16),
                               ),
                             ),
-                         ),
+                          ),
                           for (var i = 0; i < names.length; i++)
-                             _reviewContainer(names[i], comments[i], photos[i],
-                                 ratings[i].toDouble(), 5),
+                            _reviewContainer(names[i], comments[i], photos[i],
+                                ratings[i].toDouble(), 5),
                         ],
                       ),
                     ),

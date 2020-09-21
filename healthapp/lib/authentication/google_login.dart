@@ -90,20 +90,19 @@ Future<Null> handleSignIn(BuildContext context) async {
       print("Successfully Signed in");
 
       if (globals.user.id == 'HxotQtogDhYYb9wW4EbyqV3Vd1x1') {
-         Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => DocChatScreen(currentUserId: firebaseUser.uid,)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DocChatScreen(
+                      currentUserId: firebaseUser.uid,
+                    )));
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    UserForm(currentUserId: firebaseUser.uid)));
       }
-      
-      else{
- Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => UserForm(currentUserId: firebaseUser.uid)));
-      }
-      
-     
     } else {
       Fluttertoast.showToast(msg: "Sign in failed, Try Again");
       print("Sign in failed, Try Again");

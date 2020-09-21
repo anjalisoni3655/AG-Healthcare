@@ -32,12 +32,12 @@ class _OtpPageState extends State<OtpPage> {
             borderRadius: const BorderRadius.all(Radius.circular(7))),
         child: Center(
             child: Text(
-              text[position],
-              style: const TextStyle(
-                  color: Color(0xFF4B4B4B),
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600),
-            )),
+          text[position],
+          style: const TextStyle(
+              color: Color(0xFF4B4B4B),
+              fontSize: 20,
+              fontWeight: FontWeight.w600),
+        )),
       );
     } catch (e) {
       return Container(
@@ -130,12 +130,12 @@ class _OtpPageState extends State<OtpPage> {
                                 ),
                                 Container(
                                   constraints:
-                                  const BoxConstraints(maxWidth: 500),
+                                      const BoxConstraints(maxWidth: 500),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceEvenly,
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
                                       otpNumberWidget(0),
                                       otpNumberWidget(1),
@@ -160,7 +160,7 @@ class _OtpPageState extends State<OtpPage> {
                               color: Colors.blue[700],
                               shape: const RoundedRectangleBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(7))),
+                                      BorderRadius.all(Radius.circular(7))),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),

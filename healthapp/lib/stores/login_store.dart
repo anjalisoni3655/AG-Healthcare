@@ -37,16 +37,15 @@ abstract class LoginStoreBase with Store {
   }
 
   @action
-  Future<void> getCodeWithPhoneNumber(BuildContext context, String phoneNumber) async {
+  Future<void> getCodeWithPhoneNumber(
+      BuildContext context, String phoneNumber) async {
     isLoginLoading = true;
 
     await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         timeout: const Duration(seconds: 60),
         verificationCompleted: (AuthCredential auth) async {
-          await _auth
-              .signInWithCredential(auth)
-              .then((AuthResult value) {
+          await _auth.signInWithCredential(auth).then((AuthResult value) {
             if (value != null && value.user != null) {
               print('Authentication successful');
               onAuthenticationSuccessful(context, value);
@@ -54,14 +53,20 @@ abstract class LoginStoreBase with Store {
               loginScaffoldKey.currentState.showSnackBar(const SnackBar(
                 behavior: SnackBarBehavior.floating,
                 backgroundColor: Colors.red,
-                content: Text('Invalid code/invalid authentication', style: TextStyle(color: Colors.white),),
+                content: Text(
+                  'Invalid code/invalid authentication',
+                  style: TextStyle(color: Colors.white),
+                ),
               ));
             }
           }).catchError((error) {
             loginScaffoldKey.currentState.showSnackBar(const SnackBar(
               behavior: SnackBarBehavior.floating,
               backgroundColor: Colors.red,
-              content: Text('Something has gone wrong, please try later', style: TextStyle(color: Colors.white),),
+              content: Text(
+                'Something has gone wrong, please try later',
+                style: TextStyle(color: Colors.white),
+              ),
             ));
           });
         },
@@ -70,19 +75,22 @@ abstract class LoginStoreBase with Store {
           loginScaffoldKey.currentState.showSnackBar(const SnackBar(
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.red,
-            content: Text('The phone number format is incorrect. Please enter your number in E.164 format. [+][country code][number]', style: TextStyle(color: Colors.white),),
+            content: Text(
+              'The phone number format is incorrect. Please enter your number in E.164 format. [+][country code][number]',
+              style: TextStyle(color: Colors.white),
+            ),
           ));
           isLoginLoading = false;
         },
         codeSent: (String verificationId, [int forceResendingToken]) async {
           actualCode = verificationId;
           isLoginLoading = false;
-          await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const OtpPage()));
+          await Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const OtpPage()));
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           actualCode = verificationId;
-        }
-    );
+        });
   }
 
   @action
@@ -96,7 +104,10 @@ abstract class LoginStoreBase with Store {
       otpScaffoldKey.currentState.showSnackBar(const SnackBar(
         behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.red,
-        content: Text('Wrong code ! Please enter the last code received.', style: TextStyle(color: Colors.white),),
+        content: Text(
+          'Wrong code ! Please enter the last code received.',
+          style: TextStyle(color: Colors.white),
+        ),
       ));
     }).then((AuthResult authResult) {
       if (authResult != null && authResult.user != null) {
@@ -106,13 +117,16 @@ abstract class LoginStoreBase with Store {
     });
   }
 
-  Future<void> onAuthenticationSuccessful(BuildContext context, AuthResult result) async {
+  Future<void> onAuthenticationSuccessful(
+      BuildContext context, AuthResult result) async {
     isLoginLoading = true;
     isOtpLoading = true;
 
     firebaseUser = result.user;
 
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => HomeScreen()), (Route<dynamic> route) => false);
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => HomeScreen()),
+        (Route<dynamic> route) => false);
 
     isLoginLoading = false;
     isOtpLoading = false;
@@ -121,7 +135,9 @@ abstract class LoginStoreBase with Store {
   @action
   Future<void> signOut(BuildContext context) async {
     await _auth.signOut();
-    await Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => LoginPage()), (Route<dynamic> route) => false);
+    await Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => LoginPage()),
+        (Route<dynamic> route) => false);
     firebaseUser = null;
   }
 }

@@ -53,52 +53,52 @@ class _LoginPageState extends State<LoginPage> {
             ]),
             Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image(
-                      image: AssetImage('assets/icons/stethoscope.png'),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 6),
-                    ),
-                    Text(
-                      'Dr. Amit Goel',
-                      style: GoogleFonts.varelaRound(
-                          textStyle: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 29.0,
-                            fontWeight: FontWeight.w700,
-                          )),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 6),
-                    ),
-                    Text(
-                      'Endocrinologist in Hyderabad',
-                      style: GoogleFonts.varelaRound(
-                          textStyle: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w500,
-                          )),
-                    ),
-                    Divider(
-                      thickness: 1.5,
-                      indent: 90.0,
-                      endIndent: 90.0,
-                      color: Colors.blue[700],
-                    ),
-                    Text(
-                      'Comprehensive Diabetes \n       & Endo care Clinic',
-                      style: GoogleFonts.varelaRound(
-                          textStyle: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w500,
-                          )),
-                    ),
-                  ],
-                )),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image(
+                  image: AssetImage('assets/icons/stethoscope.png'),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 6),
+                ),
+                Text(
+                  'Dr. Amit Goel',
+                  style: GoogleFonts.varelaRound(
+                      textStyle: TextStyle(
+                    color: Colors.blue[900],
+                    fontSize: 29.0,
+                    fontWeight: FontWeight.w700,
+                  )),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 6),
+                ),
+                Text(
+                  'Endocrinologist in Hyderabad',
+                  style: GoogleFonts.varelaRound(
+                      textStyle: TextStyle(
+                    color: Colors.blue[900],
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                  )),
+                ),
+                Divider(
+                  thickness: 1.5,
+                  indent: 90.0,
+                  endIndent: 90.0,
+                  color: Colors.blue[700],
+                ),
+                Text(
+                  'Comprehensive Diabetes \n       & Endo care Clinic',
+                  style: GoogleFonts.varelaRound(
+                      textStyle: TextStyle(
+                    color: Colors.blue[900],
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                  )),
+                ),
+              ],
+            )),
             Padding(
               padding: EdgeInsets.all(20),
               child: Column(
@@ -117,7 +117,8 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
 //                      Expanded(child: _SignInButton(login_types[1], login_icons[1])),
 //                      Padding(padding: EdgeInsets.all(10),),
-                      Expanded(child: _SignInButton(login_types[0], login_icons[0])),
+                      Expanded(
+                          child: _SignInButton(login_types[0], login_icons[0])),
                     ],
                   ),
                 ],
@@ -132,11 +133,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget _SignInWithMobile() {
     return RaisedButton(
       onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context){
-            return MobileLoginPage();
-          }
-        ));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return MobileLoginPage();
+        }));
         //TODO: Implement Mobile Phone Login
         print('Implement Mobile Phone Login');
       },

@@ -456,6 +456,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               // obj = value.data['slots'] ?? [];
                               print("data${value.data}");
                               if (value.data != null) {
+                                //TODO: obj stores all the slots that have been booked on the selected date by some other patients, you need to display all the timings in the slot 6-8:30pm other than the booked slots.
                                 obj = value.data['slots'];
                                 print("obj$obj");
                               }

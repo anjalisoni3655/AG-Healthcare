@@ -95,7 +95,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   final _$isAlreadyAuthenticatedAsyncAction =
-  AsyncAction('isAlreadyAuthenticated');
+      AsyncAction('isAlreadyAuthenticated');
 
   @override
   Future<bool> isAlreadyAuthenticated() {
@@ -104,7 +104,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   final _$getCodeWithPhoneNumberAsyncAction =
-  AsyncAction('getCodeWithPhoneNumber');
+      AsyncAction('getCodeWithPhoneNumber');
 
   @override
   Future<void> getCodeWithPhoneNumber(

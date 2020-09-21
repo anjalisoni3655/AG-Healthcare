@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           //TODO : Implemennt the book appointment here
           print('Book appointment!');
-          Navigator.pushNamed(context,DoctorsList.id);
+          Navigator.pushNamed(context, DoctorsList.id);
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
         highlightElevation: 20,

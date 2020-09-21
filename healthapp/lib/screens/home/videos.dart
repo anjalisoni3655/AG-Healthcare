@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Videos extends StatelessWidget{
+class Videos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,9 +23,9 @@ class Videos extends StatelessWidget{
 }
 
 _launchURL(url) async {
-  await FlutterWebBrowser.openWebPage(url: url, androidToolbarColor: Colors.blue[700]);
+  await FlutterWebBrowser.openWebPage(
+      url: url, androidToolbarColor: Colors.blue[700]);
 }
-
 
 Widget _videoContainer(String url) {
   String video_id = url.split("=")[1];

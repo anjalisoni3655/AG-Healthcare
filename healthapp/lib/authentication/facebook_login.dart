@@ -12,12 +12,11 @@ String f_imageUrl;
 
 Future<String> signInWithFacebook() async {
   final facebookLoginResult =
-  await facebookLogin.logInWithReadPermissions(['email']);
-
+      await facebookLogin.logInWithReadPermissions(['email']);
 
   final FacebookAccessToken myToken = facebookLoginResult.accessToken;
   final AuthCredential credential =
-  FacebookAuthProvider.getCredential(accessToken: myToken.token);
+      FacebookAuthProvider.getCredential(accessToken: myToken.token);
 
 //  print(credential);
   final AuthResult authResult = await _auth.signInWithCredential(credential);
@@ -36,10 +35,10 @@ Future<String> signInWithFacebook() async {
   f_name = user.displayName;
   f_email = user.email;
   f_imageUrl = user.photoUrl;
-  f_imageUrl+='?height=500';
+  f_imageUrl += '?height=500';
 
   //
-  
+
   //type='Facebook';
   print(f_imageUrl);
   return 'SignIn with Facebook succeeded: $user';

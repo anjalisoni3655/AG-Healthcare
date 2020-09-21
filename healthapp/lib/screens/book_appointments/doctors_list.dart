@@ -54,9 +54,9 @@ class _DoctorsListState extends State<DoctorsList> {
       child: RaisedButton(
         onPressed: () async {
           print('name');
-       //   globals.getPatient();
-       //   globals.getAllBookings();
-       //   globals.getPatientofGivenBookingId();
+          //   globals.getPatient();
+          //   globals.getAllBookings();
+          //   globals.getPatientofGivenBookingId();
 
           Navigator.pushNamed(context, DoctorDetails.id, arguments: {
             'name': name,

@@ -10,6 +10,8 @@ import 'package:healthapp/utils/settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 void getPrescriptionByPatient() {
   Firestore.instance
@@ -516,7 +518,7 @@ class _UserDescState extends State<UserDesc> {
   }
 
   Widget _appBar() {
-     DocumentSnapshot bookingInfo = widget.bookingInfo;
+    DocumentSnapshot bookingInfo = widget.bookingInfo;
     return AppBar(
       flexibleSpace: Image(
         image: AssetImage('assets/images/docdet.png'),
@@ -550,9 +552,10 @@ class _UserDescState extends State<UserDesc> {
                   .delete()
                   .then((_) {
                 print("success!");
+                //  showAlertDialog(context);
                 //TODO: MENTION the respective patients email here, so that the doctor can give a reason to the patient why ihe is cancelling
                 _launchURL(bookingInfo.data['email'], 'appointment cancelled',
-                    'your appointment has been cancelled');
+                    'your appointment has been cancelled because of certain reasons. To claim for a refund, please mail your details along with the payment id that you had received at the time of payment confirmation');
               });
             },
             child: Icon(
@@ -574,4 +577,58 @@ class _UserDescState extends State<UserDesc> {
       throw 'Could not launch $url';
     }
   }
+
+  /* showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("Send"),
+      onPressed: () async {
+        //TODO: send automatic mail to the patient
+        String username = "anjalisony32@gmail.com";
+        String password = "Fireblaze_4_";
+        final smtpServer = gmail(username, password);
+        // Use the SmtpServer class to configure an SMTP server:
+        // final smtpServer = SmtpServer('smtp.domain.com');
+        // See the named arguments of SmtpServer for further configuration
+        // options.
+
+        // Create our message.
+        final message = Message()
+          ..from = Address(username, 'Your name')
+          ..recipients.add('destination@example.com')
+          ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
+          ..bccRecipients.add(Address('bccAddress@example.com'))
+          ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
+          ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+          ..html = "<h1>Test</h1>\n<p>Hey! Here's some HTML content</p>";
+
+        try {
+          final sendReport = await send(message, smtpServer);
+          print('Message sent: ' + sendReport.toString());
+        } on MailerException catch (e) {
+          print('Message not sent.');
+          for (var p in e.problems) {
+            print('Problem: ${p.code}: ${p.msg}');
+          }
+        }
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Reason for cancellation"),
+      content: Text("This is my message."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  } */
 }

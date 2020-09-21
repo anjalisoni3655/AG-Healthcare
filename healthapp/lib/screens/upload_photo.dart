@@ -38,8 +38,7 @@ class UploadPhoto extends StatefulWidget {
   UploadPhotoState createState() => UploadPhotoState();
 }
 
-class UploadPhotoState extends State<UploadPhoto>{
-
+class UploadPhotoState extends State<UploadPhoto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,8 +69,8 @@ class UploadPhotoState extends State<UploadPhoto>{
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomeScreen(
-                          currentUserId: widget.currentUserId)));
+                      builder: (context) =>
+                          HomeScreen(currentUserId: widget.currentUserId)));
             },
             child: Text(
               'DONE',
@@ -360,42 +359,44 @@ class SettingsScreenStatePhoto extends State<SettingsScreenPhoto> {
                     children: <Widget>[
                       (avatarImageFile == null)
                           ? (photo != ''
-                          ? Material(
-                        child: CachedNetworkImage(
-                          placeholder: (context, url) => Container(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.0,
-                              valueColor:
-                              AlwaysStoppedAnimation<Color>(
-                                  themeColor),
-                            ),
-                            width: 90.0,
-                            height: 90.0,
-                            padding: EdgeInsets.all(20.0),
-                          ),
-                          imageUrl: photo.substring(0,photo.length-5)+'s400-c',
-                          width: 200.0,
-                          height: 200.0,
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(100.0)),
-                        clipBehavior: Clip.hardEdge,
-                      )
-                          : Icon(
-                        Icons.account_circle,
-                        size: 200.0,
-                        color: greyColor,
-                      ))
+                              ? Material(
+                                  child: CachedNetworkImage(
+                                    placeholder: (context, url) => Container(
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2.0,
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                themeColor),
+                                      ),
+                                      width: 90.0,
+                                      height: 90.0,
+                                      padding: EdgeInsets.all(20.0),
+                                    ),
+                                    imageUrl:
+                                        photo.substring(0, photo.length - 5) +
+                                            's400-c',
+                                    width: 200.0,
+                                    height: 200.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(100.0)),
+                                  clipBehavior: Clip.hardEdge,
+                                )
+                              : Icon(
+                                  Icons.account_circle,
+                                  size: 200.0,
+                                  color: greyColor,
+                                ))
                           : Material(
-                        child: Image.file(avatarImageFile,
-                            width: 200.0,
-                            height: 200.0,
-                            fit: BoxFit.cover),
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(100.0)),
-                        clipBehavior: Clip.hardEdge,
-                      ),
+                              child: Image.file(avatarImageFile,
+                                  width: 200.0,
+                                  height: 200.0,
+                                  fit: BoxFit.cover),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(100.0)),
+                              clipBehavior: Clip.hardEdge,
+                            ),
                       Positioned(
                         top: 150,
                         left: 150,
@@ -404,7 +405,8 @@ class SettingsScreenStatePhoto extends State<SettingsScreenPhoto> {
                               borderRadius: BorderRadius.circular(30),
                               color: Color(0xFFDFE9F7)),
                           child: IconButton(
-                            icon: Icon(Icons.camera_alt, color: Color(0xFF408AEB)),
+                            icon: Icon(Icons.camera_alt,
+                                color: Color(0xFF408AEB)),
                             onPressed: getImage,
                           ),
                         ),
@@ -450,12 +452,12 @@ class SettingsScreenStatePhoto extends State<SettingsScreenPhoto> {
         Positioned(
           child: isLoading
               ? Container(
-            child: Center(
-              child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(themeColor)),
-            ),
-            color: Colors.white.withOpacity(0.8),
-          )
+                  child: Center(
+                    child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(themeColor)),
+                  ),
+                  color: Colors.white.withOpacity(0.8),
+                )
               : Container(),
         ),
       ],

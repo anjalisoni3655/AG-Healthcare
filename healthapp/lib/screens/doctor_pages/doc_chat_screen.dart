@@ -261,9 +261,9 @@ class DocChatScreenState extends State<DocChatScreen> {
         children: [
           (ok == true)
               ? Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: _getText(month + " " + year, 15, Color(0xFF8F8F8F)),
-              )
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: _getText(month + " " + year, 15, Color(0xFF8F8F8F)),
+                )
               : Container(),
           _appointmentsTab(document['photo'], document['name'], date, time),
         ],

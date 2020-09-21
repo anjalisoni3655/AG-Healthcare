@@ -37,7 +37,7 @@ List<Item> generateItems(int numberOfItems) {
   return List.generate(numberOfItems, (int index) {
     String img = images[index];
     String header = img[0].toUpperCase() + img.substring(1);
-    String desc=description[index];
+    String desc = description[index];
     return Item(
       id: index,
       headerValue: '$header Disorders',

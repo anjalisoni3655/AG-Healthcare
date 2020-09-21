@@ -122,7 +122,6 @@ Future<String> uploadBookingDetails({
     'id': id,
     'photo': photo,
     'name': name,
-    
   }, merge: true).then((_) {
     print("payment id added");
   });

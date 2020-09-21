@@ -208,7 +208,11 @@ class ChatScreenState extends State<ChatScreen> {
                                     if (doc1.data['id'] == globals.user.id &&
                                         difference >= -3 &&
                                         difference < 0) check = true;
-                                    if(difference==0 && visitDate.toDate().isBefore(DateTime.now())) check=true;
+                                    if (difference == 0 &&
+                                        visitDate
+                                            .toDate()
+                                            .isBefore(DateTime.now()))
+                                      check = true;
                                   }
                                   return Visibility(
                                     visible: (check == true),

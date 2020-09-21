@@ -9,6 +9,7 @@ import 'package:healthapp/widgets/app_bar.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
+import 'package:url_launcher/url_launcher.dart';
 
 class SuccessPage extends StatelessWidget {
   final PaymentSuccessResponse response;
@@ -288,6 +289,22 @@ class SuccessPage extends StatelessWidget {
                               }).then((_) {
                                 print("success!");
                               });
+                              // final Email email = Email(
+                              //   body:
+                              //       'Your booking is confirmed, your payment id is ${response.paymentId}.Please maintain this payment Id with you, it will be used for the refund purpose in future. You will be able to connect to the doctor on the data of booking. Thanks for booking the appointment',
+                              //   subject: 'appointment confirmed',
+                              //   recipients: [globals.user.email],
+                              //   cc: ['absatyaprakash01@gmail.com'],
+                              //   bcc: ['anjalisoni3655@gmail.com'],
+                              //   // attachmentPaths: ['/path/to/attachment.zip'],
+                              //   isHTML: false,
+                              // );
+
+                              // await FlutterEmailSender.send(email);
+                              // _launchURL(
+                              //     globals.user.email,
+                              //     'appointment confirmed',
+                              //     'Your booking is confirmed, your payment id is ${response.paymentId}.Please maintain this payment Id with you, it will be used for the refund purpose in future. You will be able to connect to the doctor on the data of booking. Thanks for booking the appointment');
 
                               Navigator.pushNamed(context, HomeScreen.id);
                             },
@@ -313,5 +330,14 @@ class SuccessPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _launchURL(String toMailId, String subject, String body) async {
+    var url = 'mailto:$toMailId?subject=$subject&body=$body';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
