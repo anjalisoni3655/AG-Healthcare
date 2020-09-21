@@ -89,8 +89,8 @@ class _UserDescState extends State<UserDesc> {
                               weight,
                               blood,
                               reason_for_visit,
-                              marital;
-                          timesOfVisit;
+                              marital,
+                              timesOfVisit;
                           for (int i = 0;
                               i < snapshot.data.documents.length;
                               i++) {
@@ -578,7 +578,7 @@ class _UserDescState extends State<UserDesc> {
     }
   }
 
-  /* showAlertDialog(BuildContext context) {
+/* showAlertDialog(BuildContext context) {
     // set up the button
     Widget okButton = FlatButton(
       child: Text("Send"),

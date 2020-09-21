@@ -38,16 +38,6 @@ List<Color> _textColorTimeTable = [
   Color(0xFF8F8F8F),
   Color(0xFF8F8F8F),
   Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F),
-  Color(0xFF8F8F8F)
 ];
 List<Color> _bodyColorTimeTable = [
   Color(0xFFFFFFFF),
@@ -58,16 +48,6 @@ List<Color> _bodyColorTimeTable = [
   Color(0xFFFFFFFF),
   Color(0xFFFFFFFF),
   Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF),
-  Color(0xFFFFFFFF)
 ];
 
 bool anyColorSelected = false;
@@ -461,13 +441,17 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                                 print("obj$obj");
                               }
                             });
-                            obj.add(visitDuration);
-                            print("obj2$obj");
-                            await Firestore.instance
-                                .collection("timings")
-                                .document(selectedDate.toString())
-                                .setData({"slots": obj});
-                            openCheckout();
+                            if (!obj.contains(visitDuration)) {
+                              obj.add(visitDuration);
+                              print("obj2$obj");
+                              await Firestore.instance
+                                  .collection("timings")
+                                  .document(selectedDate.toString())
+                                  .setData({"slots": obj});
+                              openCheckout();
+                            } else {
+                              Toast.show("External Wallet", context);
+                            }
                           },
                         ),
                       ),
@@ -484,51 +468,98 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
 
   Widget _timeTable() {
     return Container(
-      child: Column(
-        children: [
-          for (int i = 1; i <= 6; i++)
-            Row(
-              children: [
-                _buttonTimeTable(i * 3 - 3, '6:00 - 6:15'),
-                Padding(padding: EdgeInsets.all(5)),
-                _buttonTimeTable(i * 3 - 2, '6:15 - 6:30'),
-                Padding(padding: EdgeInsets.all(5)),
-                _buttonTimeTable(i * 3 - 1, '6:30 - 6:45'),
-              ],
-            ),
-        ],
-      ),
+      child: (visitTime == 'Evening')
+          ? StreamBuilder(
+              stream: Firestore.instance.collection('timings').snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Color(0xfff5a623)),
+                    ),
+                  );
+                } else {
+
+                  List<dynamic> timeSlotsBooked;
+                  for (int i = 0; i < snapshot.data.documents.length; i++) {
+                    // print(snapshot.data.documents[i].documentID);
+                    // print(selectedDate);
+                    // print(snapshot.data.documents[i].documentID == selectedDate.toString());
+                    if (snapshot.data.documents[i].documentID == selectedDate.toString()) {
+                      print('Huraaaah');
+                      timeSlotsBooked =
+                          snapshot.data.documents[i].data['slots'];
+                      break;
+                    }
+                  }
+                  print('slotsbooked$timeSlotsBooked');
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          (timeSlotsBooked!=null && timeSlotsBooked.contains('6:30 - 6:45'))?_buttonTimeTable(0, '6:30 - 6:45',true):_buttonTimeTable(0, '6:30 - 6:45', false),
+                          Padding(padding: EdgeInsets.all(5)),
+                          (timeSlotsBooked!=null && timeSlotsBooked.contains('6:45 - 7:00'))?_buttonTimeTable(1, '6:45 - 7:00',true):_buttonTimeTable(1, '6:45 - 7:00', false),
+                          Padding(padding: EdgeInsets.all(5)),
+                          (timeSlotsBooked!=null && timeSlotsBooked.contains('7:00 - 7:15'))?_buttonTimeTable(2, '7:00 - 7:15',true):_buttonTimeTable(2, '7:00 - 7:15', false),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          (timeSlotsBooked!=null && timeSlotsBooked.contains('7:15 - 7:30'))?_buttonTimeTable(3, '7:15 - 7:30',true):_buttonTimeTable(3, '7:15 - 7:30', false),
+                          Padding(padding: EdgeInsets.all(5)),
+                          (timeSlotsBooked!=null && timeSlotsBooked.contains('7:30 - 7:45'))?_buttonTimeTable(4, '7:30 - 7:45',true):_buttonTimeTable(4, '7:30 - 7:45', false),
+                          Padding(padding: EdgeInsets.all(5)),
+                          (timeSlotsBooked!=null && timeSlotsBooked.contains('7:45 - 8:00'))?_buttonTimeTable(5, '7:45 - 8:00',true):_buttonTimeTable(5, '7:45 - 8:00', false),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          (timeSlotsBooked!=null && timeSlotsBooked.contains('8:00 - 8:15'))?_buttonTimeTable(6, '8:00 - 8:15',true):_buttonTimeTable(6, '8:00 - 8:15', false),
+                          Padding(padding: EdgeInsets.all(5)),
+                          (timeSlotsBooked!=null && timeSlotsBooked.contains('8:15 - 8:30'))?_buttonTimeTable(7, '8:15 - 8:30',true):_buttonTimeTable(7, '8:15 - 8:30', false),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+              })
+          : Container(),
     );
   }
 
-  Widget _buttonTimeTable(int index, String text) {
-    return Expanded(
-      child: RaisedButton(
-        elevation: 0,
-        padding: EdgeInsets.all(10),
-        color: _bodyColorTimeTable[index],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: _getText(text, 15, _textColorTimeTable[index]),
-        onPressed: () {
-          setState(() {
-            anyColorSelected = true;
-            if (_bodyColorTimeTable[index] == Color(0xFFFFFFFF)) {
-              visitDuration = '9:00-9:15';
-              _bodyColorTimeTable[index] = Color(0xFFDFE9F7);
-              _textColorTimeTable[index] = Color(0xFF408AEB);
-              for (int i = 0; i < 18; i++) {
-                if (i != index) {
-                  _bodyColorTimeTable[i] = Color(0xFFFFFFFF);
-                  _textColorTimeTable[i] = Color(0xFF8F8F8F);
+  Widget _buttonTimeTable(int index, String text, booked) {
+    return Visibility(
+      visible: booked==false,
+      child: Expanded(
+        child: RaisedButton(
+          elevation: 0,
+          padding: EdgeInsets.all(10),
+          color: _bodyColorTimeTable[index],
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          child: _getText(text, 15, _textColorTimeTable[index]),
+          onPressed: () {
+            setState(() {
+              anyColorSelected = true;
+              if (_bodyColorTimeTable[index] == Color(0xFFFFFFFF)) {
+                visitDuration = text;
+                _bodyColorTimeTable[index] = Color(0xFFDFE9F7);
+                _textColorTimeTable[index] = Color(0xFF408AEB);
+                for (int i = 0; i < 8; i++) {
+                  if (i != index) {
+                    _bodyColorTimeTable[i] = Color(0xFFFFFFFF);
+                    _textColorTimeTable[i] = Color(0xFF8F8F8F);
+                  }
                 }
+              } else {
+                anyColorSelected = false;
+                _bodyColorTimeTable[index] = Color(0xFFFFFFFF);
+                _textColorTimeTable[index] = Color(0xFF8F8F8F);
               }
-            } else {
-              anyColorSelected = false;
-              _bodyColorTimeTable[index] = Color(0xFFFFFFFF);
-              _textColorTimeTable[index] = Color(0xFF8F8F8F);
-            }
-          });
-        },
+            });
+          },
+        ),
       ),
     );
   }
