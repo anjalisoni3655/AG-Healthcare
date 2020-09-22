@@ -61,6 +61,7 @@ dependencies:
   googleapis_auth:
   share: ^0.6.5
   mailer: ^3.2.1
+  flutter_webview_plugin: ^0.3.11
 
 dev_dependencies:
   flutter_test:

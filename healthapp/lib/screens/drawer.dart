@@ -9,15 +9,18 @@ import 'package:healthapp/screens/appointments/upcoming_page.dart';
 import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/chat_screen.dart';
 import 'package:healthapp/screens/user_profile.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'login_screen.dart';
 import "package:provider/provider.dart";
 import 'package:healthapp/stores/login_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:healthapp/screens/edit_profile.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:share/share.dart';
 
 class DrawerWidget extends StatefulWidget {
+  final flutterWebViewPlugin = FlutterWebviewPlugin();
   const DrawerWidget({Key key}) : super(key: key);
 
   @override
@@ -223,7 +226,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   Icons.headset_mic,
                   color: Color(0xFF408AEB),
                 ),
-                onTap: () {},
+                onTap: () {
+                  launch("https://forms.gle/W2D4CgmuC7cqDR916");
+                  //flutterWebViewPlugin.launch("https://forms.gle/W2D4CgmuC7cqDR916", hidden: true);
+                },
               ),
               // ListTile(
               //   dense: true,
