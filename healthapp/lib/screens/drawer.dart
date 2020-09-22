@@ -20,7 +20,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:share/share.dart';
 
 class DrawerWidget extends StatefulWidget {
-  final flutterWebViewPlugin = FlutterWebviewPlugin();
+//  final flutterWebViewPlugin = FlutterWebviewPlugin();
   const DrawerWidget({Key key}) : super(key: key);
 
   @override
@@ -227,7 +227,20 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   color: Color(0xFF408AEB),
                 ),
                 onTap: () {
-                  launch("https://forms.gle/W2D4CgmuC7cqDR916");
+                   // launch("https://forms.gle/W2D4CgmuC7cqDR916",forceWebView: true);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WebviewScaffold(
+                              url: "https://docs.google.com/forms/d/e/1FAIpQLSdouiwEP1VbI2j8LXpbpuELo-hnuRWI3P9NpT6gXNgJm7hi2w/viewform?usp=sf_link",
+                              appBar: AppBar(
+                                title: Text("Feedback"),
+                              ),
+                              withJavascript: true,
+                              withLocalStorage: true,
+                              withZoom: true,
+                            )),
+                  );
                   //flutterWebViewPlugin.launch("https://forms.gle/W2D4CgmuC7cqDR916", hidden: true);
                 },
               ),
