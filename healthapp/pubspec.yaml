@@ -33,7 +33,6 @@ dependencies:
   permission_handler: ^5.0.1+1
   expandable: ^4.1.4
   google_fonts: ^1.1.0
-  flutter_facebook_login: ^1.1.1
   numeric_keyboard: ^1.0.0
   firebase_core: ^0.4.4+3
   mobx: ^1.1.1

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:healthapp/screens/mobile_auth_screens/mobile_login_page.dart';
-import 'package:healthapp/authentication/facebook_login.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const List<String> login_types = ['Sign in with Google', 'Facebook'];
@@ -167,15 +166,7 @@ class _LoginPageState extends State<LoginPage> {
         } else {
           // TODO: Facebook Login!
           print('Implement Facebook Login');
-          signInWithFacebook().whenComplete(() {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return MobileLoginPage();
-                },
-              ),
-            );
-          });
+         
         }
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
