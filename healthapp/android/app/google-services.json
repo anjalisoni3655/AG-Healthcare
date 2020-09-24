@@ -8,12 +8,73 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:138479565300:android:ad57262d9842210f9061a1",
+        "android_client_info": {
+          "package_name": "com.dramitgoel.healthapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "138479565300-5t6b9c9erdnd2mtbom721mmrfhmhqvfs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dramitgoel.healthapp",
+            "certificate_hash": "ce8005f56940438cdbb784855a743e3410d9b642"
+          }
+        },
+        {
+          "client_id": "138479565300-h1ri83c4n16hmvj9agd366ib7fuf2urd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDGNppK1H2pE4qJT4fpuxZoEGNaWmcxzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "138479565300-h1ri83c4n16hmvj9agd366ib7fuf2urd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:138479565300:android:b6c74bf6a23c20939061a1",
         "android_client_info": {
           "package_name": "com.example.healthapp"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "138479565300-tp9ldcsc5ra17eec68bctd0ubi9oilk7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.healthapp",
+            "certificate_hash": "eee970333f71705ef24c24eb03689ac694f90c24"
+          }
+        },
+        {
+          "client_id": "138479565300-beaj021c0sej95e1oi2q9s7acuedsqi3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.healthapp",
+            "certificate_hash": "48f8857b048cb0da30932012df8b57569b9930b5"
+          }
+        },
+        {
+          "client_id": "138479565300-k6biolo1q7h1n93smsutudtv3phh10c7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.healthapp",
+            "certificate_hash": "ce8005f56940438cdbb784855a743e3410d9b642"
+          }
+        },
         {
           "client_id": "138479565300-h963kupi9kbptert9dk9n0tqjd7gohav.apps.googleusercontent.com",
           "client_type": 1,
