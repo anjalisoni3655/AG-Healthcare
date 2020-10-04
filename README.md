@@ -26,7 +26,7 @@ Shoutout goes to these wonderful people:
 
 <table>
   <tr>
-    <td align="center"><a href="https://imperial-lord.github.io/mywebsite/"><img src="https://avatars1.githubusercontent.com/u/51020896?v=4" width="100px;" alt=""/><br /><sub><b>Anjali Soni</b></sub></a><br /><a href="https://github.com/anjalisoni3655/healthapp-patients/commits?author=anjalisoni3655" title="Code">💻</a></td>
+    <td align="center"><a href="https://anjalisoni3655.github.io/my_new_portfolio/"><img src="https://avatars1.githubusercontent.com/u/51020896?v=4" width="100px;" alt=""/><br /><sub><b>Anjali Soni</b></sub></a><br /><a href="https://github.com/anjalisoni3655/healthapp-patients/commits?author=anjalisoni3655" title="Code">💻</a></td>
     <td align="center"><a href="https://imperial-lord.github.io/mywebsite/"><img src="https://avatars0.githubusercontent.com/u/45942031?v=4" width="100px;" alt=""/><br /><sub><b>AB Satyaprakash</b></sub></a><br /><a href="https://github.com/MLH-Fellowship/soochit/commits?author=Imperial-lord" title="Code">💻</a></td>
   </tr>
 </table>
