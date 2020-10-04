@@ -5,7 +5,7 @@ class Articles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 220,
+      height: 200,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -42,12 +42,16 @@ Widget _articleContainer(String url, String imgUrl, String title) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image(
-            image: NetworkImage(imgUrl),
-            height: 190,
-            width: 250,
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image(
+              image: NetworkImage(imgUrl),
+              height: 150,
+              width: 250,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         Padding(
@@ -56,7 +60,7 @@ Widget _articleContainer(String url, String imgUrl, String title) {
             title,
             style: TextStyle(
               fontWeight: FontWeight.w700,
-              fontSize: 15,
+              fontSize: 13,
               color: Color(0xFF08134D),
             ),
           ),

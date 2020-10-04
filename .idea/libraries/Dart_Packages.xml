@@ -19,7 +19,7 @@
         <entry key="agora_rtc_engine">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-1.0.13/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-1.0.15/lib" />
             </list>
           </value>
         </entry>
@@ -240,6 +240,13 @@
             </list>
           </value>
         </entry>
+        <entry key="ffi">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/ffi-0.1.3/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="file">
           <value>
             <list>
@@ -327,14 +334,7 @@
         <entry key="flutter_cache_manager">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_cache_manager-1.4.1/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="flutter_facebook_login">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_facebook_login-1.2.0/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_cache_manager-1.4.2/lib" />
             </list>
           </value>
         </entry>
@@ -369,7 +369,7 @@
         <entry key="flutter_plugin_android_lifecycle">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.8/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11/lib" />
             </list>
           </value>
         </entry>
@@ -408,6 +408,13 @@
             </list>
           </value>
         </entry>
+        <entry key="flutter_webview_plugin">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="fluttertoast">
           <value>
             <list>
@@ -439,7 +446,7 @@
         <entry key="google_sign_in">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-4.5.3/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-4.5.4/lib" />
             </list>
           </value>
         </entry>
@@ -453,7 +460,7 @@
         <entry key="google_sign_in_web">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1+1/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.2/lib" />
             </list>
           </value>
         </entry>
@@ -509,14 +516,14 @@
         <entry key="image_picker">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+7/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+11/lib" />
             </list>
           </value>
         </entry>
         <entry key="image_picker_platform_interface">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_platform_interface-1.1.0/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_platform_interface-1.1.1/lib" />
             </list>
           </value>
         </entry>
@@ -544,7 +551,7 @@
         <entry key="json_annotation">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-3.0.1/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-3.1.0/lib" />
             </list>
           </value>
         </entry>
@@ -593,7 +600,7 @@
         <entry key="mobx_codegen">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/mobx_codegen-1.1.0+1/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/mobx_codegen-1.1.0+2/lib" />
             </list>
           </value>
         </entry>
@@ -656,7 +663,7 @@
         <entry key="path_provider">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.14/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.18/lib" />
             </list>
           </value>
         </entry>
@@ -670,7 +677,7 @@
         <entry key="path_provider_macos">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+3/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+4/lib" />
             </list>
           </value>
         </entry>
@@ -678,6 +685,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_platform_interface-1.0.3/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="path_provider_windows">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-0.0.4+1/lib" />
             </list>
           </value>
         </entry>
@@ -723,17 +737,10 @@
             </list>
           </value>
         </entry>
-        <entry key="platform_detect">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/platform_detect-1.4.0/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="plugin_platform_interface">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.3/lib" />
             </list>
           </value>
         </entry>
@@ -754,7 +761,7 @@
         <entry key="provider">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/provider-4.3.2+1/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/provider-4.3.2+2/lib" />
             </list>
           </value>
         </entry>
@@ -796,14 +803,14 @@
         <entry key="share">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.5/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.5+2/lib" />
             </list>
           </value>
         </entry>
         <entry key="shared_preferences">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.10/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.12/lib" />
             </list>
           </value>
         </entry>
@@ -835,6 +842,13 @@
             </list>
           </value>
         </entry>
+        <entry key="shared_preferences_windows">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_windows-0.0.1+1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="shelf">
           <value>
             <list>
@@ -859,7 +873,7 @@
         <entry key="source_gen">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/source_gen-0.9.6/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/source_gen-0.9.7+1/lib" />
             </list>
           </value>
         </entry>
@@ -957,7 +971,7 @@
         <entry key="url_launcher">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.5.0/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.7.2/lib" />
             </list>
           </value>
         </entry>
@@ -971,28 +985,35 @@
         <entry key="url_launcher_macos">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+7/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+8/lib" />
             </list>
           </value>
         </entry>
         <entry key="url_launcher_platform_interface">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-1.0.7/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-1.0.8/lib" />
             </list>
           </value>
         </entry>
         <entry key="url_launcher_web">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.2+1/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.4+1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="url_launcher_windows">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-0.0.1+1/lib" />
             </list>
           </value>
         </entry>
         <entry key="uuid">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/uuid-2.2.1/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/uuid-2.2.2/lib" />
             </list>
           </value>
         </entry>
@@ -1017,6 +1038,13 @@
             </list>
           </value>
         </entry>
+        <entry key="win32">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/win32-1.7.3/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="xdg_directories">
           <value>
             <list>
@@ -1027,7 +1055,7 @@
         <entry key="xml">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/xml-4.2.0/lib" />
+              <option value="$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/xml-4.5.1/lib" />
             </list>
           </value>
         </entry>
@@ -1043,7 +1071,7 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/_discoveryapis_commons-0.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-6.0.0/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-1.0.13/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/agora_rtc_engine-1.0.15/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/analyzer-0.39.14/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/args-1.6.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.4.2/lib" />
@@ -1075,6 +1103,7 @@
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/eventify-0.1.4/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/expandable-4.1.4/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.1.0/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/ffi-0.1.3/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/file-5.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase-7.3.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.16.1/lib" />
@@ -1086,23 +1115,23 @@
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-6.0.13/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-3.1.6/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/fixnum-0.10.11/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_cache_manager-1.4.1/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_facebook_login-1.2.0/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_cache_manager-1.4.2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-1.4.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_platform_interface-1.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_mobx-1.1.0+2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_phone_direct_caller-1.0.1/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.8/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_rating_bar-3.0.1+1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_svg-0.18.1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_web_browser-0.11.0/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.3.11/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-3.1.3/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-8.8.1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/glob-1.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-1.1.0/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-4.5.3/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-4.5.4/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_platform_interface-1.1.2/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1+1/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/googleapis-0.55.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/googleapis_auth-0.2.12/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/graphs-0.2.0/lib" />
@@ -1110,19 +1139,19 @@
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http_multi_server-2.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.4/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+7/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_platform_interface-1.1.0/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+11/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_platform_interface-1.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.15.8/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/io-0.3.4/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.2/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-3.0.1/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-3.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/logging-0.11.4/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/mailer-3.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.8/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.1.8/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/mime-0.9.7/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/mobx-1.2.1+2/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/mobx_codegen-1.1.0+1/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/mobx_codegen-1.1.0+2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/nested-0.0.4/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/node_interop-1.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/node_io-1.1.1/lib" />
@@ -1131,35 +1160,36 @@
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.7.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_drawing-0.4.1+1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_parsing-0.1.4/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.14/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.18/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+3/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+4/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_platform_interface-1.0.3/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-0.0.4+1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.9.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-5.0.1+1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_platform_interface-2.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-3.0.4/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/photo_view-0.5.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/platform-2.2.1/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/platform_detect-1.4.0/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.3/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/pool-1.4.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/process-3.0.13/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/provider-4.3.2+1/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/provider-4.3.2+2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/pub_semver-1.4.4/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/pubspec_parse-0.1.5/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.1.3/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/razorpay_flutter-1.2.2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.24.1/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.5/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.10/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.5+2/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.12/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_linux-0.0.2+2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+10/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_platform_interface-1.0.4/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+7/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_windows-0.0.1+1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shelf-0.7.9/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shelf_web_socket-0.2.3/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/source_gen-0.9.6/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/source_gen-0.9.7+1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.7.0/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-1.3.1+1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite_common-1.0.2+1/lib" />
@@ -1173,17 +1203,19 @@
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/timing-0.1.1+2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/toast-0.1.5/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.2.0/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.5.0/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.7.2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-0.0.1+1/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+7/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-1.0.7/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.2+1/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/uuid-2.2.1/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+8/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-1.0.8/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.4+1/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-0.0.1+1/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/uuid-2.2.2/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.0.8/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/watcher-0.9.7+15/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/web_socket_channel-1.1.0/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/win32-1.7.3/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/xdg_directories-0.1.0/lib" />
-      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/xml-4.2.0/lib" />
+      <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/xml-4.5.1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/yaml-2.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$PROJECT_DIR$/../snap/flutter/common/flutter/packages/flutter/lib" />

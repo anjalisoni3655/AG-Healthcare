@@ -110,14 +110,14 @@ class SettingsScreenState extends State<SettingsScreen> {
 
   String gender = '';
 
-  int age;
+  int age = 0;
 
   //int phone;
   String dob = '';
   String blood = '';
-  String height;
-  String weight;
-  String phone;
+  String height = '';
+  String weight = '';
+  String phone = '';
   String marital = '';
   String address = '';
 

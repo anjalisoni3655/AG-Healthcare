@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
         },
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'AG Hospital',
+          title: 'AG Healthcare',
           theme: ThemeData(
             primarySwatch: Colors.blue,
             textTheme: GoogleFonts.nunitoTextTheme(

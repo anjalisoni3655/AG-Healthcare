@@ -1,21 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:healthapp/authentication/google_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:healthapp/screens/appointments/upcoming_page.dart';
 import 'package:healthapp/screens/blogs/blogs_page.dart';
 import 'package:healthapp/screens/chat_screen.dart';
 import 'package:healthapp/screens/user_profile.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'login_screen.dart';
 import "package:provider/provider.dart";
 import 'package:healthapp/stores/login_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
-import 'package:healthapp/screens/edit_profile.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:share/share.dart';
 
@@ -51,6 +47,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   String name;
   String email;
   String photo;
+  String phoneNumber;
 
   void readLocal() async {
     prefs = await SharedPreferences.getInstance();
@@ -59,6 +56,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     email = prefs.getString('email') ?? globals.user.email;
     photo = prefs.getString('photo') ?? globals.user.photo;
     email = email.split('@')[0];
+    phoneNumber = prefs.getString('phone') ?? globals.user.phone;
     // Force refresh input
     setState(() {});
   }
@@ -79,6 +77,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           color: Colors.white,
           child: ListView(
             children: [
+              // ignore: todo
               //TODO :Make this dynamic later!
               InkWell(
                 onTap: () {
@@ -122,8 +121,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               ),
                             ),
                             Text(
-                              (email != null)
-                                  ? '${email.split('@')[0]}'
+                              (phoneNumber != null)
+                                  ? '+91' + phoneNumber
                                   : 'katewilliams01',
                               style: TextStyle(
                                 fontSize: 16.0,
@@ -227,14 +226,33 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   color: Color(0xFF408AEB),
                 ),
                 onTap: () {
-                   // launch("https://forms.gle/W2D4CgmuC7cqDR916",forceWebView: true);
+                  // launch("https://forms.gle/W2D4CgmuC7cqDR916",forceWebView: true);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => WebviewScaffold(
-                              url: "https://docs.google.com/forms/d/e/1FAIpQLSdouiwEP1VbI2j8LXpbpuELo-hnuRWI3P9NpT6gXNgJm7hi2w/viewform?usp=sf_link",
+                              url:
+                                  "https://docs.google.com/forms/d/e/1FAIpQLSdouiwEP1VbI2j8LXpbpuELo-hnuRWI3P9NpT6gXNgJm7hi2w/viewform?usp=sf_link",
                               appBar: AppBar(
-                                title: Text("Feedback"),
+                                backgroundColor: Colors.white,
+                                elevation: 0,
+                                centerTitle: true,
+                                title: Text(
+                                  'Support',
+                                  style: GoogleFonts.nunito(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Color(0xFF262626),
+                                  ),
+                                ),
+                                leading: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Icon(
+                                      Icons.arrow_back_ios,
+                                      color: Colors.blue[700],
+                                    )),
                               ),
                               withJavascript: true,
                               withLocalStorage: true,

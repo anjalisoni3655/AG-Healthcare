@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthapp/screens/chat_screen.dart';
 import 'package:healthapp/screens/doctor_pages/doc_chat_screen.dart';
+import 'package:healthapp/screens/home/home_page.dart';
+import 'package:healthapp/screens/home_screen.dart';
 import 'dart:async';
 import 'package:healthapp/screens/user_details.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -63,10 +65,10 @@ Future<Null> handleSignIn(BuildContext context) async {
       globals.user.id = firebaseUser.uid;
       globals.user.name = firebaseUser.displayName;
       globals.user.email = firebaseUser.email;
-      print('NAME ${globals.user.name}');
-      print('EMAIL ${globals.user.email}');
-      print('photo ${globals.user.photo}');
-      print('id ${globals.user.id}');
+      // print('NAME ${globals.user.name}');
+      // print('EMAIL ${globals.user.email}');
+      // print('photo ${globals.user.photo}');
+      // print('id ${globals.user.id}');
       await prefs.setString('id', currentUser.uid);
       await prefs.setString('name', currentUser.displayName);
       await prefs.setString('photo', currentUser.photoUrl);
@@ -97,11 +99,24 @@ Future<Null> handleSignIn(BuildContext context) async {
                       currentUserId: firebaseUser.uid,
                     )));
       } else {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    UserForm(currentUserId: firebaseUser.uid)));
+        var collectionRef = Firestore.instance.collection('user_details');
+        var doc = await collectionRef.document(globals.user.id).get();
+        print(globals.user.id);
+        print(doc.exists);
+        print(doc);
+        if (doc.exists) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      HomeScreen(currentUserId: firebaseUser.uid)));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      UserForm(currentUserId: firebaseUser.uid)));
+        }
       }
     } else {
       Fluttertoast.showToast(msg: "Sign in failed, Try Again");
@@ -110,6 +125,7 @@ Future<Null> handleSignIn(BuildContext context) async {
   } catch (e) {
     print(e.toString());
     print('Exception Caught!');
+    Fluttertoast.showToast(msg: "Sign in failed, Try Again");
   }
 
   void signOutGoogle() async {

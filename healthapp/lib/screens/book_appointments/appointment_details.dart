@@ -480,13 +480,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                     ),
                   );
                 } else {
-
                   List<dynamic> timeSlotsBooked;
                   for (int i = 0; i < snapshot.data.documents.length; i++) {
                     // print(snapshot.data.documents[i].documentID);
                     // print(selectedDate);
                     // print(snapshot.data.documents[i].documentID == selectedDate.toString());
-                    if (snapshot.data.documents[i].documentID == selectedDate.toString()) {
+                    if (snapshot.data.documents[i].documentID ==
+                        selectedDate.toString()) {
                       print('Huraaaah');
                       timeSlotsBooked =
                           snapshot.data.documents[i].data['slots'];
@@ -498,27 +498,51 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                     children: [
                       Row(
                         children: [
-                          (timeSlotsBooked!=null && timeSlotsBooked.contains('6:30 - 6:45'))?_buttonTimeTable(0, '6:30 - 6:45',true):_buttonTimeTable(0, '6:30 - 6:45', false),
+                          (timeSlotsBooked != null &&
+                                  timeSlotsBooked.contains('6:30 - 6:45'))
+                              ? _buttonTimeTable(0, '6:30 - 6:45', true)
+                              : _buttonTimeTable(0, '6:30 - 6:45', false),
                           Padding(padding: EdgeInsets.all(5)),
-                          (timeSlotsBooked!=null && timeSlotsBooked.contains('6:45 - 7:00'))?_buttonTimeTable(1, '6:45 - 7:00',true):_buttonTimeTable(1, '6:45 - 7:00', false),
+                          (timeSlotsBooked != null &&
+                                  timeSlotsBooked.contains('6:45 - 7:00'))
+                              ? _buttonTimeTable(1, '6:45 - 7:00', true)
+                              : _buttonTimeTable(1, '6:45 - 7:00', false),
                           Padding(padding: EdgeInsets.all(5)),
-                          (timeSlotsBooked!=null && timeSlotsBooked.contains('7:00 - 7:15'))?_buttonTimeTable(2, '7:00 - 7:15',true):_buttonTimeTable(2, '7:00 - 7:15', false),
+                          (timeSlotsBooked != null &&
+                                  timeSlotsBooked.contains('7:00 - 7:15'))
+                              ? _buttonTimeTable(2, '7:00 - 7:15', true)
+                              : _buttonTimeTable(2, '7:00 - 7:15', false),
                         ],
                       ),
                       Row(
                         children: [
-                          (timeSlotsBooked!=null && timeSlotsBooked.contains('7:15 - 7:30'))?_buttonTimeTable(3, '7:15 - 7:30',true):_buttonTimeTable(3, '7:15 - 7:30', false),
+                          (timeSlotsBooked != null &&
+                                  timeSlotsBooked.contains('7:15 - 7:30'))
+                              ? _buttonTimeTable(3, '7:15 - 7:30', true)
+                              : _buttonTimeTable(3, '7:15 - 7:30', false),
                           Padding(padding: EdgeInsets.all(5)),
-                          (timeSlotsBooked!=null && timeSlotsBooked.contains('7:30 - 7:45'))?_buttonTimeTable(4, '7:30 - 7:45',true):_buttonTimeTable(4, '7:30 - 7:45', false),
+                          (timeSlotsBooked != null &&
+                                  timeSlotsBooked.contains('7:30 - 7:45'))
+                              ? _buttonTimeTable(4, '7:30 - 7:45', true)
+                              : _buttonTimeTable(4, '7:30 - 7:45', false),
                           Padding(padding: EdgeInsets.all(5)),
-                          (timeSlotsBooked!=null && timeSlotsBooked.contains('7:45 - 8:00'))?_buttonTimeTable(5, '7:45 - 8:00',true):_buttonTimeTable(5, '7:45 - 8:00', false),
+                          (timeSlotsBooked != null &&
+                                  timeSlotsBooked.contains('7:45 - 8:00'))
+                              ? _buttonTimeTable(5, '7:45 - 8:00', true)
+                              : _buttonTimeTable(5, '7:45 - 8:00', false),
                         ],
                       ),
                       Row(
                         children: [
-                          (timeSlotsBooked!=null && timeSlotsBooked.contains('8:00 - 8:15'))?_buttonTimeTable(6, '8:00 - 8:15',true):_buttonTimeTable(6, '8:00 - 8:15', false),
+                          (timeSlotsBooked != null &&
+                                  timeSlotsBooked.contains('8:00 - 8:15'))
+                              ? _buttonTimeTable(6, '8:00 - 8:15', true)
+                              : _buttonTimeTable(6, '8:00 - 8:15', false),
                           Padding(padding: EdgeInsets.all(5)),
-                          (timeSlotsBooked!=null && timeSlotsBooked.contains('8:15 - 8:30'))?_buttonTimeTable(7, '8:15 - 8:30',true):_buttonTimeTable(7, '8:15 - 8:30', false),
+                          (timeSlotsBooked != null &&
+                                  timeSlotsBooked.contains('8:15 - 8:30'))
+                              ? _buttonTimeTable(7, '8:15 - 8:30', true)
+                              : _buttonTimeTable(7, '8:15 - 8:30', false),
                         ],
                       ),
                     ],
@@ -531,13 +555,14 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
 
   Widget _buttonTimeTable(int index, String text, booked) {
     return Visibility(
-      visible: booked==false,
+      visible: booked == false,
       child: Expanded(
         child: RaisedButton(
           elevation: 0,
           padding: EdgeInsets.all(10),
           color: _bodyColorTimeTable[index],
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: _getText(text, 15, _textColorTimeTable[index]),
           onPressed: () {
             setState(() {
@@ -620,7 +645,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: selectedDate == null ? DateTime.now() : selectedDate,
       firstDate: DateTime(2015, 8),
       lastDate: DateTime(2050),
       builder: (BuildContext context, Widget child) {

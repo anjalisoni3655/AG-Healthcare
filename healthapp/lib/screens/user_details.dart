@@ -1,11 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:healthapp/screens/home_screen.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:healthapp/screens/mobile_auth_screens/mobile_login_page.dart';
-import 'package:healthapp/screens/user_profile.dart';
 import 'package:healthapp/utils/settings.dart';
 import 'package:healthapp/widgets/app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,21 +21,21 @@ List<Color> _bodyColor = [
   Color(0xFFFFFFFF),
 ];
 List<String> _category = ['Male', 'Female', 'Other'];
-DateTime selectedDate = DateTime.now();
+DateTime selectedDate;
 String dropdownValue = 'O+';
 
-String name;
-String email;
-String photo;
-String gender;
-String address;
+String name = '';
+String email = '';
+String photo = '';
+String gender = '';
+String address = '';
 
-String phone;
+String phone = '';
 String dob = '${selectedDate.toLocal()}'.split(' ')[0];
 String blood = 'O+';
-int height;
-int weight;
-String marital;
+int height = 0;
+int weight = 0;
+String marital = '';
 
 String validatePincode(String pincode) {
   Pattern pattern = r'[.,|_]';
@@ -507,7 +504,7 @@ class _UserFormState extends State<UserForm> {
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: selectedDate == null ? DateTime.now() : selectedDate,
       firstDate: DateTime(1900),
       lastDate: DateTime(2050),
       builder: (BuildContext context, Widget child) {
@@ -580,138 +577,133 @@ class _UserFormState extends State<UserForm> {
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           color: Color(0xFFF8F8F8),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Hello there!',
-                      style: TextStyle(
-                        fontSize: 29,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF08134D),
-                      ),
-                    ),
-                    Text(
-                      'Let\'s get your account set up',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF8F8F8F),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          _buildName(),
-                          _buildEmail(),
-                          _buildPhone(),
-                          _buildGender(),
-                          _buildDOB(context),
-                          _buildBlood(),
-                          _buildHeight(),
-                          _buildWeight(),
-                          _buildAddress(),
-                          _buildMarital(),
-                          Padding(
-                            padding: EdgeInsets.all(150),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Hello there!',
+                  style: TextStyle(
+                    fontSize: 29,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF08134D),
+                  ),
                 ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.65),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: RaisedButton(
-                        key: Key('Submit'),
-                        elevation: 10,
-                        color: Colors.blue,
-                        padding: EdgeInsets.all(15),
-                        onPressed: () async {
-                          if (!_formKey.currentState.validate()) {
-                            return;
-                          }
-                          // If the form is valid , all the values are saved in respective variables
-                          _formKey.currentState.save();
+                Text(
+                  'Let\'s get your account set up',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF8F8F8F),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _buildName(),
+                      // _buildEmail(),
+                      _buildPhone(),
+                      _buildGender(),
+                      _buildDOB(context),
+                      _buildBlood(),
+                      _buildHeight(),
+                      _buildWeight(),
+                      _buildAddress(),
+                      _buildMarital(),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 50, bottom: 250),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: RaisedButton(
+                          key: Key('Submit'),
+                          elevation: 10,
+                          color: Colors.blue,
+                          padding: EdgeInsets.all(15),
+                          onPressed: () async {
+                            if (!_formKey.currentState.validate()) {
+                              return;
+                            }
+                            // If the form is valid , all the values are saved in respective variables
+                            _formKey.currentState.save();
+                            FirebaseUser user =
+                                await FirebaseAuth.instance.currentUser();
+                            email = user.email;
+                            print(name);
+                            print(email);
+                            print(phone);
+                            print(gender);
+                            print(address);
+                            print(dob);
+                            print(blood);
+                            print(height);
+                            print(weight);
+                            print(marital);
 
-                          print(name);
-                          print(email);
-                          print(phone);
-                          print(gender);
-                          print(address);
-                          print(dob);
-                          print(blood);
-                          print(height);
-                          print(weight);
-                          print(marital);
-
-                          prefs = await SharedPreferences.getInstance();
-                          // final doc = await Firestore.instance
-                          //     .collection('user_details')
-                          //     .where('email', isEqualTo: email)
-                          //     .getDocuments();
-                          if (true) {
-                            await globals.uploadUserDetails(
-                              name: name,
-                              email: email,
-                              gender: gender,
-                              address: address,
-                              dob: dob,
-                              blood: blood,
-                              height: height,
-                              weight: weight,
-                              marital: marital,
-                              phone: phone,
-                            );
-                            globals.user.phone = phone;
-                            await prefs.setString('email', email);
-                            await prefs.setString('gender', gender);
-                            await prefs.setString('dob', dob);
-                            await prefs.setString('gender', gender);
-                            await prefs.setString('dob', dob);
-                            await prefs.setString('blood', blood);
-                            await prefs.setString('height', height.toString());
-                            await prefs.setString('weight', weight.toString());
-                            await prefs.setString('marital', marital);
-                            await prefs.setString('address', address);
-                            await prefs.setString('phone', phone.toString());
-                          }
-                          // Navigator.pushNamed(context, UploadPhoto.id);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => UploadPhoto(
-                                      currentUserId: widget.currentUserId)));
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(7)),
-                        child: Text(
-                          'SUBMIT',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
+                            prefs = await SharedPreferences.getInstance();
+                            // final doc = await Firestore.instance
+                            //     .collection('user_details')
+                            //     .where('email', isEqualTo: email)
+                            //     .getDocuments();
+                            if (true) {
+                              await globals.uploadUserDetails(
+                                name: name,
+                                email: email,
+                                gender: gender,
+                                address: address,
+                                dob: dob,
+                                blood: blood,
+                                height: height,
+                                weight: weight,
+                                marital: marital,
+                                phone: phone,
+                              );
+                              globals.user.phone = phone;
+                              await prefs.setString('email', email);
+                              await prefs.setString('gender', gender);
+                              await prefs.setString('dob', dob);
+                              await prefs.setString('gender', gender);
+                              await prefs.setString('dob', dob);
+                              await prefs.setString('blood', blood);
+                              await prefs.setString(
+                                  'height', height.toString());
+                              await prefs.setString(
+                                  'weight', weight.toString());
+                              await prefs.setString('marital', marital);
+                              await prefs.setString('address', address);
+                              await prefs.setString('phone', phone.toString());
+                            }
+                            // Navigator.pushNamed(context, UploadPhoto.id);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UploadPhoto(
+                                        currentUserId: widget.currentUserId)));
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(7)),
+                          child: Text(
+                            'SUBMIT',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
