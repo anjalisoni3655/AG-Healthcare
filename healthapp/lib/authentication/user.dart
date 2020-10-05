@@ -45,16 +45,16 @@ Future<String> uploadUserDetails({
       .document(globals.user.id)
       .setData(
     {
-      'name': name,
-      'email': email,
-      'gender': gender,
-      'dob': dob,
-      'address': address,
-      'blood': blood,
-      'height': height,
-      'weight': weight,
-      'marital': marital,
-      'phone': phone,
+      'name': name??globals.user.name,
+      'email': email??globals.user.email,
+      'gender': gender??'Male',
+      'dob': dob??'dd/mm/yyyy',
+      'address': 'some address',
+      'blood': blood??'o+',
+      'height': height??120,
+      'weight': weight??40,
+      'marital': marital??'No',
+      'phone': phone??'1234567890',
     },
   );
   return _id;

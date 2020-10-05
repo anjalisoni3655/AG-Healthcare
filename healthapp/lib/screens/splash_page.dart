@@ -7,11 +7,14 @@ import 'package:healthapp/screens/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:healthapp/authentication/user.dart' as globals;
 import 'package:healthapp/screens/chat_screen.dart';
+import 'package:healthapp/screens/doctor_pages/doc_chat.dart';
 
 SharedPreferences prefs;
+String UserId;
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key key}) : super(key: key);
+
   @override
   _SplashPageState createState() => _SplashPageState();
 }
@@ -49,21 +52,25 @@ class _SplashPageState extends State<SplashPage> {
         print(globals.user.photo);
         print(globals.user.name);
         // if (globals.user.email != "anjalisoni3655@gmail.com") {
-           if (globals.user.id == 'HxotQtogDhYYb9wW4EbyqV3Vd1x1') {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DocChatScreen(
-                      currentUserId: firebaseUser.uid,
-                    )));
-      } else{
-Navigator.of(context).pushAndRemoveUntil(
+        /*  if (globals.user.id == 'HxotQtogDhYYb9wW4EbyqV3Vd1x1') {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DocChatScreen(
+                        UserId: 'HxotQtogDhYYb9wW4EbyqV3Vd1x1',
+                      ))); */
+//  Navigator.of(context).pushAndRemoveUntil(
+//               MaterialPageRoute(
+//                   builder: (_) =>
+//                       DocChatScreen(UserId: 'HxotQtogDhYYb9wW4EbyqV3Vd1x1')),
+//               (Route<dynamic> route) => false);
+        // } else {
+        Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (_) =>
                     HomeScreen(currentUserId: prefs.getString('id'))),
             (Route<dynamic> route) => false);
-      }
-        
+        // }
       } else {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (_) => LoginPage()),
