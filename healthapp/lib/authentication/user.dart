@@ -120,6 +120,7 @@ Future<String> uploadBookingDetails({
     'paymentId': paymentId,
     'email': email,
     'id': id,
+    'phone': phone,
     'photo': photo,
     'name': name,
   }, merge: true).then((_) {

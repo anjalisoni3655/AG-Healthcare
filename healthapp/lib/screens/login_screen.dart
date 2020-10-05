@@ -166,7 +166,6 @@ class _LoginPageState extends State<LoginPage> {
         } else {
           // TODO: Facebook Login!
           print('Implement Facebook Login');
-         
         }
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),

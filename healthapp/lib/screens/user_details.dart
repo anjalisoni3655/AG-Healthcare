@@ -666,7 +666,7 @@ class _UserFormState extends State<UserForm> {
                                 marital: marital,
                                 phone: phone,
                               );
-                              globals.user.phone = phone;
+
                               await prefs.setString('email', email);
                               await prefs.setString('gender', gender);
                               await prefs.setString('dob', dob);
@@ -681,6 +681,7 @@ class _UserFormState extends State<UserForm> {
                               await prefs.setString('address', address);
                               await prefs.setString('phone', phone.toString());
                             }
+                            globals.user.phone = phone;
                             // Navigator.pushNamed(context, UploadPhoto.id);
                             Navigator.push(
                                 context,

@@ -421,6 +421,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                               id: globals.user.id,
                               photo: globals.user.photo,
                               name: globals.user.name,
+                              phone: globals.user.phone,
                             );
 
                             print('done');
