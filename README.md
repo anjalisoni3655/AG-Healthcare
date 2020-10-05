@@ -5,7 +5,7 @@
 
 # AG HealthCare ⚕️🩺
 
-## What it is ❓ 
+## What is it❓ 
 
 * An Android application for Amit Goel's (Telangana, India), built in collaboration with Students' Web Committee, IIT Guwahati.
 
