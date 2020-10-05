@@ -3,21 +3,20 @@
 </a>
 
 
-# AG HealthCare ⚕️
+# AG HealthCare ⚕️🩺
 
-## Description 
+## What it is ❓ 
 
 * An Android application for Amit Goel's (Telangana, India), built in collaboration with Students' Web Committee, IIT Guwahati.
-* Features include, booking of appointments, chat and video-calling features, and payment for offline visits. The app also features, videos and blogs released by the hospital for general awareness.
 
-## Features
+## Features  📝
 
 * Patient can book both online as well as clinic apointments from the app
 * Chat and video-calling features added for patient and doctor to communicate
 * Payment done with Razorpay integration, for offline and online visits.
 * Users can also view and watch blogs as well as videos released by Dr. Amit Goel for general medical awareness.
 
-## Techstack Used
+## Techstack Used 🛠️
 Flutter, Firebase
 
 ## Contributors ✨
