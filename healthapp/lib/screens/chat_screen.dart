@@ -194,7 +194,7 @@ class ChatScreenState extends State<ChatScreen> {
                                 } else {
                                   bool check = false;
                                   for (int i = 0;
-                                      i < snapshotBooking.data.documents.length;
+                                      i < snapshotBooking.data.documents.length && (snapshotBooking.data.documents[i].data['paymentId']!=null);
                                       i++) {
                                     DocumentSnapshot doc1 =
                                         snapshotBooking.data.documents[i];

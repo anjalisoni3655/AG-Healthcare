@@ -49,11 +49,21 @@ class _SplashPageState extends State<SplashPage> {
         print(globals.user.photo);
         print(globals.user.name);
         // if (globals.user.email != "anjalisoni3655@gmail.com") {
-        Navigator.of(context).pushAndRemoveUntil(
+           if (globals.user.id == 'HxotQtogDhYYb9wW4EbyqV3Vd1x1') {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DocChatScreen(
+                      currentUserId: firebaseUser.uid,
+                    )));
+      } else{
+Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (_) =>
                     HomeScreen(currentUserId: prefs.getString('id'))),
             (Route<dynamic> route) => false);
+      }
+        
       } else {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (_) => LoginPage()),

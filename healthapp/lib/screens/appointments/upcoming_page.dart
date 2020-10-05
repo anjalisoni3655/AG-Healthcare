@@ -75,7 +75,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
   }
 
   Widget buildItem(BuildContext context, DocumentSnapshot document) {
-    if (document.data['id'] != globals.user.id) {
+    if (document.data['id'] != globals.user.id || document.data['paymentId']==null) {
       return Container();
     } else {
       print(document.data['id']);
